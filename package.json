@@ -4,7 +4,8 @@
   "description": "Front-end for quantiteam.com, written in React",
   "main": "src/index.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --inline --hot",
+    "start": "WEBPACK_ENV=production webpack --colors",
+    "dev": "NODE_ENV=development webpack-dev-server --inline --hot",
     "test": "mocha",
     "build": "WEBPACK_ENV=production webpack --colors",
     "clean": "rimraf public/build"
