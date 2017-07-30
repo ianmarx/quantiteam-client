@@ -7,7 +7,8 @@
     "start": "NODE_ENV=development webpack-dev-server --inline --hot",
     "test": "mocha",
     "build": "WEBPACK_ENV=production webpack --colors",
-    "clean": "rimraf public/build"
+    "clean": "rimraf public/build",
+    "deploy": "npm run build; npm run clean"
   },
   "repository": {
     "type": "git",
