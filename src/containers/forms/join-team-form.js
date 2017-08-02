@@ -49,7 +49,7 @@ class JoinTeamForm extends Component {
               </li>
               <div className="button-group">
                 <button type="submit" className="modal-submit">Submit</button>
-                <button type="button" className="modal-close" onClick={this.props.onTeamModalClose}>Close</button>
+                <button type="button" className="modal-close" onClick={this.props.onJoinModalClose}>Close</button>
               </div>
             </ul>
           </div>
