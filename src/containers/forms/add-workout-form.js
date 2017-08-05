@@ -110,8 +110,8 @@ class AddWorkoutForm extends Component {
             <ul className="form-column">
               <li>
                 <h3>Activity</h3>
-                <select value={this.state.activity} onChange={this.onActivityChange}>
-                  <option default>Select</option>
+                <select required value={this.state.activity} onChange={this.onActivityChange}>
+                  <option default value="">Select</option>
                   <option value="erg">Ergometer</option>
                   <option value="row">Rowing</option>
                   <option value="run">Running</option>
@@ -120,8 +120,8 @@ class AddWorkoutForm extends Component {
               </li>
               <li>
                 <h3>Distance Units</h3>
-                <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                  <option default>Select</option>
+                <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                  <option default value="">Select</option>
                   <option value="m">m</option>
                   <option value="km">km</option>
                   <option value="mi">mi</option>

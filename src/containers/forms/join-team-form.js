@@ -41,8 +41,8 @@ class JoinTeamForm extends Component {
               </li>
               <li>
                 <h3>Your Role</h3>
-                <select id="userType" onChange={this.onTypeChange} value={this.state.userType}>
-                  <option default>Select</option>
+                <select required id="userType" onChange={this.onTypeChange} value={this.state.userType}>
+                  <option default value="">Select</option>
                   <option value="athlete">Athlete</option>
                   <option value="coach">Coach</option>
                 </select>
