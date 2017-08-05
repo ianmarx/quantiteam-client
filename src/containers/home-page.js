@@ -72,9 +72,21 @@ class HomePage extends Component {
   /* this is called in the WorkoutPost component by onLocalDeleteClick */
   /* this setup is used so that both ID's can be passed to deleteWorkout() */
   onDeleteClick(workoutId, userId) {
-    this.props.deleteWorkout(workoutId, userId);
-    console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
+    const promise = new Promise((resolve, reject) => {
+      this.props.deleteWorkout(workoutId, userId);
+
+      setTimeout(() => {
+        resolve();
+        console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
+      }, 300);
+    });
+    promise.then((result) => {
+      console.log(result);
+      this.props.fetchUserWorkouts(this.props.match.params.userId);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
   onResultDeleteClick(workoutId, teamWorkoutId) {
     this.props.deleteResult(workoutId, teamWorkoutId);
