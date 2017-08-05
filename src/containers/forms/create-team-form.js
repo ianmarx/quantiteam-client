@@ -24,7 +24,7 @@ class CreateTeamForm extends Component {
     console.log(name);
     console.log(userType);
     const teamObject = { name, userType };
-    this.props.addTeam(teamObject, this.props.userId);
+    this.props.createTeam(teamObject, this.props.userId);
   }
   render() {
     return (
