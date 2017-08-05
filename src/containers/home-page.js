@@ -195,7 +195,7 @@ class HomePage extends Component {
     } else {
       return (
         <div className="workout-posts">
-          {this.props.workouts.map((workout, i) => {
+          {this.props.teamSoloWorkouts.map((workout, i) => {
             return (
               <div key={`workout-${i}`}>
                 <WorkoutPost userId={workout._creator} workout={workout} index={i}
