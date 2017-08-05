@@ -98,7 +98,7 @@ class AddResultForm extends Component {
                 <li id="athlete-field">
                   <h3>Athlete</h3>
                   <input list="athletes" onChange={this.onAthleteNameChange} value={this.state.athleteName}
-                    type="text"
+                    type="text" required
                   />
                   <datalist id="athletes">
                     {this.props.queryResults.map((athlete, i) => {
@@ -111,7 +111,7 @@ class AddResultForm extends Component {
                 <li id="distance-field">
                   <h3>Distance</h3>
                   <input onChange={this.onDistanceChange} value={this.state.distance}
-                    type="text"
+                    type="text" required
                   />
                 </li>
               </ul>
@@ -121,7 +121,7 @@ class AddResultForm extends Component {
                 <li id="athlete-field">
                   <h3>Athlete</h3>
                   <input list="athletes" onChange={this.onAthleteNameChange} value={this.state.athleteName}
-                    type="text"
+                    type="text" required
                   />
                   <datalist id="athletes">
                     {this.props.queryResults.map((athlete, i) => {
@@ -134,15 +134,15 @@ class AddResultForm extends Component {
                 <li id="time-field">
                   <h3>Hours</h3>
                   <input onChange={this.onHoursChange} value={this.state.hours}
-                    type="text"
+                    type="text" required
                   />
                   <h3>Minutes</h3>
                   <input onChange={this.onMinutesChange} value={this.state.minutes}
-                    type="text"
+                    type="text" required
                   />
                   <h3>Seconds</h3>
                   <input onChange={this.onSecondsChange} value={this.state.seconds}
-                    type="text"
+                    type="text" required
                   />
                 </li>
               </ul>
