@@ -72,8 +72,8 @@ class AddTeamWorkoutForm extends Component {
               <ul className="form-column">
                 <li id="type-field">
                   <h3>Workout Type</h3>
-                  <select value={this.state.type} onChange={this.onTypeChange}>
-                    <option default>Select</option>
+                  <select required value={this.state.type} onChange={this.onTypeChange}>
+                    <option default value="">Select</option>
                     <option value="distance">Distance</option>
                     <option value="time">Time</option>
                   </select>
@@ -95,8 +95,8 @@ class AddTeamWorkoutForm extends Component {
                 </li>
                 <li>
                   <h3>Activity</h3>
-                  <select value={this.state.activity} onChange={this.onActivityChange}>
-                    <option default>Select</option>
+                  <select required value={this.state.activity} onChange={this.onActivityChange}>
+                    <option default value="">Select</option>
                     <option value="erg">Ergometer</option>
                     <option value="row">Rowing</option>
                     <option value="run">Running</option>
@@ -105,8 +105,8 @@ class AddTeamWorkoutForm extends Component {
                 </li>
                 <li>
                   <h3>Distance Units</h3>
-                  <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default>Select</option>
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
                     <option value="mi">mi</option>
@@ -140,8 +140,8 @@ class AddTeamWorkoutForm extends Component {
               <ul className="form-column">
                 <li>
                   <h3>Activity</h3>
-                  <select value={this.state.activity} onChange={this.onActivityChange}>
-                    <option default>Select</option>
+                  <select required value={this.state.activity} onChange={this.onActivityChange}>
+                    <option default value="">Select</option>
                     <option value="erg">Ergometer</option>
                     <option value="row">Rowing</option>
                     <option value="run">Running</option>
@@ -150,8 +150,8 @@ class AddTeamWorkoutForm extends Component {
                 </li>
                 <li>
                   <h3>Distance Units</h3>
-                  <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default>Select</option>
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
                     <option value="mi">mi</option>
