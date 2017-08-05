@@ -62,12 +62,26 @@ class HomePage extends Component {
   componentDidMount() {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
-    this.props.fetchUserTeam(this.props.match.params.userId);
 
-    if (this.props.team._id) {
+    const promise = new Promise((resolve, reject) => {
+      this.props.fetchUserTeam(this.props.match.params.userId);
+
+      setTimeout(() => {
+        if (this.props.team._id) {
+          resolve();
+        } else {
+          reject();
+        }
+      }, 300);
+    });
+    promise.then((result) => {
+      console.log(result);
       this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
       this.props.fetchTeamWorkouts(this.props.match.params.userId);
-    }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
   /* this is called in the WorkoutPost component by onLocalDeleteClick */
   /* this setup is used so that both ID's can be passed to deleteWorkout() */
