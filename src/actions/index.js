@@ -182,7 +182,7 @@ export function createTeam({ name, userType }, userId) {
   console.log(info);
   /* axios POST call */
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/team/add`, info, headers).then((response) => {
+    axios.post(`${ROOT_URL}/team/create`, info, headers).then((response) => {
       console.log('Team created successfully');
       dispatch({ type: ActionTypes.FETCH_TEAM, payload: response.data });
     }).catch((error) => {
