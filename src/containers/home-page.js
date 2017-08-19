@@ -80,7 +80,7 @@ class HomePage extends Component {
       this.props.fetchTeamWorkouts(this.props.match.params.userId);
     })
     .catch((error) => {
-      console.log(error);
+      console.log('non-team user logged in');
     });
   }
   /* this is called in the WorkoutPost component by onLocalDeleteClick */
@@ -91,25 +91,53 @@ class HomePage extends Component {
 
       setTimeout(() => {
         resolve();
-        console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
+        console.log('Workout deleted successfully');
       }, 300);
     });
     promise.then((result) => {
       console.log(result);
       this.props.fetchUserWorkouts(this.props.match.params.userId);
+      if (this.props.team._id) {
+        this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
+      }
     })
     .catch((error) => {
-      console.log(error);
+      console.log(`promise error: ${error}`);
     });
   }
   onResultDeleteClick(workoutId, teamWorkoutId) {
-    this.props.deleteResult(workoutId, teamWorkoutId);
-    this.props.fetchResults(teamWorkoutId);
+    const promise = new Promise((resolve, reject) => {
+      this.props.deleteResult(workoutId, teamWorkoutId);
+
+      setTimeout(() => {
+        resolve();
+        console.log('Result deleted successfully');
+      }, 300);
+    });
+    promise.then((result) => {
+      console.log(result);
+      this.props.fetchResults(teamWorkoutId);
+    })
+    .catch((error) => {
+      console.log(`promise error: ${error}`);
+    });
   }
   onTeamWorkoutDeleteClick(workoutId, teamId) {
-    this.props.deleteTeamWorkout(workoutId, teamId);
-    console.log('Team workout deleted successfully');
-    this.props.fetchTeamWorkouts(this.props.match.params.userId);
+    const promise = new Promise((resolve, reject) => {
+      this.props.deleteTeamWorkout(workoutId, teamId);
+
+      setTimeout(() => {
+        resolve();
+        console.log('Team workout deleted successfully');
+      }, 300);
+    });
+    promise.then((result) => {
+      console.log(result);
+      this.props.fetchTeamWorkouts(this.props.match.params.userId);
+    })
+    .catch((error) => {
+      console.log(`promise error: ${error}`);
+    });
   }
   onResultAddClick(teamWorkoutId, prevProps) {
     const promise = new Promise((resolve, reject) => {
@@ -121,7 +149,7 @@ class HomePage extends Component {
         } else {
           reject('State was not changed');
         }
-      }, 250);
+      }, 300);
     });
     promise.then((result) => {
       console.log(result);
@@ -132,14 +160,29 @@ class HomePage extends Component {
     });
   }
   onViewResultsClick(teamWorkoutId, type) {
-    console.log(type);
-    this.props.fetchTeamWorkout(teamWorkoutId);
-    if (type === 'distance') {
-      this.props.fetchTimeResults(teamWorkoutId);
-    } else if (type === 'time') {
-      this.props.fetchDistResults(teamWorkoutId);
-    }
-    this.onViewResultModalOpen();
+    const promise = new Promise((resolve, reject) => {
+      this.props.fetchTeamWorkout(teamWorkoutId);
+
+      setTimeout(() => {
+        if (teamWorkoutId === this.props.currentTeamWorkout._id) {
+          resolve();
+        } else {
+          reject();
+        }
+      }, 250);
+    });
+    promise.then((result) => {
+      console.log(result);
+      if (type === 'distance') {
+        this.props.fetchTimeResults(teamWorkoutId);
+      } else if (type === 'time') {
+        this.props.fetchDistResults(teamWorkoutId);
+      }
+      this.onViewResultModalOpen();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
   onModalOpen(event) {
     this.setState({ showModal: true });
