@@ -90,7 +90,10 @@ class WorkoutPost extends Component {
     const time = this.timeConvert();
     const strokeRate = this.state.strokeRate;
     const watts = this.state.watts;
-    const avgHR = this.state.avgHR;
+    let avgHR = this.state.avgHR;
+    if (avgHR === '') {
+      avgHR = 0;
+    }
     const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR };
     this.props.updateWorkout(this.props.workout._id, workoutObject);
   }
@@ -208,9 +211,15 @@ class WorkoutPost extends Component {
             <div>{this.props.workout.distance} {this.props.workout.distUnit} {this.props.workout.activity}</div>
             {this.displayStrokeRate()}
             {this.displayAvgHR()}
+            {this.props.workout.wattsPerBeat &&
+              <div><hr />{this.props.workout.wattsPerBeat} watts/bpm</div>
+            }
           </div>
           <div className="workout-div-column">
             <div>{this.props.workout.timeString}</div>
+            {this.props.workout.splitString &&
+              <div><hr />{this.props.workout.splitString} s/500m</div>
+            }
             {this.displayWatts()}
           </div>
           <div className="workout-div-column">
