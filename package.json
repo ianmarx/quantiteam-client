@@ -1,6 +1,6 @@
 {
   "name": "Quantiteam",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha",
   "description": "Front-end for quantiteam.com, written in React",
   "main": "src/index.js",
   "scripts": {
