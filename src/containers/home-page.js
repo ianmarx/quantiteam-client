@@ -62,7 +62,11 @@ class HomePage extends Component {
   componentDidMount() {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
+    this.props.fetchUserTeam(this.props.match.params.userId);
+    this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
+    this.props.fetchTeamWorkouts(this.props.match.params.userId);
 
+    /*
     const promise = new Promise((resolve, reject) => {
       this.props.fetchUserTeam(this.props.match.params.userId);
 
@@ -72,7 +76,7 @@ class HomePage extends Component {
         } else {
           reject();
         }
-      }, 300);
+      }, 100);
     });
     promise.then((result) => {
       console.log(result);
@@ -82,6 +86,7 @@ class HomePage extends Component {
     .catch((error) => {
       console.log('non-team user logged in');
     });
+    */
   }
   /* this is called in the WorkoutPost component by onLocalDeleteClick */
   /* this setup is used so that both ID's can be passed to deleteWorkout() */

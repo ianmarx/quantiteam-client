@@ -74,6 +74,32 @@ class AddWorkoutForm extends Component {
             (parseFloat(this.state.seconds, 10).toPrecision(3) * 1));
   }
   render() {
+    if (this.state.activity === '') {
+      return (
+        <div className="form-container">
+          <form className="modal-form" onSubmit={this.onSubmit}>
+            <div className="form-title">Add Workout</div>
+            <div className="column-group">
+              <ul className="form-column">
+                <li id="type-field">
+                  <h3>Workout Type</h3>
+                  <select required value={this.state.activity} onChange={this.onActivityChange}>
+                    <option default value="">Select</option>
+                    <option value="erg">Ergometer</option>
+                    <option value="row">Rowing</option>
+                    <option value="run">Running</option>
+                    <option value="bike">Cycling</option>
+                  </select>
+                </li>
+                <li>
+                  <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      );
+    }
     return (
       <div className="form-container">
         <form className="modal-form" onSubmit={this.onSubmit}>
@@ -110,35 +136,67 @@ class AddWorkoutForm extends Component {
             <ul className="form-column">
               <li>
                 <h3>Activity</h3>
-                <select required value={this.state.activity} onChange={this.onActivityChange}>
-                  <option default value="">Select</option>
-                  <option value="erg">Ergometer</option>
-                  <option value="row">Rowing</option>
-                  <option value="run">Running</option>
-                  <option value="bike">Cycling</option>
-                </select>
+                {this.state.activity === 'erg' &&
+                  <div className="static-activity">Ergometer</div>
+                }
+                {this.state.activity === 'row' &&
+                  <div className="static-activity">Rowing</div>
+                }
+                {this.state.activity === 'run' &&
+                  <div className="static-activity">Running</div>
+                }
+                {this.state.activity === 'bike' &&
+                  <div className="static-activity">Cycling</div>
+                }
               </li>
               <li>
                 <h3>Distance Units</h3>
-                <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                  <option default value="">Select</option>
-                  <option value="m">m</option>
-                  <option value="km">km</option>
-                  <option value="mi">mi</option>
-                </select>
+                {this.state.activity === 'erg' &&
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
+                    <option value="m">m</option>
+                    <option value="km">km</option>
+                  </select>
+                }
+                {this.state.activity === 'row' &&
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
+                    <option value="km">km</option>
+                    <option value="m">m</option>
+                  </select>
+                }
+                {this.state.activity === 'run' &&
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
+                    <option value="mi">mi</option>
+                    <option value="km">km</option>
+                    <option value="m">m</option>
+                  </select>
+                }
+                {this.state.activity === 'bike' &&
+                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                    <option default value="">Select</option>
+                    <option value="mi">mi</option>
+                    <option value="km">km</option>
+                  </select>
+                }
               </li>
-              <li>
-                <h3>Stroke Rate</h3>
-                <input onChange={this.onStrokeRateChange} value={this.state.strokeRate}
-                  type="text"
-                />
-              </li>
-              <li>
-                <h3>Watts</h3>
-                <input onChange={this.onWattsChange} value={this.state.watts}
-                  type="text"
-                />
-              </li>
+              {(this.state.activity === 'erg' || this.state.activity === 'row') &&
+                <li>
+                  <h3>Stroke Rate</h3>
+                  <input onChange={this.onStrokeRateChange} value={this.state.strokeRate}
+                    type="text"
+                  />
+                </li>
+              }
+              {(this.state.activity === 'bike') &&
+                <li>
+                  <h3>Watts</h3>
+                  <input onChange={this.onWattsChange} value={this.state.watts}
+                    type="text"
+                  />
+                </li>
+              }
               <div className="button-group">
                 <button type="submit" className="modal-submit">Submit</button>
                 <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
