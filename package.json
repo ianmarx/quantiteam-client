@@ -10,7 +10,6 @@
     "clean": "rimraf public/build",
     "surge:dev": "npm run build; surge -p public -d qt-dev.surge.sh; npm run clean",
     "surge:prod": "npm run build; surge -p public -d quantiteam.com; npm run clean"
-
   },
   "repository": {
     "type": "git",
@@ -57,6 +56,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "victory": "^0.21.5"
   }
 }
