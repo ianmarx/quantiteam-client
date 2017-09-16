@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryStack } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
 import { fetchUser, fetchUserWorkouts, updateWorkout,
   deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals } from '../actions';
 import WorkoutPost from './workout-post';
@@ -20,11 +20,9 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ergTotals: [
-        { week: 1, distance: (this.props.user.ergTotal / 1000) || 0 },
-      ],
-      rowTotals: [
-        { week: 1, distance: (this.props.user.rowTotal / 1000) || 0 },
+      distTotals: [
+        { x: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#eda412' },
+        { x: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
       ],
     };
     this.displayFeed = this.displayFeed.bind(this);
@@ -85,30 +83,28 @@ class Profile extends Component {
     } else {
       return (
         <VictoryChart
-          domainPadding={20}
+          domainPadding={40}
         >
+          <VictoryLabel x={130} y={25}
+            text="Workout Totals by Activity"
+          />
           <VictoryAxis
-            tickValues={[1]}
-            tickFormat={['Workout Totals']}
+            tickValues={['Erg', 'Row', 'Bike', 'Run']}
           />
           <VictoryAxis
             dependentAxis
             tickFormat={x => (`${x}km`)}
           />
-          <VictoryStack>
-            <VictoryBar
-              data={this.state.ergTotals}
-              style={{ data: { fill: '#eda412' } }}
-              x="week"
-              y="distance"
-            />
-            <VictoryBar
-              data={this.state.rowTotals}
-              style={{ data: { fill: '#2b85bc' } }}
-              x="week"
-              y="distance"
-            />
-          </VictoryStack>
+          <VictoryBar
+            data={[
+              { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#eda412' },
+              { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
+              { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
+              { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
+            ]}
+            x="type"
+            y="distance"
+          />
         </VictoryChart>
       );
     }
