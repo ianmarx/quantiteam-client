@@ -43,6 +43,7 @@ class Profile extends Component {
   onDeleteClick(workoutId, userId) {
     this.props.deleteWorkout(workoutId, userId);
     console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
+    this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
   }
   displayFeed() {
@@ -78,36 +79,32 @@ class Profile extends Component {
     );
   }
   displayWeekChart() {
-    if ((this.props.user.ergTotal === 0) || (this.props.user.rowTotal === 0)) {
-      return <div />;
-    } else {
-      return (
-        <VictoryChart
-          domainPadding={40}
-        >
-          <VictoryLabel x={130} y={25}
-            text="Workout Totals by Activity"
-          />
-          <VictoryAxis
-            tickValues={['Erg', 'Row', 'Bike', 'Run']}
-          />
-          <VictoryAxis
-            dependentAxis
-            tickFormat={x => (`${x}km`)}
-          />
-          <VictoryBar
-            data={[
-              { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#eda412' },
-              { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
-              { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
-              { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
-            ]}
-            x="type"
-            y="distance"
-          />
-        </VictoryChart>
-      );
-    }
+    return (
+      <VictoryChart
+        domainPadding={40}
+      >
+        <VictoryLabel x={130} y={25}
+          text="Workout Totals by Activity"
+        />
+        <VictoryAxis
+          tickValues={['Erg', 'Row', 'Bike', 'Run']}
+        />
+        <VictoryAxis
+          dependentAxis
+          tickFormat={x => (`${x}km`)}
+        />
+        <VictoryBar
+          data={[
+            { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#eda412' },
+            { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
+            { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
+            { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
+          ]}
+          x="type"
+          y="distance"
+        />
+      </VictoryChart>
+    );
   }
   render() {
     return (
