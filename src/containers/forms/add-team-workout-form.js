@@ -121,7 +121,6 @@ class AddTeamWorkoutForm extends Component {
                     <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
-                    <option value="mi">mi</option>
                   </select>
                 </li>
                 <div className="button-group">
@@ -167,7 +166,6 @@ class AddTeamWorkoutForm extends Component {
                     <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
-                    <option value="mi">mi</option>
                   </select>
                 </li>
                 <div className="button-group">

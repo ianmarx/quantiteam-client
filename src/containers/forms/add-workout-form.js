@@ -186,7 +186,6 @@ class AddWorkoutForm extends Component {
                 {this.state.activity === 'run' &&
                   <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
                     <option default value="">Select</option>
-                    <option value="mi">mi</option>
                     <option value="km">km</option>
                     <option value="m">m</option>
                   </select>
@@ -194,7 +193,6 @@ class AddWorkoutForm extends Component {
                 {this.state.activity === 'bike' &&
                   <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
                     <option default value="">Select</option>
-                    <option value="mi">mi</option>
                     <option value="km">km</option>
                   </select>
                 }
