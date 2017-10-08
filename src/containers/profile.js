@@ -28,7 +28,7 @@ class Profile extends Component {
     };
     this.displayFeed = this.displayFeed.bind(this);
     this.displayInfo = this.displayInfo.bind(this);
-    this.displayWeekChart = this.displayWeekChart.bind(this);
+    this.displayDistTotals = this.displayDistTotals.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
   componentDidMount() {
@@ -89,7 +89,7 @@ class Profile extends Component {
       <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
     );
   }
-  displayWeekChart() {
+  displayDistTotals() {
     return (
       <VictoryChart
         domainPadding={40}
@@ -122,7 +122,7 @@ class Profile extends Component {
       <div className="profile-page">
         <div className="profile-column">
           {this.displayInfo()}
-          {this.displayWeekChart()}
+          {this.displayDistTotals()}
         </div>
         <div className="profile-column">
           <div id="feed-title">My Workouts</div>
