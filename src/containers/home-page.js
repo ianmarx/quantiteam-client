@@ -101,6 +101,7 @@ class HomePage extends Component {
     });
     promise.then((result) => {
       console.log(result);
+      this.props.fetchUser(this.props.match.params.userId);
       this.props.fetchUserWorkouts(this.props.match.params.userId);
       if (this.props.team._id) {
         this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
