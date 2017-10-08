@@ -40,11 +40,31 @@ class Profile extends Component {
     this.props.fetchUserWorkouts(this.props.match.params.userId);
     this.props.fetchUserTeam(this.props.match.params.userId);
   }
+  /*
   onDeleteClick(workoutId, userId) {
     this.props.deleteWorkout(workoutId, userId);
     console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
+  }
+  */
+  onDeleteClick(workoutId, userId) {
+    const promise = new Promise((resolve, reject) => {
+      this.props.deleteWorkout(workoutId, userId);
+
+      setTimeout(() => {
+        resolve();
+        console.log('Workout deleted successfully');
+      }, 300);
+    });
+    promise.then((result) => {
+      console.log(result);
+      this.props.fetchUser(this.props.match.params.userId);
+      this.props.fetchUserWorkouts(this.props.match.params.userId);
+    })
+    .catch((error) => {
+      console.log(`promise error: ${error}`);
+    });
   }
   displayFeed() {
     this.props.workouts.sort((a, b) => {
@@ -86,7 +106,7 @@ class Profile extends Component {
         />
         <VictoryBar
           data={[
-            { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#eda412' },
+            { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#ffaf11' },
             { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
             { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
             { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
