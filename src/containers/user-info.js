@@ -67,12 +67,22 @@ class UserInfo extends Component {
       return (
         <form className="user-edit-form" onSubmit={this.onSubmit}>
           <div className="user-info-column">
-            <div className="user-description">
+            <div className="user-column-group">
               <ul>
                 <li>
                   <div>Name</div>
                   <input onChange={this.onNameChange} value={this.state.name} type="text" />
                 </li>
+                <li>
+                  <div>Height</div>
+                  <input onChange={this.onHeightChange} value={this.state.height} type="text" />
+                </li>
+                <li>
+                  <div>Year</div>
+                  <input onChange={this.onClassYearChange} value={this.state.classYear} type="text" />
+                </li>
+              </ul>
+              <ul>
                 <li>
                   <div>Position</div>
                   <select value={this.state.position} onChange={this.onPositionChange}>
@@ -85,16 +95,8 @@ class UserInfo extends Component {
                   </select>
                 </li>
                 <li>
-                  <div>Height</div>
-                  <input onChange={this.onHeightChange} value={this.state.height} type="text" />
-                </li>
-                <li>
                   <div>Weight</div>
                   <input onChange={this.onWeightChange} value={this.state.weight} type="text" />
-                </li>
-                <li>
-                  <div>Year</div>
-                  <input onChange={this.onClassYearChange} value={this.state.classYear} type="text" />
                 </li>
                 <button type="button" className="user-edit-cancel" onClick={this.onCancelClick}>Cancel</button>
                 <button type="submit" className="user-edit-submit">Save</button>
