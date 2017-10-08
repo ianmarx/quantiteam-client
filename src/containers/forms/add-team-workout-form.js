@@ -19,6 +19,9 @@ class AddTeamWorkoutForm extends Component {
     this.onMinutesChange = this.onMinutesChange.bind(this);
     this.onSecondsChange = this.onSecondsChange.bind(this);
     this.onTypeChange = this.onTypeChange.bind(this);
+    this.onDistSelect = this.onDistSelect.bind(this);
+    this.onTimeSelect = this.onTimeSelect.bind(this);
+    this.onPrevClick = this.onPrevClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
   }
@@ -44,6 +47,15 @@ class AddTeamWorkoutForm extends Component {
   onTypeChange(event) {
     this.setState({ type: event.target.value });
   }
+  onDistSelect(event) {
+    this.setState({ type: 'distance' });
+  }
+  onTimeSelect(event) {
+    this.setState({ type: 'time' });
+  }
+  onPrevClick(event) {
+    this.setState({ type: '' });
+  }
   /* Add a workout using the form */
   onSubmit(event) {
     console.log('Team Workout add submitted');
@@ -68,15 +80,14 @@ class AddTeamWorkoutForm extends Component {
         <form className="modal-form" onSubmit={this.onSubmit}>
           <div className="form-title">Add Team Workout</div>
           {this.state.type === '' &&
-            <div className="column-group">
+            <div className="form-column-group">
               <ul className="form-column">
                 <li id="type-field">
                   <h3>Workout Type</h3>
-                  <select required value={this.state.type} onChange={this.onTypeChange}>
-                    <option default value="">Select</option>
-                    <option value="distance">Distance</option>
-                    <option value="time">Time</option>
-                  </select>
+                </li>
+                <li>
+                  <button className="type-select" onClick={this.onDistSelect}>Distance</button>
+                  <button className="type-select" onClick={this.onTimeSelect}>Time</button>
                 </li>
                 <li>
                   <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
@@ -87,6 +98,7 @@ class AddTeamWorkoutForm extends Component {
           {this.state.type === 'distance' &&
             <div className="column-group">
               <ul className="form-column">
+                <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
                 <li id="distance-field">
                   <h3>Distance</h3>
                   <input onChange={this.onDistanceChange} value={this.state.distance}
@@ -109,7 +121,6 @@ class AddTeamWorkoutForm extends Component {
                     <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
-                    <option value="mi">mi</option>
                   </select>
                 </li>
                 <div className="button-group">
@@ -121,6 +132,7 @@ class AddTeamWorkoutForm extends Component {
           }
           {this.state.type === 'time' &&
             <div className="column-group">
+              <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
               <ul className="form-column">
                 <li id="time-field">
                   <h3>Hours</h3>
@@ -154,7 +166,6 @@ class AddTeamWorkoutForm extends Component {
                     <option default value="">Select</option>
                     <option value="m">m</option>
                     <option value="km">km</option>
-                    <option value="mi">mi</option>
                   </select>
                 </li>
                 <div className="button-group">
