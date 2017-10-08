@@ -74,7 +74,7 @@ export function fetchUser(userId) {
       console.log('User successfully fetched');
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
     }).catch((error) => {
-      console.log('fetchUser() failed'); // : ${error.response.data}`);
+      console.log(`fetchUser failed ${error.message}`);
     });
   };
 }
@@ -87,8 +87,7 @@ export function updateUser(userId, user) {
       console.log('User successfully updated');
       dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
     }).catch((error) => {
-      console.log('updateUser() failed:');
-      console.log(error.response.data);
+      console.log(`updateUser failed: ${error.message}`);
     });
   };
 }

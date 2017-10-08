@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
-import { fetchUser, fetchUserWorkouts, updateWorkout,
+import { fetchUser, updateUser, fetchUserWorkouts, updateWorkout,
   deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals } from '../actions';
 import WorkoutPost from './workout-post';
+import UserInfo from './user-info';
 
 const mapStateToProps = state => (
   {
@@ -38,7 +39,6 @@ class Profile extends Component {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
     this.props.fetchUserTeam(this.props.match.params.userId);
-//    this.props.fetchUserDistTotals(this.props.match.params.userId);
   }
   onDeleteClick(workoutId, userId) {
     this.props.deleteWorkout(workoutId, userId);
@@ -66,16 +66,7 @@ class Profile extends Component {
   }
   displayInfo() {
     return (
-      <div className="user-info">
-        <div className="user-name">{this.props.user.name}</div>
-        <div className="user-description">
-          <div className="team-name">{this.props.team.name}</div>
-          <div className="user-location">Home Location</div>
-          <div className="user-bio" rows="2" cols="32">
-            This is a test user bio.
-          </div>
-        </div>
-      </div>
+      <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
     );
   }
   displayWeekChart() {
@@ -122,5 +113,5 @@ class Profile extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchUser, fetchUserWorkouts,
+export default withRouter(connect(mapStateToProps, { fetchUser, updateUser, fetchUserWorkouts,
   updateWorkout, deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals })(Profile));
