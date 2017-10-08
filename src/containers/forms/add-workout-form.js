@@ -14,6 +14,10 @@ class AddWorkoutForm extends Component {
       watts: '',
       avgHR: '',
     };
+    this.onErgSelect = this.onErgSelect.bind(this);
+    this.onRowSelect = this.onRowSelect.bind(this);
+    this.onRunSelect = this.onRunSelect.bind(this);
+    this.onBikeSelect = this.onBikeSelect.bind(this);
     this.onActivityChange = this.onActivityChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onDistUnitChange = this.onDistUnitChange.bind(this);
@@ -24,9 +28,28 @@ class AddWorkoutForm extends Component {
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
     this.onWattsChange = this.onWattsChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onPrevClick = this.onPrevClick.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
   }
   /* Handle changes in the add workout fields */
+  onErgSelect(event) {
+    this.setState({
+      activity: 'erg',
+      distUnit: 'm',
+    });
+  }
+  onRowSelect(event) {
+    this.setState({
+      activity: 'row',
+      distUnit: 'km',
+    });
+  }
+  onRunSelect(event) {
+    this.setState({ activity: 'run' });
+  }
+  onBikeSelect(event) {
+    this.setState({ activity: 'bike' });
+  }
   onActivityChange(event) {
     this.setState({ activity: event.target.value });
   }
@@ -54,6 +77,9 @@ class AddWorkoutForm extends Component {
   onHeartRateChange(event) {
     this.setState({ avgHR: event.target.value });
   }
+  onPrevClick(event) {
+    this.setState({ activity: '' });
+  }
   /* Add a workout using the form */
   onSubmit(event) {
     console.log('Workout add submitted');
@@ -79,17 +105,16 @@ class AddWorkoutForm extends Component {
         <div className="form-container">
           <form className="modal-form" onSubmit={this.onSubmit}>
             <div className="form-title">Add Workout</div>
-            <div className="column-group">
+            <div className="form-column-group">
               <ul className="form-column">
                 <li id="type-field">
                   <h3>Workout Type</h3>
-                  <select required value={this.state.activity} onChange={this.onActivityChange}>
-                    <option default value="">Select</option>
-                    <option value="erg">Ergometer</option>
-                    <option value="row">Rowing</option>
-                    <option value="run">Running</option>
-                    <option value="bike">Cycling</option>
-                  </select>
+                </li>
+                <li>
+                  <button id="erg-select" className="activity-select" onClick={this.onErgSelect}>Erg</button>
+                  <button id="row-select" className="activity-select" onClick={this.onRowSelect}>Row</button>
+                  <button id="run-select" className="activity-select" onClick={this.onRunSelect}>Run</button>
+                  <button id="bike-select" className="activity-select" onClick={this.onBikeSelect}>Bike</button>
                 </li>
                 <li>
                   <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
@@ -104,6 +129,7 @@ class AddWorkoutForm extends Component {
       <div className="form-container">
         <form className="modal-form" onSubmit={this.onSubmit}>
           <div className="form-title">Add Workout</div>
+          <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
           <div className="column-group">
             <ul className="form-column">
               <li id="distance-field">
@@ -137,33 +163,25 @@ class AddWorkoutForm extends Component {
               <li>
                 <h3>Activity</h3>
                 {this.state.activity === 'erg' &&
-                  <div className="static-activity">Ergometer</div>
+                  <div className="static-info">Ergometer</div>
                 }
                 {this.state.activity === 'row' &&
-                  <div className="static-activity">Rowing</div>
+                  <div className="static-info">Rowing</div>
                 }
                 {this.state.activity === 'run' &&
-                  <div className="static-activity">Running</div>
+                  <div className="static-info">Running</div>
                 }
                 {this.state.activity === 'bike' &&
-                  <div className="static-activity">Cycling</div>
+                  <div className="static-info">Cycling</div>
                 }
               </li>
               <li>
                 <h3>Distance Units</h3>
                 {this.state.activity === 'erg' &&
-                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default value="">Select</option>
-                    <option value="m">m</option>
-                    <option value="km">km</option>
-                  </select>
+                  <div className="static-info">m</div>
                 }
                 {this.state.activity === 'row' &&
-                  <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default value="">Select</option>
-                    <option value="km">km</option>
-                    <option value="m">m</option>
-                  </select>
+                  <div className="static-info">km</div>
                 }
                 {this.state.activity === 'run' &&
                   <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
