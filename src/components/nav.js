@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
-import { signOutUser } from '../actions';
+import { signOutUser, fetchUser, fetchUserWorkouts } from '../actions';
 
 /* Connect to the auth prop */
 const mapStateToProps = state => (
@@ -15,7 +15,12 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.signOut = this.signOut.bind(this);
+    this.onProfileClick = this.onProfileClick.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
+  }
+  onProfileClick() {
+    this.props.fetchUser(localStorage.getItem('userId'));
+    this.props.fetchUserWorkouts(localStorage.getItem('userId'));
   }
   signOut() {
     console.log('Sign out clicked');
@@ -36,7 +41,12 @@ class Nav extends Component {
           </li>
           <li>
             <NavLink to={`/profile/${localStorage.getItem('userId')}`}>
-              <div id="profile-button" className="nav-button">Profile</div>
+              <div id="profile-button" onClick={this.onProfileClick()} className="nav-button">Profile</div>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/team/${localStorage.getItem('userId')}`}>
+              <div id="profile-button" className="nav-button">Team</div>
             </NavLink>
           </li>
           <li>
@@ -80,4 +90,4 @@ class Nav extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { signOutUser })(Nav));
+export default withRouter(connect(mapStateToProps, { signOutUser, fetchUser, fetchUserWorkouts })(Nav));
