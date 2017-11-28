@@ -8,6 +8,7 @@ import SignUp from '../containers/sign-up';
 import SignIn from '../containers/sign-in';
 import HomePage from '../containers/home-page';
 import Profile from '../containers/profile';
+import TeamProfile from '../containers/team-profile';
 import '../style.scss';
 
 const mapStateToProps = state => (
@@ -27,6 +28,7 @@ const App = (props) => {
           <Route path="/signin" component={SignIn} />
           <PrivateRoute path="/home/:userId" component={HomePage} isAuthenticated={props.authenticated} />
           <PrivateRoute path="/profile/:userId" component={Profile} isAuthenticated={props.authenticated} />
+          <PrivateRoute path="/team/:userId" component={TeamProfile} isAuthenticated={props.authenticated} />
           <Route render={() => (<div>Page not found.</div>)} />
         </Switch>
       </div>
