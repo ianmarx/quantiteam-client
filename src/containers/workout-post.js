@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import round from 'lodash.round';
 
 class WorkoutPost extends Component {
@@ -204,7 +205,9 @@ class WorkoutPost extends Component {
         <div className="workout-content">
           <div className="workout-div-column">
             <div className="workout-div-creator">
-              <strong>{this.props.workout.creatorName}</strong>
+              <NavLink to={`/profile/${this.props.userId}`}>
+                <div className="profile-link">{this.props.workout.creatorName}</div>
+              </NavLink>
             </div>
           </div>
           <div className="workout-div-column">
