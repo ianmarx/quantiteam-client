@@ -1,6 +1,6 @@
 {
   "name": "Quantiteam",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-beta",
   "description": "Front-end for quantiteam.com, written in React",
   "main": "src/index.js",
   "scripts": {
@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ianmarx/quantiteam.git"
+    "url": "git+https://github.com/ianmarx/quantiteam-client.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/ianmarx/quantiteam/issues"
+    "url": "https://github.com/ianmarx/quantiteam-client/issues"
   },
-  "homepage": "https://github.com/ianmarx/quantiteam#readme",
+  "homepage": "https://github.com/ianmarx/quantiteam-client#readme",
   "devDependencies": {
     "autoprefixer": "^6.7.7",
     "babel-core": "^6.24.1",
