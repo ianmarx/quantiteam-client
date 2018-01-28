@@ -8,7 +8,7 @@ const extractSass = new ExtractTextPlugin({
 });
 
 module.exports = {
-  entry: ['./src'],
+  entry: ['babel-polyfill', './src'],
   devtool: 'inline-source-map',
   output: {
     path: path.join(__dirname, 'public/build'),

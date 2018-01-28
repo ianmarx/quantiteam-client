@@ -13,7 +13,7 @@ import AddTeamWorkoutForm from './forms/add-team-workout-form';
 import CreateTeamForm from './forms/create-team-form';
 import JoinTeamForm from './forms/join-team-form';
 import AddResultForm from './forms/add-result-form';
-import ResultsView from './results-view';
+import ResultsView from '../components/ResultsView';
 
 const mapStateToProps = state => (
   {
@@ -65,28 +65,6 @@ class HomePage extends Component {
     this.props.fetchUserTeam(this.props.match.params.userId);
     this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
     this.props.fetchTeamWorkouts(this.props.match.params.userId);
-
-    /*
-    const promise = new Promise((resolve, reject) => {
-      this.props.fetchUserTeam(this.props.match.params.userId);
-
-      setTimeout(() => {
-        if (this.props.team._id) {
-          resolve();
-        } else {
-          reject();
-        }
-      }, 100);
-    });
-    promise.then((result) => {
-      console.log(result);
-      this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
-      this.props.fetchTeamWorkouts(this.props.match.params.userId);
-    })
-    .catch((error) => {
-      console.log('non-team user logged in');
-    });
-    */
   }
   /* this is called in the WorkoutPost component by onLocalDeleteClick */
   /* this setup is used so that both ID's can be passed to deleteWorkout() */
@@ -235,6 +213,7 @@ class HomePage extends Component {
               <div key={`workout-${i}`}>
                 <WorkoutPost userId={workout._creator} workout={workout} index={i}
                   onDeleteClick={this.onDeleteClick} updateWorkout={this.props.updateWorkout}
+                  currentUserId={this.props.match.params.userId}
                 />
               </div>
             );
@@ -249,6 +228,7 @@ class HomePage extends Component {
               <div key={`workout-${i}`}>
                 <WorkoutPost userId={workout._creator} workout={workout} index={i}
                   onDeleteClick={this.onDeleteClick} updateWorkout={this.props.updateWorkout}
+                  currentUserId={this.props.match.params.userId}
                 />
               </div>
             );
@@ -374,6 +354,8 @@ class HomePage extends Component {
               results={this.props.currentResults}
               teamWorkoutId={this.props.currentTeamWorkout._id}
               onDeleteClick={this.onResultDeleteClick}
+              fetchDistResults={this.props.fetchDistResults}
+              fetchTimeResults={this.props.fetchTimeResults}
               updateWorkout={this.props.updateWorkout}
               onModalClose={this.onViewResultModalClose}
             />

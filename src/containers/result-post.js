@@ -49,8 +49,14 @@ class ResultPost extends Component {
   onLocalEditClick(event) {
     this.setState({ isEditing: true });
   }
-  onLocalDeleteClick(event) {
-    this.props.onDeleteClick(this.props.workout._id, this.props.teamWorkoutId);
+  async onLocalDeleteClick(event) {
+    console.log(this.props.teamWorkoutId);
+    await this.props.deleteResult(this.props.workout._id, this.props.teamWorkoutId);
+    if (this.props.type === 'distance') {
+      await this.props.fetchDistResults(this.props.teamWorkoutId);
+    } else {
+      await this.props.fetchTimeResults(this.props.teamWorkoutId);
+    }
   }
     /* Handle changes in the add workout fields */
   onActivityChange(event) {

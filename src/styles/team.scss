@@ -1,0 +1,79 @@
+$div-background: #e8e8e8;
+
+.team-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  margin-top: 40px;
+  margin-left: 80px;
+  margin-right: 80px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: $div-background;
+  color: black;
+  height: 93%;
+
+  .team-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    background-color: #f4f4f4;
+    padding: 5px;
+    border-style: none;
+    border-radius: 5px;
+  }
+  #teamName {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .team-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 95%;
+
+    .workout-feed {
+      overflow: auto;
+    }
+
+    #feed-title {
+      display: fixed;
+      font-size: 35px;
+      margin-top: 40px;
+    }
+  }
+
+}
+
+.profile-link {
+  color: black;
+  background-color: none;
+  text-decoration: underline;
+}
+
+.seasons-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  background-color: #f4f4f4;
+  padding: 5px;
+  border-style: none;
+  border-radius: 5px;
+
+  #seasonsTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}

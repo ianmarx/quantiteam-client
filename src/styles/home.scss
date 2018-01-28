@@ -198,6 +198,11 @@ $div-background: #e8e8e8;
         cursor: pointer;
       }
     }
+    .profile-link {
+      color: black;
+      background-color: none;
+      text-decoration: underline;
+    }
     .workout-edit-cancel {
       background-color: #595959;
     }
@@ -311,7 +316,7 @@ $div-background: #e8e8e8;
 }
 
 .modal {
-  margin-top: 145px;
+  margin-top: 100px;
   outline: none;
 }
 
