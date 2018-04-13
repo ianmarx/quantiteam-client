@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { signUpUser } from '../actions';
 
 class SignUp extends Component {
@@ -50,25 +50,28 @@ class SignUp extends Component {
       <div className="signup-form">
         <form onSubmit={this.onSubmit}>
           <h2>Sign Up</h2>
-          <div id="name-field">
+          <div className="name field">
             <h3>Name</h3>
             <input onChange={this.onNameChange} value={this.state.name}
               type="text" required
             />
           </div>
-          <div className="email-field">
+          <div className="email field">
             <h3>Email</h3>
             <input onChange={this.onEmailChange} value={this.state.email}
               type="text" required
             />
           </div>
-          <div className="password-field">
+          <div className="password field">
             <h3>Password</h3>
             <input onChange={this.onPasswordChange} value={this.state.password}
               type="password" required
             />
           </div>
           <button type="submit" className="signup-button">Sign Up</button>
+          <NavLink to={'/'}>
+            <button className="back-button">Back</button>
+          </NavLink>
         </form>
       </div>
     );

@@ -1,27 +1,27 @@
 .signin-form, .signup-form {
-  position: absolute;
-  z-index: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 125px;
-  margin-right: 200px;
-  top: 50px;
-  right: 70px;
-  background-color: rgba(50,50,50,0.6);
+  margin: 5% 35% 0%;
+  background-color: rgba(50, 50, 50, 0.5);
   background-repeat: no-repeat;
   border-style: none;
-  border-radius: 5px;
-  font-size: 20px;
+  border-radius: 10px;
+  font-size: 25px;
 
   form {
     align-self: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     padding: 20px;
+
+    .field {
+      text-align: center;
+    }
 
     input {
       width: 75%;
@@ -32,28 +32,32 @@
     }
     button {
       margin-top: 25px;
-      margin-bottom: 25px;
       padding: 10px;
       border: none;
       border-radius: 8px;
       font-size: 20px;
-      background-color: #1da55f;
       color: white;
 
       &:hover {
         cursor: pointer;
       }
     }
-  }
-}
 
-@media only screen and (max-width: 1000px) {
-  .signup-form, form, .signin-form {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 60px;
+    .signup-button, .signin-button {
+      background-color: #1da55f;
+
+      &:active {
+        background-color: #106b3c;
+      }
+    }
+
+    .back-button {
+      background-color: #595959;
+
+      &:active {
+        background-color: #3d3d3d;
+      }
+    }
+
   }
 }
