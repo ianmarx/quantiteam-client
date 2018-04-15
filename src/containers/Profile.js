@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
-import { fetchUser, updateUser, fetchUserWorkouts, updateWorkout,
-  deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals } from '../actions';
-import WorkoutPost from './workout-post';
-import UserInfo from './user-info';
+import {
+  fetchUser, updateUser, fetchUserWorkouts, updateWorkout,
+  deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals,
+} from '../actions';
+import WorkoutPost from './WorkoutPost';
+import UserInfo from './UserInfo';
 
 const mapStateToProps = state => (
   {
@@ -62,9 +64,9 @@ class Profile extends Component {
       this.props.fetchUser(this.props.match.params.userId);
       this.props.fetchUserWorkouts(this.props.match.params.userId);
     })
-    .catch((error) => {
-      console.log(`promise error: ${error}`);
-    });
+      .catch((error) => {
+        console.log(`promise error: ${error}`);
+      });
   }
   displayFeed() {
     this.props.workouts.sort((a, b) => {
@@ -75,8 +77,11 @@ class Profile extends Component {
         {this.props.workouts.map((workout, i) => {
           return (
             <div key={`workout-${i}`}>
-              <WorkoutPost userId={workout._creator} workout={workout} index={i}
-                onDeleteClick={this.onDeleteClick} updateWorkout={this.props.updateWorkout}
+              <WorkoutPost userId={workout._creator}
+                workout={workout}
+                index={i}
+                onDeleteClick={this.onDeleteClick}
+                updateWorkout={this.props.updateWorkout}
               />
             </div>
           );
@@ -94,7 +99,8 @@ class Profile extends Component {
       <VictoryChart
         domainPadding={40}
       >
-        <VictoryLabel x={130} y={25}
+        <VictoryLabel x={130}
+          y={25}
           text="Workout Totals by Activity"
         />
         <VictoryAxis
@@ -133,5 +139,7 @@ class Profile extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchUser, updateUser, fetchUserWorkouts,
-  updateWorkout, deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals })(Profile));
+export default withRouter(connect(mapStateToProps, {
+  fetchUser, updateUser, fetchUserWorkouts,
+  updateWorkout, deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals,
+})(Profile));

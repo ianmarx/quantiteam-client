@@ -59,7 +59,9 @@ class UserInfo extends Component {
     const height = this.state.height;
     const weight = this.state.weight;
     const classYear = this.state.classYear;
-    const userObject = { name, position, height, weight, classYear };
+    const userObject = {
+      name, position, height, weight, classYear,
+    };
     this.props.updateUser(this.props.user._id, userObject);
   }
   renderContent() {

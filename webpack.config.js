@@ -33,6 +33,7 @@ module.exports = {
               loader: 'postcss-loader',
               options: {
                 plugins: () => [autoprefixer()],
+                sourceMap: true,
               },
             },
             {

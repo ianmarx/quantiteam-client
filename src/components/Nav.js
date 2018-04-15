@@ -63,7 +63,7 @@ class Nav extends Component {
             <div id="name-logo">Quantiteam</div>
           </li>
           <li>
-            <NavLink to={'/'}>
+            <NavLink to="/">
               <div id="home-button-deauth" className="nav-button">Home</div>
             </NavLink>
           </li>

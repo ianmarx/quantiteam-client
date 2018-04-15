@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
-import { fetchUser, addWorkout, fetchWorkout, fetchUserWorkouts, fetchTeamSoloWorkouts,
+import {
+  fetchUser, addWorkout, fetchWorkout, fetchUserWorkouts, fetchTeamSoloWorkouts,
   updateWorkout, updateUser, deleteWorkout, createTeam, joinTeam, fetchUserTeam,
   addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout, deleteTeamWorkout,
-  addResult, fetchDistResults, fetchTimeResults, matchAthlete, deleteResult } from '../actions';
-import WorkoutPost from './workout-post';
-import TeamWorkoutPost from './team-workout-post';
-import AddWorkoutForm from './forms/add-workout-form';
-import AddTeamWorkoutForm from './forms/add-team-workout-form';
-import CreateTeamForm from './forms/create-team-form';
-import JoinTeamForm from './forms/join-team-form';
-import AddResultForm from './forms/add-result-form';
+  addResult, fetchDistResults, fetchTimeResults, matchAthlete, deleteResult,
+} from '../actions';
+import WorkoutPost from './WorkoutPost';
+import TeamWorkoutPost from './TeamWorkoutPost';
+import AddWorkoutForm from './forms/AddWorkout';
+import AddTeamWorkoutForm from './forms/AddTeamWorkout';
+import CreateTeamForm from './forms/CreateTeam';
+import JoinTeamForm from './forms/JoinTeam';
+import AddResultForm from './forms/AddResult';
 import ResultsView from '../components/ResultsView';
 
 const mapStateToProps = state => (
@@ -85,9 +87,9 @@ class HomePage extends Component {
         this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
       }
     })
-    .catch((error) => {
-      console.log(`promise error: ${error}`);
-    });
+      .catch((error) => {
+        console.log(`promise error: ${error}`);
+      });
   }
   onResultDeleteClick(workoutId, teamWorkoutId) {
     const promise = new Promise((resolve, reject) => {
@@ -102,9 +104,9 @@ class HomePage extends Component {
       console.log(result);
       this.props.fetchResults(teamWorkoutId);
     })
-    .catch((error) => {
-      console.log(`promise error: ${error}`);
-    });
+      .catch((error) => {
+        console.log(`promise error: ${error}`);
+      });
   }
   onTeamWorkoutDeleteClick(workoutId, teamId) {
     const promise = new Promise((resolve, reject) => {
@@ -119,9 +121,9 @@ class HomePage extends Component {
       console.log(result);
       this.props.fetchTeamWorkouts(this.props.match.params.userId);
     })
-    .catch((error) => {
-      console.log(`promise error: ${error}`);
-    });
+      .catch((error) => {
+        console.log(`promise error: ${error}`);
+      });
   }
   onResultAddClick(teamWorkoutId, prevProps) {
     const promise = new Promise((resolve, reject) => {
@@ -139,9 +141,9 @@ class HomePage extends Component {
       console.log(result);
       this.onAddResultModalOpen();
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
   }
   onViewResultsClick(teamWorkoutId, type) {
     const promise = new Promise((resolve, reject) => {
@@ -164,9 +166,9 @@ class HomePage extends Component {
       }
       this.onViewResultModalOpen();
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
   }
   onModalOpen(event) {
     this.setState({ showModal: true });
@@ -211,8 +213,11 @@ class HomePage extends Component {
           {this.props.workouts.map((workout, i) => {
             return (
               <div key={`workout-${i}`}>
-                <WorkoutPost userId={workout._creator} workout={workout} index={i}
-                  onDeleteClick={this.onDeleteClick} updateWorkout={this.props.updateWorkout}
+                <WorkoutPost userId={workout._creator}
+                  workout={workout}
+                  index={i}
+                  onDeleteClick={this.onDeleteClick}
+                  updateWorkout={this.props.updateWorkout}
                   currentUserId={this.props.match.params.userId}
                 />
               </div>
@@ -226,8 +231,11 @@ class HomePage extends Component {
           {this.props.teamSoloWorkouts.map((workout, i) => {
             return (
               <div key={`workout-${i}`}>
-                <WorkoutPost userId={workout._creator} workout={workout} index={i}
-                  onDeleteClick={this.onDeleteClick} updateWorkout={this.props.updateWorkout}
+                <WorkoutPost userId={workout._creator}
+                  workout={workout}
+                  index={i}
+                  onDeleteClick={this.onDeleteClick}
+                  updateWorkout={this.props.updateWorkout}
                   currentUserId={this.props.match.params.userId}
                 />
               </div>
@@ -243,7 +251,9 @@ class HomePage extends Component {
         {this.props.teamWorkouts.map((workout, i) => {
           return (
             <div key={`workout-${i}`}>
-              <TeamWorkoutPost userId={workout._creator} teamWorkout={workout} index={i}
+              <TeamWorkoutPost userId={workout._creator}
+                teamWorkout={workout}
+                index={i}
                 onDeleteClick={this.onTeamWorkoutDeleteClick}
                 updateTeamWorkout={this.props.updateTeamWorkout}
                 onResultAddClick={this.onResultAddClick}
@@ -366,9 +376,13 @@ class HomePage extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps,
-  { fetchUser, addWorkout, fetchWorkout, fetchUserWorkouts, fetchTeamSoloWorkouts,
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    fetchUser, addWorkout, fetchWorkout, fetchUserWorkouts, fetchTeamSoloWorkouts,
     updateWorkout, updateUser, deleteWorkout, createTeam, joinTeam, fetchUserTeam,
     addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout,
     deleteTeamWorkout, addResult, fetchDistResults, fetchTimeResults, matchAthlete,
-    deleteResult })(HomePage));
+    deleteResult,
+  },
+)(HomePage));

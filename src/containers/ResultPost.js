@@ -58,7 +58,7 @@ class ResultPost extends Component {
       await this.props.fetchTimeResults(this.props.teamWorkoutId);
     }
   }
-    /* Handle changes in the add workout fields */
+  /* Handle changes in the add workout fields */
   onActivityChange(event) {
     this.setState({ activity: event.target.value });
   }
@@ -97,7 +97,9 @@ class ResultPost extends Component {
     const strokeRate = this.state.strokeRate;
     const watts = this.state.watts;
     const avgHR = this.state.avgHR;
-    const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR };
+    const workoutObject = {
+      activity, distance, distUnit, time, strokeRate, watts, avgHR,
+    };
     this.props.updateWorkout(this.props.workout._id, workoutObject);
   }
   /* Only display HR, stroke rate, and watts if the values exist */
@@ -157,7 +159,8 @@ class ResultPost extends Component {
               </li>
               <li>
                 <div>Average HR (bpm)</div>
-                <input onChange={this.onHeartRateChange} value={this.state.avgHR}
+                <input onChange={this.onHeartRateChange}
+                  value={this.state.avgHR}
                   type="text"
                 />
               </li>
@@ -186,13 +189,15 @@ class ResultPost extends Component {
               </li>
               <li>
                 <div>Stroke Rate</div>
-                <input onChange={this.onStrokeRateChange} value={this.state.strokeRate}
+                <input onChange={this.onStrokeRateChange}
+                  value={this.state.strokeRate}
                   type="text"
                 />
               </li>
               <li>
                 <div>Watts</div>
-                <input onChange={this.onWattsChange} value={this.state.watts}
+                <input onChange={this.onWattsChange}
+                  value={this.state.watts}
                   type="text"
                 />
               </li>

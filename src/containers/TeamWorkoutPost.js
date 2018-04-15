@@ -81,7 +81,9 @@ class TeamWorkoutPost extends Component {
     const distance = this.state.distance;
     const distUnit = this.state.distUnit;
     const time = this.timeConvert();
-    const teamWorkoutObject = { activity, distance, distUnit, time };
+    const teamWorkoutObject = {
+      activity, distance, distUnit, time,
+    };
     this.props.updateTeamWorkout(this.props.teamWorkout._id, teamWorkoutObject);
   }
   /* convert the strings of each time values into the total number of seconds */

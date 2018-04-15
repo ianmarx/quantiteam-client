@@ -1,5 +1,5 @@
 import React from 'react';
-import ResultPost from '../containers/result-post';
+import ResultPost from '../containers/ResultPost';
 
 const ResultsView = (props) => {
   return (

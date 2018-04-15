@@ -45,18 +45,22 @@ class SignIn extends Component {
           <h2>Sign In</h2>
           <div className="email field">
             <h3>Email</h3>
-            <input onChange={this.onEmailChange} value={this.state.email}
-              type="text" required
+            <input onChange={this.onEmailChange}
+              value={this.state.email}
+              type="text"
+              required
             />
           </div>
           <div className="password field">
             <h3>Password</h3>
-            <input onChange={this.onPasswordChange} value={this.state.password}
-              type="password" required
+            <input onChange={this.onPasswordChange}
+              value={this.state.password}
+              type="password"
+              required
             />
           </div>
           <button type="submit" className="signin-button">Sign In</button>
-          <NavLink to={'/'}>
+          <NavLink to="/">
             <button className="back-button">Back</button>
           </NavLink>
         </form>

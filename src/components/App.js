@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, browserHistory, Switch, Route } from 'react-router-dom';
-import Nav from './nav';
-import PrivateRoute from './private-route';
-import LandingPage from '../containers/landing-page';
-import SignUp from '../containers/sign-up';
-import SignIn from '../containers/sign-in';
-import HomePage from '../containers/home-page';
-import Profile from '../containers/profile';
-import TeamProfile from '../containers/team-profile';
+import Nav from './Nav';
+import PrivateRoute from './PrivateRoute';
+import LandingPage from '../containers/LandingPage';
+import SignUp from '../containers/SignUp';
+import SignIn from '../containers/SignIn';
+import HomePage from '../containers/HomePage';
+import Profile from '../containers/Profile';
+import TeamProfile from '../containers/TeamProfile';
 import '../style.scss';
 
 const mapStateToProps = state => (

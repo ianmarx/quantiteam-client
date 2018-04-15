@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
-import { fetchUser, fetchUserTeam, fetchTeamWorkouts, updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults,
-  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult } from '../actions';
-import AddTeamWorkoutForm from './forms/add-team-workout-form';
-import AddResultForm from './forms/add-result-form';
-import TeamWorkoutPost from './team-workout-post';
+import {
+  fetchUser, fetchUserTeam, fetchTeamWorkouts, updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults,
+  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult,
+} from '../actions';
+import AddTeamWorkoutForm from './forms/AddTeamWorkout';
+import AddResultForm from './forms/AddResult';
+import TeamWorkoutPost from './TeamWorkoutPost';
 import ResultsView from '../components/ResultsView';
 import TeamInfo from '../components/TeamInfo';
 
@@ -89,7 +91,9 @@ class TeamProfile extends Component {
         {this.props.teamWorkouts.map((workout, i) => {
           return (
             <div key={`workout-${i}`}>
-              <TeamWorkoutPost userId={workout._creator} teamWorkout={workout} index={i}
+              <TeamWorkoutPost userId={workout._creator}
+                teamWorkout={workout}
+                index={i}
                 onDeleteClick={this.onTeamWorkoutDeleteClick}
                 updateTeamWorkout={this.props.updateTeamWorkout}
                 fetchTeamWorkout={this.props.fetchTeamWorkout}
@@ -169,6 +173,8 @@ class TeamProfile extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchUser, fetchUserTeam, fetchTeamWorkouts,
+export default withRouter(connect(mapStateToProps, {
+  fetchUser, fetchUserTeam, fetchTeamWorkouts,
   updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults, fetchDistResults, fetchTeamWorkout,
-  fetchTimeResults, deleteResult })(TeamProfile));
+  fetchTimeResults, deleteResult,
+})(TeamProfile));

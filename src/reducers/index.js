@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import AuthReducer from './auth-reducer';
-import UserReducer from './user-reducer';
-import WorkoutReducer from './workout-reducer';
-import TeamReducer from './team-reducer';
-import TeamWorkoutReducer from './team-workout-reducer';
+import AuthReducer from './auth';
+import UserReducer from './user';
+import WorkoutReducer from './workout';
+import TeamReducer from './team';
+import TeamWorkoutReducer from './teamworkout';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
