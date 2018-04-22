@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10% 25% 0%;
-  background-color: rgba(50, 50, 50, 0.5);
+  margin: 10% 20% 0%;
+  background: linear-gradient(rgba(50, 50, 50, 0.3), rgba(25, 25, 25, 0.8));
   background-repeat: no-repeat;
   border-style: none;
   border-radius: 10px;
@@ -14,14 +14,52 @@
 
   .tagline {
     color: white;
-    margin: 25px;
-    font-size: 70px;
+    margin: 20px;
+    font-size: 60px;
     font-weight: 550;
     text-align: center;
   }
-  .button-group {
 
-    #signup-button {
+  .info {
+    font-size: 20px;
+    width: 80%;
+    margin-bottom: 15px;
+  }
+  .button-group {
+    display: flex;
+    flex-direction: row;
+
+    .button {
+      border: none;
+      border-radius: 8px;
+      padding: 5px;
+      font-size: 40px;
+      color: white;
+      margin: 10px;
+      width: 50%;
+
+      &.start-team {
+        background-color: #fca400;
+
+        &:active {
+          background-color: #d68e08;
+        }
+      }
+
+      &.sign-up {
+        background-color: #2f98dc;
+
+        &:active {
+          background-color: #1c5b7f;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .signup-button {
       border: none;
       border-radius: 8px;
       padding: 5px;
