@@ -17,7 +17,7 @@ class SignUp extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
-    document.body.style.background = 'url("/img/rowing.png") no-repeat center center fixed';
+    document.body.style.background = 'url("/img/erging.jpg") no-repeat center center fixed';
     document.body.style.backgroundSize = 'cover';
   }
   componentWillUnmount() {
