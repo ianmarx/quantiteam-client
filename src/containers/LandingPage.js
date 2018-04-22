@@ -40,7 +40,7 @@ class LandingPage extends Component {
           Make your workouts work for you.
         </div>
         <div className='info'>
-          Quantiteam is the leading web platform for tracking team performance data in endurance sports. We are currently in a closed beta release.
+          Quantiteam is the leading web platform for tracking team performance data in endurance sports.
         </div>
         <div className="button-group">
           <button className="start-team button">Start a Team</button>

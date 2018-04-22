@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10% 20% 0%;
+  margin: 11% 20% 0%;
   background: linear-gradient(rgba(50, 50, 50, 0.3), rgba(25, 25, 25, 0.8));
   background-repeat: no-repeat;
   border-style: none;
@@ -22,12 +22,13 @@
 
   .info {
     font-size: 20px;
-    width: 80%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
+  
   .button-group {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 
     .button {
       border: none;
@@ -36,7 +37,6 @@
       font-size: 40px;
       color: white;
       margin: 10px;
-      width: 50%;
 
       &.start-team {
         background-color: #fca400;
