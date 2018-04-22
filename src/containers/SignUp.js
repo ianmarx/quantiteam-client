@@ -51,27 +51,27 @@ class SignUp extends Component {
         <form onSubmit={this.onSubmit}>
           <h2>Sign Up</h2>
           <div className="name field">
-            <h3>Name</h3>
             <input onChange={this.onNameChange}
               value={this.state.name}
               type="text"
               required
+              placeholder='Name'
             />
           </div>
           <div className="email field">
-            <h3>Email</h3>
             <input onChange={this.onEmailChange}
               value={this.state.email}
               type="text"
               required
+              placeholder='Email'
             />
           </div>
           <div className="password field">
-            <h3>Password</h3>
             <input onChange={this.onPasswordChange}
               value={this.state.password}
               type="password"
               required
+              placeholder='Password'
             />
           </div>
           <button type="submit" className="signup-button">Sign Up</button>

@@ -44,19 +44,19 @@ class SignIn extends Component {
         <form onSubmit={this.onSubmit}>
           <h2>Sign In</h2>
           <div className="email field">
-            <h3>Email</h3>
             <input onChange={this.onEmailChange}
               value={this.state.email}
               type="text"
               required
+              placeholder='Email'
             />
           </div>
           <div className="password field">
-            <h3>Password</h3>
             <input onChange={this.onPasswordChange}
               value={this.state.password}
               type="password"
               required
+              placeholder='Password'
             />
           </div>
           <button type="submit" className="signin-button">Sign In</button>
