@@ -1,11 +1,11 @@
-.signin-form, .signup-form {
+.sign-in-form, .signup-form {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 5% 35% 0%;
-  background-color: rgba(50, 50, 50, 0.3);
+//  background-color: rgba(50, 50, 50, 0.3);
   background-repeat: no-repeat;
   border-style: none;
   border-radius: 10px;
@@ -15,9 +15,13 @@
     align-self: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 20px;
+
+    h2, h3 {
+      margin: 15px;
+    }
 
     .field {
       text-align: center;

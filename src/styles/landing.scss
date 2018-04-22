@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 6% 20% 0%;
-  background-color: rgba(50, 50, 50, 0.3);
+  margin: 3% 20% 0%;
+//  background-color: rgba(50, 50, 50, 0.3);
   background-repeat: no-repeat;
   border-style: none;
   border-radius: 10px;
@@ -60,7 +60,10 @@
     }
   }
   .already-user {
-    margin-top: 50px;
+    background-color: rgba(50, 50, 50, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 20px;
     font-size: 20px;
 
     a:active {

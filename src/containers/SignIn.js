@@ -40,7 +40,7 @@ class SignIn extends Component {
   }
   render() {
     return (
-      <div className="signin-form">
+      <div className="sign-in-form">
         <form onSubmit={this.onSubmit}>
           <h2>Sign In</h2>
           <div className="email field">
