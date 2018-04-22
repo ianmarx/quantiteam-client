@@ -56,7 +56,13 @@ nav {
       left: 10px;
       border-style: none;
       font-size: 30px;
+      font-weight: 550;
       margin: 0px;
+
+      sup {
+        font-size: 16px;
+        font-weight: 400;
+      }
     }
     #signout-button {
       color: white;

@@ -32,7 +32,7 @@ class Nav extends Component {
       return (
         <ul className="navigation">
           <li>
-            <div id="name-logo">Quantiteam</div>
+            <div id="name-logo">Quantiteam<sup>Beta</sup></div>
           </li>
           <li>
             <NavLink to={`/home/${localStorage.getItem('userId')}`}>
@@ -60,7 +60,7 @@ class Nav extends Component {
       return (
         <ul className="navigation">
           <li>
-            <div id="name-logo">Quantiteam</div>
+            <div id="name-logo">Quantiteam<sup>Beta</sup></div>
           </li>
           <li>
             <NavLink to="/">
