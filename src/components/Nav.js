@@ -68,13 +68,13 @@ class Nav extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/signin">
-              <div id="signin-button" className="nav-button">Sign In</div>
+            <NavLink to="/signup">
+              <div id="signup-button" className="nav-button">Sign Up</div>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/signup">
-              <div id="signup-button" className="nav-button">Sign Up</div>
+            <NavLink to="/signin">
+              <div id="signin-button" className="nav-button">Sign In</div>
             </NavLink>
           </li>
         </ul>
