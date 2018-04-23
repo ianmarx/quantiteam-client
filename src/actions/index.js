@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const ROOT_URL = 'http://localhost:9090/api';
-const ROOT_URL = 'https://quantiteam-api.herokuapp.com/api';
+// export const ROOT_URL = 'http://localhost:9090/api';
+export const ROOT_URL = 'https://quantiteam-api.herokuapp.com/api';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
@@ -26,10 +26,23 @@ export function authError(error) {
   };
 }
 
-export function signUpUser({ name, email, password }, history) {
+export function signUpAthlete(athleteObject, history) {
   return (dispatch) => {
-    const info = { name, email, password };
-    axios.post(`${ROOT_URL}/signup`, info).then((response) => {
+    axios.post(`${ROOT_URL}/signup/athlete`, athleteObject).then((response) => {
+      console.log('Sign up successful');
+      dispatch({ type: ActionTypes.AUTH_USER });
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.id);
+      history.push(`/home/${response.data.id}`);
+    }).catch((error) => {
+      dispatch(authError(`Sign up failed: ${error.message}`));
+    });
+  };
+}
+
+export function signUpCoach(coachObject, history) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/signup/coach`, coachObject).then((response) => {
       console.log('Sign up successful');
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);

@@ -14,6 +14,7 @@ const mapStateToProps = state => (
     user: state.profile.user,
     workouts: state.workouts.list,
     team: state.team.team,
+    isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
     userDistTotal: state.workouts.userDistTotal,
   }
@@ -28,111 +29,81 @@ class Profile extends Component {
         { x: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
       ],
     };
-    this.displayFeed = this.displayFeed.bind(this);
-    this.displayInfo = this.displayInfo.bind(this);
-    this.displayDistTotals = this.displayDistTotals.bind(this);
+
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
-  componentDidMount() {
+
+  async componentDidMount() {
     if (!this.props.authenticated) {
       console.log('should redirect to signin');
       this.props.history.replace('/signin');
     }
-    this.props.fetchUser(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
-    this.props.fetchUserTeam(this.props.match.params.userId);
-  }
-  /*
-  onDeleteClick(workoutId, userId) {
-    this.props.deleteWorkout(workoutId, userId);
-    console.log('Workout deleted successfully'); // added b/c message in deleteWorkout action not showing up
-    this.props.fetchUser(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
-  }
-  */
-  onDeleteClick(workoutId, userId) {
-    const promise = new Promise((resolve, reject) => {
-      this.props.deleteWorkout(workoutId, userId);
 
-      setTimeout(() => {
-        resolve();
-        console.log('Workout deleted successfully');
-      }, 300);
-    });
-    promise.then((result) => {
-      console.log(result);
-      this.props.fetchUser(this.props.match.params.userId);
-      this.props.fetchUserWorkouts(this.props.match.params.userId);
-    })
-      .catch((error) => {
-        console.log(`promise error: ${error}`);
-      });
-  }
-  displayFeed() {
+    this.props.fetchUser(this.props.match.params.userId);
+    await this.props.fetchUserWorkouts(this.props.match.params.userId);
+    await this.props.fetchUserTeam(this.props.match.params.userId);
+
     this.props.workouts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
-    return (
-      <div className="workout-feed">
-        {this.props.workouts.map((workout, i) => {
-          return (
-            <div key={`workout-${i}`}>
-              <WorkoutPost userId={workout._creator}
-                workout={workout}
-                index={i}
-                onDeleteClick={this.onDeleteClick}
-                updateWorkout={this.props.updateWorkout}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
   }
-  displayInfo() {
-    return (
-      <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
-    );
+
+  async onDeleteClick(workoutId, userId) {
+    await this.props.deleteWorkout(workoutId, userId);
+    await this.props.fetchUser(this.props.match.params.userId);
+    this.props.fetchUserWorkouts(this.props.match.params.userId);
   }
-  displayDistTotals() {
-    return (
-      <VictoryChart
-        domainPadding={40}
-      >
-        <VictoryLabel x={130}
-          y={25}
-          text="Workout Totals by Activity"
-        />
-        <VictoryAxis
-          tickValues={['Erg', 'Row', 'Bike', 'Run']}
-        />
-        <VictoryAxis
-          dependentAxis
-          tickFormat={x => (`${x}km`)}
-        />
-        <VictoryBar
-          data={[
-            { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#ffaf11' },
-            { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
-            { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
-            { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
-          ]}
-          x="type"
-          y="distance"
-        />
-      </VictoryChart>
-    );
-  }
+
   render() {
     return (
       <div className="profile-page">
         <div className="profile-column">
-          {this.displayInfo()}
-          {this.displayDistTotals()}
+          <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
+          {!this.props.isCoach &&
+            <VictoryChart
+              domainPadding={40}
+              className='victory-container'
+            >
+              <VictoryLabel x={130}
+                y={25}
+                text="Workout Totals by Activity"
+              />
+              <VictoryAxis
+                tickValues={['Erg', 'Row', 'Bike', 'Run']}
+              />
+              <VictoryAxis
+                dependentAxis
+                tickFormat={x => (`${x}km`)}
+              />
+              <VictoryBar
+                data={[
+                  { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#ffaf11' },
+                  { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
+                  { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
+                  { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
+                ]}
+                x="type"
+                y="distance"
+              />
+            </VictoryChart>
+          }
         </div>
         <div className="profile-column">
           <div id="feed-title">My Workouts</div>
-          {this.displayFeed()}
+          <div className="workout-feed">
+            {this.props.workouts.map((workout, i) => {
+              return (
+                <div key={`workout-${i}`}>
+                  <WorkoutPost userId={workout._creator}
+                    workout={workout}
+                    index={i}
+                    onDeleteClick={this.onDeleteClick}
+                    updateWorkout={this.props.updateWorkout}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

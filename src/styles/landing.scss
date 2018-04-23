@@ -4,11 +4,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 4% 20% 0%;
+  margin: 5% 20% 0%;
+  height: 430px;
+  background-color: rgba(50, 50, 50, 0.5);
   background-repeat: no-repeat;
   border-style: none;
   border-radius: 10px;
-  padding: 30px;
   text-align: center;
 
   .tagline {
@@ -22,13 +23,13 @@
   .info {
     width: 80%;
     font-size: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   .button-group {
     display: flex;
     flex-direction: row;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 
     .button {
       border: none;
@@ -37,22 +38,12 @@
       font-size: 35px;
       color: white;
       margin: 10px;
+      background-color: #1da55f;
 
-      &.start-team {
-        background-color: #fca400;
-
-        &:active {
-          background-color: #d68e08;
-        }
+      &:active {
+        background-color: #106b3c;
       }
 
-      &.sign-up {
-        background-color: #2f98dc;
-
-        &:active {
-          background-color: #1c5b7f;
-        }
-      }
 
       &:hover {
         cursor: pointer;
@@ -60,7 +51,6 @@
     }
   }
   .already-user {
-    background-color: rgba(50, 50, 50, 0.5);
     padding: 5px;
     border-radius: 5px;
     font-size: 20px;

@@ -2,9 +2,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  margin: 3% 35% 0%;
+  margin: 5% 20% 0%;
+  height: 430px;
+  background-color: rgba(50, 50, 50, 0.5);
   background-repeat: no-repeat;
   border-style: none;
   border-radius: 10px;
@@ -22,19 +24,70 @@
       margin: 15px;
     }
 
+    .button-group {
+      display: flex;
+      flex-direction: row;
+
+      button {
+        margin: 5px;
+        background-color: #fca400;
+
+        &.disabled {
+          background-color: grey;
+        }
+
+        &:not(.disabled) {
+          background-color: #fca400;
+        }
+
+        &:focus {
+          outline: 0;
+        }
+      }
+    }
+
     .field {
-      margin-top: 20px;
+      margin-top: 15px;
+      margin-bottom: 5px;
       text-align: center;
+
+    }
+
+    .team-name, .team-code {
+      input {
+        margin-top: 15px;
+        text-align: center;
+      }
+    }
+
+    .fa-stack {
+      position: fixed;
+      margin-top: 10px;
+      display: inline;
+    }
+
+    .fa-circle {
+      color: white;
+      font-size: 0.9em;
+    }
+
+    .fa-check-circle {
+      color: #1da55f;
+    }
+
+    .fa-times-circle {
+      color: #ff6347;
     }
 
     input {
-      width: 75%;
+      width: 350px;
       height: 40px;
-      font-size: 25px;
+      font-size: 22px;
       border-style: none;
       border-radius: 5px;
       padding-left: 5px;
     }
+
     button {
       margin-top: 15px;
       padding: 10px;
@@ -48,6 +101,18 @@
       }
     }
 
+    .team-name {
+      input {
+        width: 95%;
+      }
+    }
+
+    .team-code {
+      input {
+        width: 50%;
+      }
+    }
+
     .signup-button, .signin-button {
       background-color: #1da55f;
 
@@ -58,9 +123,20 @@
 
     .back-button {
       background-color: #595959;
+      width: 62px;
 
       &:active {
         background-color: #3d3d3d;
+      }
+    }
+
+    .next-button {
+      background-color: #1da55f;
+      width: 62px;
+
+      &:disabled {
+        background-color: #5fbf8e;
+        cursor: default;
       }
     }
 
