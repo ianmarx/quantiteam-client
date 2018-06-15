@@ -1,0 +1,124 @@
+#modal-button {
+  margin: 5px;
+  margin-top: 10px;
+  height: 40px;
+  width: 120px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2f98dc;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #1c5b7f;
+  }
+}
+#team-workout-modal-button {
+  margin: 5px;
+  margin-top: 10px;
+  height: 40px;
+  width: 180px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2f98dc;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #1c5b7f;
+  }
+}
+#create-modal-button {
+  margin: 5px;
+  margin-top: 10px;
+  height: 40px;
+  width: 120px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fca400;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #d68e08;
+  }
+}
+#join-modal-button {
+  margin: 5px;
+  margin-top: 10px;
+  height: 40px;
+  width: 100px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2bb8d1;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #1e8496;
+  }
+}
+#result-modal-button {
+  margin: 5px;
+  height: 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #84bee0;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #577d93;
+  }
+}
+#view-result-modal-button {
+  margin: 5px;
+  height: 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #82cc91;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #54825d;
+  }
+}
+
+.workout-edit-submit {
+  border: none;
+  border-radius: 10px;
+  background-color: #1da55f;
+  color: white;
+  padding: 5px;
+  font-size: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.workout-edit-cancel {
+  border: none;
+  border-radius: 10px;
+  background-color: #595959;
+  color: white;
+  padding: 5px 8px;
+  font-size: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

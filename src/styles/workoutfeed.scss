@@ -1,0 +1,106 @@
+.workout-feed, .results-feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+
+  .feed-title {
+    display: fixed;
+    font-size: 48px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+  .headers {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+
+  .workout-post {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    margin: 5px 10px;
+    border-radius: 3px;
+    border-style: none;
+    width: 100%;
+
+    div {
+      margin: 5px 10px;
+    }
+
+    .row-unit {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0px;
+    }
+
+    i {
+      font-size: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    li {
+      margin: 5px;
+    }
+
+    select {
+      height: 20px;
+      font-size: 16px;
+      border-style: none;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    input {
+      font-size: 20px;
+      border-style: none;
+      border-radius: 5px;
+    }
+
+    .profile-link {
+      color: black;
+      background-color: none;
+      text-decoration: underline;
+    }
+
+    &.edit {
+      div {
+        margin: 5px 10px;
+      }
+
+      input {
+        height: 25px;
+        font-size: 16px;
+      }
+
+
+      .input-sm {
+        max-width: 30px;
+        height: 25px;
+      }
+
+      .input-md {
+        max-width: 50px;
+      }
+
+      .input-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      button {
+        margin: 0px 5px;
+      }
+    }
+  }
+}

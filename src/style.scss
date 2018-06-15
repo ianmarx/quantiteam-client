@@ -3,16 +3,15 @@
 @import '/styles/home.scss';
 @import '/styles/profile.scss';
 @import '/styles/team.scss';
+@import '/styles/buttons.scss';
+@import '/styles/modal.scss';
+@import '/styles/results.scss';
+@import '/styles/workoutfeed.scss';
 
 body {
   font-family: "Open Sans", sans-serif;
-  padding: 10px;
   color: white;
   background-color: #242628;
-}
-
-.active div:not(#home-button-deauth) {
-  background-color: #babfc6;
 }
 
 a {
@@ -31,8 +30,11 @@ nav {
   right: 0px;
   width: 100%;
   z-index: 0;
-  margin-bottom: 80px;
   background-color: #173f6c;
+
+  .active .nav-button:not(#home-button-deauth) {
+    background-color: #babfc6;
+  }
 
   .navigation {
     margin: 0px;
@@ -48,9 +50,11 @@ nav {
       border: 2px solid transparent;
       border-radius: 5px;
     }
+
     div:hover, #signout-button:hover {
       border-color: white;
     }
+
     #name-logo {
       position: fixed;
       left: 10px;
@@ -64,6 +68,7 @@ nav {
         font-weight: 400;
       }
     }
+
     #signout-button {
       color: white;
       background-color: rgba(0,0,0,.3);

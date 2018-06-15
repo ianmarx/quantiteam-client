@@ -1,36 +1,51 @@
 import React from 'react';
-import ResultPost from '../containers/ResultPost';
+import ResultPost from './ResultPost';
 
 const ResultsView = (props) => {
-  return (
-    <div className="results-container">
+  const date = props.teamWorkout.date;
+  const dateObject = new Date(date);
+  const dateString = dateObject.toDateString();
+
+  if (props.results.length > 0) {
+    return (
       <div className="results-view">
-        <div className="results-title">
-          Workout Results
-        </div>
-        <div className="results-feed">
-          {props.results.map((workout, i) => {
-            return (
-              <div key={`workout-${i}`}>
-                <ResultPost
-                  workout={workout}
-                  index={i}
-                  teamWorkoutId={props.teamWorkoutId}
-                  type={props.type}
-                  onDeleteClick={props.onDeleteClick}
-                  updateWorkout={props.updateWorkout}
-                  deleteResult={props.deleteResult}
-                  fetchDistResults={props.fetchDistResults}
-                  fetchTimeResults={props.fetchTimeResults}
-                />
-              </div>
-            );
-          })}
-        </div>
+        {dateString}
+        {props.teamWorkout.type === 'distance' &&
+          <div className="results-title">
+            {props.teamWorkout.distance} {props.teamWorkout.distUnit} {props.teamWorkout.activity}
+          </div>
+        }
+        {props.teamWorkout.type === 'time' &&
+          <div className="results-title">
+            {props.teamWorkout.timeString} {props.teamWorkout.activity}
+          </div>
+        }
+        {props.results.map((workout) => {
+          return (
+            <ResultPost
+              workout={workout}
+              key={workout.date}
+              teamWorkoutId={props.teamWorkout._id}
+              type={props.teamWorkout.type}
+              onDeleteClick={props.onDeleteClick}
+              updateWorkout={props.updateWorkout}
+              deleteResult={props.deleteResult}
+              fetchDistResults={props.fetchDistResults}
+              fetchTimeResults={props.fetchTimeResults}
+            />
+          );
+        })}
         <button type="button" className="modal-close" onClick={props.onModalClose}>Close</button>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className='results-view'>
+        <div className='instructions'>No results have been logged for this team workout.</div>
+        <button type="button" className="modal-close" onClick={props.onModalClose}>Close</button>
+      </div>
+    );
+  }
 };
 
 export default ResultsView;

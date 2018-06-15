@@ -5,8 +5,8 @@ class AddTeamWorkoutForm extends Component {
     super(props);
     this.state = {
       type: '',
-      activity: '',
-      distUnit: '',
+      activity: 'erg',
+      distUnit: 'm',
       distance: '',
       hours: '',
       minutes: '',
@@ -108,18 +108,16 @@ class AddTeamWorkoutForm extends Component {
                 <li>
                   <h3>Activity</h3>
                   <select required value={this.state.activity} onChange={this.onActivityChange}>
-                    <option default value="">Select</option>
-                    <option value="erg">Ergometer</option>
-                    <option value="row">Rowing</option>
-                    <option value="run">Running</option>
-                    <option value="bike">Cycling</option>
+                    <option default value="erg">Erg</option>
+                    <option value="row">Row</option>
+                    <option value="run">Run</option>
+                    <option value="bike">Bike</option>
                   </select>
                 </li>
                 <li>
                   <h3>Distance Units</h3>
                   <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default value="">Select</option>
-                    <option value="m">m</option>
+                    <option default value="m">m</option>
                     <option value="km">km</option>
                   </select>
                 </li>
@@ -153,18 +151,16 @@ class AddTeamWorkoutForm extends Component {
                 <li>
                   <h3>Activity</h3>
                   <select required value={this.state.activity} onChange={this.onActivityChange}>
-                    <option default value="">Select</option>
-                    <option value="erg">Ergometer</option>
-                    <option value="row">Rowing</option>
-                    <option value="run">Running</option>
-                    <option value="bike">Cycling</option>
+                    <option default value="erg">Erg</option>
+                    <option value="row">Row</option>
+                    <option value="run">Run</option>
+                    <option value="bike">Bike</option>
                   </select>
                 </li>
                 <li>
                   <h3>Distance Units</h3>
                   <select required value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                    <option default value="">Select</option>
-                    <option value="m">m</option>
+                    <option default value="m">m</option>
                     <option value="km">km</option>
                   </select>
                 </li>

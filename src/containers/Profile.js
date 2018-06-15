@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
+// import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
 import {
   fetchUser, updateUser, fetchUserWorkouts, updateWorkout,
   deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals,
@@ -35,7 +35,6 @@ class Profile extends Component {
 
   async componentDidMount() {
     if (!this.props.authenticated) {
-      console.log('should redirect to signin');
       this.props.history.replace('/signin');
     }
 
@@ -57,53 +56,49 @@ class Profile extends Component {
   render() {
     return (
       <div className="profile-page">
-        <div className="profile-column">
-          <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
-          {!this.props.isCoach &&
-            <VictoryChart
-              domainPadding={40}
-              className='victory-container'
-            >
-              <VictoryLabel x={130}
-                y={25}
-                text="Workout Totals by Activity"
+        <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
+        {/*
+        {!this.props.isCoach &&
+          <VictoryChart
+            domainPadding={40}
+            className='victory-container'
+          >
+            <VictoryLabel x={130}
+              y={25}
+              text="Workout Totals by Activity"
+            />
+            <VictoryAxis
+              tickValues={['Erg', 'Row', 'Bike', 'Run']}
+            />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={x => (`${x}km`)}
+            />
+            <VictoryBar
+              data={[
+                { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#ffaf11' },
+                { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
+                { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
+                { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
+              ]}
+              x="type"
+              y="distance"
+            />
+          </VictoryChart>
+        }
+        */}
+        <div className="workout-feed profile">
+          <div className="profile-feed-title">My Workouts</div>
+          {this.props.workouts.map((workout, i) => {
+            return (
+              <WorkoutPost userId={workout._creator}
+                workout={workout}
+                key={workout.date}
+                onDeleteClick={this.onDeleteClick}
+                updateWorkout={this.props.updateWorkout}
               />
-              <VictoryAxis
-                tickValues={['Erg', 'Row', 'Bike', 'Run']}
-              />
-              <VictoryAxis
-                dependentAxis
-                tickFormat={x => (`${x}km`)}
-              />
-              <VictoryBar
-                data={[
-                  { type: 'Erg', distance: ((this.props.user.ergTotal / 1000) || 0), fill: '#ffaf11' },
-                  { type: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
-                  { type: 'Run', distance: ((this.props.user.runTotal / 1000) || 0), fill: '#5cb73e' },
-                  { type: 'Bike', distance: ((this.props.user.bikeTotal / 1000) || 0), fill: '#d65342' },
-                ]}
-                x="type"
-                y="distance"
-              />
-            </VictoryChart>
-          }
-        </div>
-        <div className="profile-column">
-          <div id="feed-title">My Workouts</div>
-          <div className="workout-feed">
-            {this.props.workouts.map((workout, i) => {
-              return (
-                <div key={`workout-${i}`}>
-                  <WorkoutPost userId={workout._creator}
-                    workout={workout}
-                    index={i}
-                    onDeleteClick={this.onDeleteClick}
-                    updateWorkout={this.props.updateWorkout}
-                  />
-                </div>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import {
   fetchUser, fetchUserTeam, fetchTeamWorkouts, updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults,
-  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult,
+  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult, updateWorkout,
 } from '../actions';
 import AddTeamWorkoutForm from './forms/AddTeamWorkout';
 import AddResultForm from './forms/AddResult';
@@ -16,6 +16,7 @@ const mapStateToProps = state => (
   {
     user: state.profile.user,
     team: state.team.team,
+    isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
     teamWorkouts: state.teamWorkouts.list,
     currentTeamWorkout: state.teamWorkouts.current,
@@ -34,7 +35,6 @@ class TeamProfile extends Component {
       showAddTeamWorkoutModal: false,
       showRoster: true,
     };
-    this.displayTeamFeed = this.displayTeamFeed.bind(this);
     this.onViewResultsClickBound = this.onViewResultsClick.bind(this);
     this.onViewResultsModalOpenBound = this.onViewResultsModalOpen.bind(this);
     this.onViewResultsModalCloseBound = this.onViewResultsModalClose.bind(this);
@@ -44,7 +44,6 @@ class TeamProfile extends Component {
   }
   async componentDidMount() {
     if (!this.props.authenticated) {
-      console.log('should redirect to signin');
       this.props.history.replace('/signin');
     }
     await this.props.fetchUser(this.props.match.params.userId);
@@ -53,6 +52,8 @@ class TeamProfile extends Component {
   }
 
   async onViewResultsClick(teamWorkoutId, type) {
+    await this.props.fetchTeamWorkout(teamWorkoutId);
+
     if (type === 'distance') {
       await this.props.fetchTimeResults(teamWorkoutId);
     } else if (type === 'time') {
@@ -85,30 +86,7 @@ class TeamProfile extends Component {
     this.setState({ showViewResultModal: false });
   }
 
-  displayTeamFeed() {
-    return (
-      <div className="workout-posts">
-        {this.props.teamWorkouts.map((workout, i) => {
-          return (
-            <div key={`workout-${i}`}>
-              <TeamWorkoutPost userId={workout._creator}
-                teamWorkout={workout}
-                index={i}
-                onDeleteClick={this.onTeamWorkoutDeleteClick}
-                updateTeamWorkout={this.props.updateTeamWorkout}
-                fetchTeamWorkout={this.props.fetchTeamWorkout}
-                onResultAddClick={this.onResultAddClick}
-                onViewResultsClick={this.onViewResultsClickBound}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
   render() {
-    console.log(this.props.currentTeamWorkout._id);
     return (
       <div className="team-page">
         <div className="team-column">
@@ -116,8 +94,21 @@ class TeamProfile extends Component {
         </div>
         <div className="team-column">
           <div className="workout-feed">
-            <div id="feed-title">Recent Workouts</div>
-            {this.displayTeamFeed()}
+            <div id="feed-title">Team Workouts</div>
+            {this.props.teamWorkouts.map((workout) => {
+              return (
+                <TeamWorkoutPost userId={workout._creator}
+                  teamWorkout={workout}
+                  key={workout.date}
+                  isCoach={this.props.isCoach}
+                  onDeleteClick={this.onTeamWorkoutDeleteClick}
+                  updateTeamWorkout={this.props.updateTeamWorkout}
+                  fetchTeamWorkout={this.props.fetchTeamWorkout}
+                  onResultAddClick={this.onResultAddClick}
+                  onViewResultsClick={this.onViewResultsClickBound}
+                />
+              );
+            })}
           </div>
         </div>
         <ReactModal
@@ -155,10 +146,10 @@ class TeamProfile extends Component {
           className="modal"
           overlayClassName="overlay"
         >
-          {this.props.currentResults !== undefined &&
+          <div className='results-modal-container'>
             <ResultsView
               results={this.props.currentResults}
-              teamWorkoutId={this.props.currentTeamWorkout._id}
+              teamWorkout={this.props.currentTeamWorkout}
               type={this.props.currentTeamWorkout.type}
               deleteResult={this.props.deleteResult}
               fetchDistResults={this.props.fetchDistResults}
@@ -166,7 +157,7 @@ class TeamProfile extends Component {
               updateWorkout={this.props.updateWorkout}
               onModalClose={this.onViewResultsModalCloseBound}
             />
-          }
+          </div>
         </ReactModal>
       </div>
     );
@@ -176,5 +167,5 @@ class TeamProfile extends Component {
 export default withRouter(connect(mapStateToProps, {
   fetchUser, fetchUserTeam, fetchTeamWorkouts,
   updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults, fetchDistResults, fetchTeamWorkout,
-  fetchTimeResults, deleteResult,
+  fetchTimeResults, deleteResult, updateWorkout,
 })(TeamProfile));

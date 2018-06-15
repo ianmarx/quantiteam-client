@@ -1,0 +1,77 @@
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: none;
+
+  .form-title {
+    font-size: 40px;
+  }
+  .column-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+
+    #time-field {
+      display: flex;
+      flex-direction: column;
+    }
+    h3 {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    input {
+      width: 80%;
+      height: 30px;
+      font-size: 20px;
+      border-style: solid;
+      border-color: grey;
+      border-width: 1px;
+      border-radius: 5px;
+    }
+    #teamName {
+      width: 100%;
+    }
+    #userType {
+      width: 80%;
+    }
+    select {
+      width: 60%;
+      height: 30px;
+      font-size: 16px;
+      border-style: solid;
+      border-color: grey;
+      border-radius: 5px;
+      background-color: white;
+    }
+  }
+}
+
+.modal-submit, .modal-close {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  background-color: #1da55f;
+  &:not(.modal-submit) {
+    background-color: #595959;
+    &:active {
+      background-color: #3d3d3d;
+    }
+  }
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #106b3c;
+  }
+}
