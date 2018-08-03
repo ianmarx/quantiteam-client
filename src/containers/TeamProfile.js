@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import ReactModal from 'react-modal';
 import {
   fetchUser, fetchUserTeam, fetchTeamWorkouts, updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults,
-  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult, updateWorkout,
+  fetchDistResults, fetchTeamWorkout, fetchTimeResults, deleteResult, updateWorkout, addTeamWorkout,
 } from '../actions';
-import AddTeamWorkoutForm from './forms/AddTeamWorkout';
-import AddResultForm from './forms/AddResult';
-import TeamWorkoutPost from './TeamWorkoutPost';
-import ResultsView from '../components/ResultsView';
 import TeamInfo from '../components/TeamInfo';
+import TeamWorkoutFeedContainer from './TeamWorkoutFeedContainer';
 
 const mapStateToProps = state => (
   {
@@ -93,79 +89,36 @@ class TeamProfile extends Component {
           <TeamInfo team={this.props.team} />
         </div>
         <div className="team-column">
-          <div className="workout-feed">
-            <div id="feed-title">Team Workouts</div>
-            {this.props.teamWorkouts.map((workout) => {
-              return (
-                <TeamWorkoutPost userId={workout._creator}
-                  teamWorkout={workout}
-                  key={workout.date}
-                  isCoach={this.props.isCoach}
-                  onDeleteClick={this.onTeamWorkoutDeleteClick}
-                  updateTeamWorkout={this.props.updateTeamWorkout}
-                  fetchTeamWorkout={this.props.fetchTeamWorkout}
-                  onResultAddClick={this.onResultAddClick}
-                  onViewResultsClick={this.onViewResultsClickBound}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <ReactModal
-          isOpen={this.state.showAddTeamWorkoutModal}
-          contentLabel="Add Team Workout"
-          className="modal"
-          overlayClassName="overlay"
-        >
-          <AddTeamWorkoutForm
+          <TeamWorkoutFeedContainer
+            addResult={this.props.addResult}
             addTeamWorkout={this.props.addTeamWorkout}
+            matchAthlete={this.props.matchAthlete}
+            queryResults={this.props.queryResults}
+            currentTeamWorkout={this.props.currentTeamWorkout}
+            currentResults={this.props.currentResults}
+            deleteResult={this.props.deleteResult}
+            deleteTeamWorkout={this.props.deleteTeamWorkout}
+            fetchDistResults={this.props.fetchDistResults}
+            fetchTimeResults={this.props.fetchTimeResults}
+            fetchUser={this.props.fetchUser}
+            fetchUserWorkouts={this.props.fetchUserWorkouts}
+            fetchTeamWorkouts={this.props.fetchTeamWorkouts}
+            fetchTeamWorkout={this.props.fetchTeamWorkout}
+            isCoach={this.props.isCoach}
+            teamWorkouts={this.props.teamWorkouts}
+            team={this.props.team}
             userId={this.props.match.params.userId}
-            teamId={this.props.team._id}
-            onModalClose={this.onTeamWorkoutModalClose}
+            updateWorkout={this.props.updateWorkout}
+            updateTeamWorkout={this.props.updateTeamWorkout}
           />
-        </ReactModal>
-        <ReactModal
-          isOpen={this.state.showAddResultModal}
-          contentLabel="Add Result"
-          className="modal"
-          overlayClassName="overlay"
-        >
-          {this.props.currentTeamWorkout._id !== undefined &&
-            <AddResultForm
-              teamWorkout={this.props.currentTeamWorkout}
-              addResult={this.props.addResult}
-              matchAthlete={this.props.matchAthlete}
-              queryResults={this.props.queryResults}
-              onModalClose={this.onAddResultModalClose}
-            />
-          }
-        </ReactModal>
-        <ReactModal
-          isOpen={this.state.showViewResultModal}
-          contentLabel="Workout Results"
-          className="modal"
-          overlayClassName="overlay"
-        >
-          <div className='results-modal-container'>
-            <ResultsView
-              results={this.props.currentResults}
-              teamWorkout={this.props.currentTeamWorkout}
-              type={this.props.currentTeamWorkout.type}
-              deleteResult={this.props.deleteResult}
-              fetchDistResults={this.props.fetchDistResults}
-              fetchTimeResults={this.props.fetchTimeResults}
-              updateWorkout={this.props.updateWorkout}
-              onModalClose={this.onViewResultsModalCloseBound}
-            />
-          </div>
-        </ReactModal>
+        </div>
       </div>
     );
   }
 }
 
 export default withRouter(connect(mapStateToProps, {
-  fetchUser, fetchUserTeam, fetchTeamWorkouts,
+  fetchUser, fetchUserTeam, fetchTeamWorkouts, addTeamWorkout,
   updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, queryResults, fetchDistResults, fetchTeamWorkout,
   fetchTimeResults, deleteResult, updateWorkout,
 })(TeamProfile));

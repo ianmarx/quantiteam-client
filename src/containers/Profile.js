@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel } from 'victory';
 import {
-  fetchUser, updateUser, fetchUserWorkouts, updateWorkout,
+  fetchUser, updateUser, fetchUserWorkouts, updateWorkout, addWorkout,
   deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals,
 } from '../actions';
-import WorkoutPost from './WorkoutPost';
+import SoloWorkoutFeedContainer from './SoloWorkoutFeedContainer';
 import UserInfo from './UserInfo';
 
 const mapStateToProps = state => (
@@ -29,8 +29,6 @@ class Profile extends Component {
         { x: 'Row', distance: ((this.props.user.rowTotal / 1000) || 0), fill: '#2b85bc' },
       ],
     };
-
-    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   async componentDidMount() {
@@ -45,12 +43,6 @@ class Profile extends Component {
     this.props.workouts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
-  }
-
-  async onDeleteClick(workoutId, userId) {
-    await this.props.deleteWorkout(workoutId, userId);
-    await this.props.fetchUser(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
   }
 
   render() {
@@ -87,25 +79,22 @@ class Profile extends Component {
           </VictoryChart>
         }
         */}
-        <div className="workout-feed profile">
-          <div className="profile-feed-title">My Workouts</div>
-          {this.props.workouts.map((workout, i) => {
-            return (
-              <WorkoutPost userId={workout._creator}
-                workout={workout}
-                key={workout.date}
-                onDeleteClick={this.onDeleteClick}
-                updateWorkout={this.props.updateWorkout}
-              />
-            );
-          })}
-        </div>
+        <SoloWorkoutFeedContainer
+          addWorkout={this.props.addWorkout}
+          soloWorkouts={this.props.workouts}
+          fetchUser={this.props.fetchUser}
+          fetchUserWorkouts={this.props.fetchUserWorkouts}
+          updateWorkout={this.props.updateWorkout}
+          deleteWorkout={this.props.deleteWorkout}
+          userId={this.props.match.params.userId}
+          team={this.props.team}
+        />
       </div>
     );
   }
 }
 
 export default withRouter(connect(mapStateToProps, {
-  fetchUser, updateUser, fetchUserWorkouts,
+  fetchUser, updateUser, fetchUserWorkouts, addWorkout,
   updateWorkout, deleteWorkout, addTeam, fetchUserTeam, fetchUserDistTotals,
 })(Profile));

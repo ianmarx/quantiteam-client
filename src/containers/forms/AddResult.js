@@ -5,8 +5,8 @@ class AddResultForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: this.props.teamWorkout.type,
-      distance: this.props.teamWorkout.distance || '',
+      type: '',
+      distance: '',
       athleteName: '',
       hours: '',
       minutes: '',
@@ -15,6 +15,7 @@ class AddResultForm extends Component {
       watts: '',
       avgHR: '',
     };
+
     this.onAthleteNameChange = this.onAthleteNameChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
@@ -26,7 +27,8 @@ class AddResultForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
   }
-  componentWillMount() {
+
+  componentDidMount() {
     if (this.props.teamWorkout.type === 'time') {
       /* split up the time value into separate units for editing mode */
       const h = Math.floor(this.props.teamWorkout.time / 3600);
@@ -38,7 +40,15 @@ class AddResultForm extends Component {
         minutes: m,
         seconds: s,
       });
+    } else {
+      this.setState({
+        distance: this.props.teamWorkout.distance,
+      });
     }
+
+    this.setState({
+      type: this.props.teamWorkout.type,
+    });
   }
   /* Handle changes in the add result fields */
   onAthleteNameChange(event) {
@@ -69,7 +79,6 @@ class AddResultForm extends Component {
     this.setState({ avgHR: event.target.value });
   }
   onSubmit(event) {
-    console.log('Result add submitted');
     const activity = this.props.teamWorkout.activity;
     const distance = this.state.distance;
     const distUnit = this.props.teamWorkout.distUnit;

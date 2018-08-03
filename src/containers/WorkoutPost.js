@@ -131,7 +131,7 @@ class WorkoutPost extends Component {
   render() {
     if (this.state.isEditing) {
       return (
-        <form className="workout-post edit" key={this.props.index} onSubmit={this.onSubmit}>
+        <form className="workout-post edit" onSubmit={this.onSubmit}>
           <div className='row-unit'>
             <input className='input-md' onChange={this.onDistanceChange} value={this.state.distance} type="text" />
             <div>{this.props.workout.distUnit} {this.props.workout.activity}</div>
@@ -166,7 +166,7 @@ class WorkoutPost extends Component {
       );
     } else {
       return (
-        <div className="workout-post" key={this.props.key}>
+        <div className="workout-post">
           <div className="workout-div-creator">
             <NavLink to={`/profile/${this.props.userId}`}>
               <div className="profile-link">{this.props.workout.creatorName}</div>
@@ -185,14 +185,16 @@ class WorkoutPost extends Component {
               <div>{this.props.workout.avgHR} bpm</div>
             }
           </div>
-          <div className='row-unit'>
-            <div className="icon">
-              <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+          {!this.props.isCoach &&
+            <div className='row-unit'>
+              <div className="icon">
+                <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+              </div>
+              <div className="icon">
+                <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
+              </div>
             </div>
-            <div className="icon">
-              <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
-            </div>
-          </div>
+          }
         </div>
       );
     }
