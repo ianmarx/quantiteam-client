@@ -1,10 +1,30 @@
+.modal {
+  margin-top: 60px;
+  outline: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(38, 38, 38, 0.5);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .modal-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background-color: white;
+  background-color: #e8e8e8;
   color: black;
   border-radius: 5px;
   border: none;
@@ -12,51 +32,46 @@
   .form-title {
     font-size: 40px;
   }
-  .column-group {
+
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0px;
+  }
 
-    #time-field {
-      display: flex;
-      flex-direction: column;
+  input {
+    width: 100px;
+    height: 30px;
+    margin-right: 10px;
+    font-size: 20px;
+    border-style: none;
+    border-radius: 5px;
+    text-align: center;
+
+    &.time-input {
+      width: 50px;
     }
-    h3 {
-      font-weight: bold;
-      font-size: 20px;
+
+    &.athlete-names {
+      width: 200px;
     }
-    input {
-      width: 80%;
-      height: 30px;
-      font-size: 20px;
-      border-style: solid;
-      border-color: grey;
-      border-width: 1px;
-      border-radius: 5px;
-    }
-    #teamName {
-      width: 100%;
-    }
-    #userType {
-      width: 80%;
-    }
-    select {
-      width: 60%;
-      height: 30px;
-      font-size: 16px;
-      border-style: solid;
-      border-color: grey;
-      border-radius: 5px;
-      background-color: white;
-    }
+
   }
 }
 
 .modal-submit, .modal-close {
-  margin-top: 35px;
-  margin-bottom: 15px;
-  padding: 10px;
+  margin: 10px 5px 5px;
+  padding: 5px;
   border: none;
   border-radius: 5px;
   font-size: 20px;
@@ -73,5 +88,21 @@
   }
   &:active {
     background-color: #106b3c;
+  }
+}
+
+.modal-prev {
+  padding: 10px;
+  margin: 10px 0px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #d8d8d8;
   }
 }

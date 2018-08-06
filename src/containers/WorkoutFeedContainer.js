@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import WorkoutFeed from '../components/WorkoutFeed';
 import ResultsView from '../components/ResultsView';
-import AddWorkoutForm from './forms/AddWorkout';
-import AddResultForm from './forms/AddResult';
-import AddTeamWorkoutForm from './forms/AddTeamWorkout';
+import AddWorkoutForm from './forms/AddWorkoutForm';
+import AddResultForm from './forms/AddResultForm';
+import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
 
 class WorkoutFeedContainer extends Component {
   constructor(props) {
