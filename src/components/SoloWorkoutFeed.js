@@ -33,7 +33,6 @@ SoloWorkoutFeed.propTypes = {
   onAddWorkoutModalOpen: PropTypes.func,
   onWorkoutDeleteClick: PropTypes.func,
   soloWorkouts: PropTypes.array,
-  team: PropTypes.object,
   userId: PropTypes.string,
   updateWorkout: PropTypes.func,
 };

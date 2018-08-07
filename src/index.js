@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
 import App from './components/App';
-import { ActionTypes } from './actions/index';
+import { AUTH_USER } from './actions/auth';
 import './style.scss';
 
 
@@ -16,7 +16,7 @@ const store = createStore(reducers, {}, compose(
 
 const token = localStorage.getItem('token');
 if (token) {
-  store.dispatch({ type: ActionTypes.AUTH_USER });
+  store.dispatch({ type: AUTH_USER });
 }
 
 ReactDOM.render(

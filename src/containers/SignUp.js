@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
-import { signUpAthlete, signUpCoach } from '../actions';
+import { signUpAthlete, signUpCoach } from '../actions/auth';
 import { checkTeamNameAvailability, checkTeamCodeValidity } from '../actions/team';
 
 const mapStateToProps = state => (

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
-import { signOutUser, fetchUser, fetchUserWorkouts } from '../actions';
+import { signOutUser } from '../actions/auth';
+import { fetchUser } from '../actions/user';
+import { fetchUserWorkouts } from '../actions/workout';
 
 /* Connect to the auth prop */
 const mapStateToProps = state => (

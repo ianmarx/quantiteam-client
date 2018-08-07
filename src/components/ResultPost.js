@@ -58,11 +58,11 @@ class ResultPost extends Component {
   }
 
   async onLocalDeleteClick(event) {
-    await this.props.onDeleteClick(this.props.workout._id, this.props.teamWorkoutId);
+    this.props.onDeleteClick(this.props.workout._id, this.props.teamWorkoutId);
     if (this.props.type === 'distance') {
-      await this.props.fetchDistResults(this.props.teamWorkoutId);
-    } else {
-      await this.props.fetchTimeResults(this.props.teamWorkoutId);
+      this.props.fetchDistResults(this.props.teamWorkoutId);
+    } else if (this.props.type === 'time') {
+      this.props.fetchTimeResults(this.props.teamWorkoutId);
     }
   }
 

@@ -11,7 +11,7 @@ const WorkoutFeed = (props) => {
 
   return (
     <div className="workout-feed">
-      <div className="feed-title">{props.team.name}</div>
+      <div className="feed-title">{props.teamName}</div>
       {props.isCoach ? (
         <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
       ) : (
@@ -60,7 +60,7 @@ WorkoutFeed.propTypes = {
   onTeamWorkoutDeleteClick: PropTypes.func,
   soloWorkouts: PropTypes.array,
   teamWorkouts: PropTypes.array,
-  team: PropTypes.object,
+  teamName: PropTypes.string,
   userId: PropTypes.string,
   updateWorkout: PropTypes.func,
   updateTeamWorkout: PropTypes.func,

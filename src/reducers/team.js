@@ -1,5 +1,8 @@
-import { ActionTypes } from '../actions';
-import { TeamActionTypes } from '../actions/team';
+import {
+  FETCH_TEAM,
+  CHECK_TEAM_CODE_VALIDITY,
+  CHECK_TEAM_NAME_AVAILABILITY,
+} from '../actions/team';
 
 const initialState = {
   team: [],
@@ -10,13 +13,13 @@ const initialState = {
 
 const TeamReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_TEAM: {
+    case FETCH_TEAM: {
       return Object.assign({}, state, {
         team: action.payload.team,
         isCoach: action.payload.isCoach,
       });
     }
-    case TeamActionTypes.CHECK_TEAM_NAME_AVAILABILITY: {
+    case CHECK_TEAM_NAME_AVAILABILITY: {
       let available;
       if (action.payload === null) {
         available = true;
@@ -27,7 +30,7 @@ const TeamReducer = (state = initialState, action) => {
         teamNameIsAvailable: available,
       });
     }
-    case TeamActionTypes.CHECK_TEAM_CODE_VALIDITY: {
+    case CHECK_TEAM_CODE_VALIDITY: {
       let valid;
       if (action.payload === null) {
         valid = false;

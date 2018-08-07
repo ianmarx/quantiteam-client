@@ -1,35 +1,146 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import ReactModal from 'react-modal';
+import { fetchUser } from '../actions/user';
 import {
-  fetchUser, fetchUserWorkouts, fetchTeamSoloWorkouts,
-  updateWorkout, fetchUserTeam, addWorkout, deleteWorkout,
-  addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout, deleteTeamWorkout,
-  addResult, fetchDistResults, fetchTimeResults, matchAthlete, deleteResult,
-} from '../actions';
-import WorkoutFeedContainer from './WorkoutFeedContainer';
+  fetchUserWorkouts,
+  fetchTeamSoloWorkouts,
+  updateWorkout,
+  addWorkout,
+  deleteWorkout,
+} from '../actions/workout';
+import { fetchUserTeam } from '../actions/team';
+import {
+  addTeamWorkout,
+  fetchTeamWorkouts,
+  updateTeamWorkout,
+  deleteTeamWorkout,
+  addResult,
+  matchAthlete,
+  deleteResult,
+  fetchTeamWorkout,
+  fetchTimeResults,
+  fetchDistResults,
+} from '../actions/teamworkout';
+import WorkoutFeed from '../components/WorkoutFeed';
+import ResultsView from '../components/ResultsView';
+import AddWorkoutForm from './forms/AddWorkoutForm';
+import AddResultForm from './forms/AddResultForm';
+import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
 
 const mapStateToProps = state => (
   {
     user: state.profile.user,
-    workouts: state.workouts.teamList,
+    teamSoloWorkouts: state.workouts.teamList,
     team: state.team.team,
     isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
     teamWorkouts: state.teamWorkouts.list,
-    currentTeamWorkout: state.teamWorkouts.current,
-    currentResults: state.teamWorkouts.results,
+    currentTeamWorkout: state.teamWorkouts.currentTeamWorkout,
+    isFetchingTeamWorkout: state.teamWorkouts.isFetchingTeamWorkout,
+    isFetchingResults: state.teamWorkouts.isFetchingResults,
+    currentResults: state.teamWorkouts.currentResults,
     queryResults: state.profile.queryResults,
   }
 );
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAddTeamWorkoutModal: false,
+      showAddWorkoutModal: false,
+      showAddResultModal: false,
+      showViewResultsModal: false,
+    };
+
+    this.onAddWorkoutModalOpen = this.onAddWorkoutModalOpen.bind(this);
+    this.onAddWorkoutModalClose = this.onAddWorkoutModalClose.bind(this);
+    this.onWorkoutDeleteClick = this.onWorkoutDeleteClick.bind(this);
+    this.onAddTeamWorkoutModalOpen = this.onTeamWorkoutModalOpen.bind(this);
+    this.onAddTeamWorkoutModalClose = this.onTeamWorkoutModalClose.bind(this);
+    this.onTeamWorkoutDeleteClick = this.onTeamWorkoutDeleteClick.bind(this);
+    this.onAddResultModalOpen = this.onAddResultModalOpen.bind(this);
+    this.onAddResultModalClose = this.onAddResultModalClose.bind(this);
+    this.onViewResultsModalOpen = this.onViewResultsModalOpen.bind(this);
+    this.onViewResultsModalClose = this.onViewResultsModalClose.bind(this);
+    this.onAddResultClick = this.onAddResultClick.bind(this);
+    this.onResultDeleteClick = this.onResultDeleteClick.bind(this);
+    this.onViewResultsClick = this.onViewResultsClick.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserTeam(this.props.match.params.userId);
     this.props.fetchUserWorkouts(this.props.match.params.userId);
     this.props.fetchTeamWorkouts(this.props.match.params.userId);
     this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
+  }
+
+  async onResultDeleteClick(workoutId, teamWorkoutId) {
+    await this.props.deleteResult(workoutId, teamWorkoutId);
+    this.props.fetchTeamWorkout(teamWorkoutId);
+  }
+
+  async onWorkoutDeleteClick(workoutId, userId) {
+    await this.props.deleteWorkout(workoutId, userId);
+    this.props.fetchUser(this.props.match.params.userId);
+    this.props.fetchUserWorkouts(this.props.match.params.userId);
+  }
+
+  async onTeamWorkoutDeleteClick(workoutId, teamId) {
+    await this.props.deleteTeamWorkout(workoutId, teamId);
+    this.props.fetchTeamWorkouts(this.props.match.params.userId);
+  }
+
+  async onAddResultClick(teamWorkoutId, prevProps) {
+    await this.props.fetchTeamWorkout(teamWorkoutId);
+    this.onAddResultModalOpen();
+  }
+
+  async onViewResultsClick(teamWorkoutId, type) {
+    await this.props.fetchTeamWorkout(teamWorkoutId);
+
+    if (type === 'distance') {
+      await this.props.fetchTimeResults(teamWorkoutId);
+    } else if (type === 'time') {
+      await this.props.fetchDistResults(teamWorkoutId);
+    }
+
+    this.onViewResultsModalOpen();
+  }
+
+  onAddWorkoutModalOpen(event) {
+    this.setState({ showAddWorkoutModal: true });
+  }
+
+  onAddWorkoutModalClose(event) {
+    this.setState({ showAddWorkoutModal: false });
+  }
+
+  onTeamWorkoutModalOpen(event) {
+    this.setState({ showAddTeamWorkoutModal: true });
+  }
+
+  onTeamWorkoutModalClose(event) {
+    this.setState({ showAddTeamWorkoutModal: false });
+  }
+
+  onAddResultModalOpen(event) {
+    this.setState({ showAddResultModal: true });
+  }
+
+  onAddResultModalClose(event) {
+    this.setState({ showAddResultModal: false });
+  }
+
+  onViewResultsModalOpen(event) {
+    this.setState({ showViewResultsModal: true });
+  }
+
+  onViewResultsModalClose(event) {
+    this.setState({ showViewResultsModal: false });
   }
 
   render() {
@@ -41,31 +152,87 @@ class HomePage extends Component {
 
     return (
       <div className="home-page">
-        <WorkoutFeedContainer
-          addWorkout={this.props.addWorkout}
-          addResult={this.props.addResult}
-          addTeamWorkout={this.props.addTeamWorkout}
-          matchAthlete={this.props.matchAthlete}
-          queryResults={this.props.queryResults}
-          currentTeamWorkout={this.props.currentTeamWorkout}
-          currentResults={this.props.currentResults}
-          deleteResult={this.props.deleteResult}
-          deleteWorkout={this.props.deleteWorkout}
-          deleteTeamWorkout={this.props.deleteTeamWorkout}
-          fetchDistResults={this.props.fetchDistResults}
-          fetchTimeResults={this.props.fetchTimeResults}
-          fetchUser={this.props.fetchUser}
-          fetchUserWorkouts={this.props.fetchUserWorkouts}
-          fetchTeamWorkouts={this.props.fetchTeamWorkouts}
-          fetchTeamWorkout={this.props.fetchTeamWorkout}
-          isCoach={this.props.isCoach}
-          soloWorkouts={this.props.workouts}
-          teamWorkouts={this.props.teamWorkouts}
-          team={this.props.team}
-          userId={this.props.match.params.userId}
-          updateWorkout={this.props.updateWorkout}
-          updateTeamWorkout={this.props.updateTeamWorkout}
-        />
+        <div className='workout-feed-container'>
+          <WorkoutFeed
+            isCoach={this.props.isCoach}
+            onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
+            onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
+            onAddResultClick={this.onAddResultClick}
+            onViewResultsClick={this.onViewResultsClick}
+            onWorkoutDeleteClick={this.onWorkoutDeleteClick}
+            onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
+            soloWorkouts={this.props.teamSoloWorkouts}
+            teamWorkouts={this.props.teamWorkouts}
+            teamName={this.props.team.name}
+            userId={this.props.match.params.userId}
+            updateWorkout={this.props.updateWorkout}
+            updateTeamWorkout={this.props.updateTeamWorkout}
+          />
+          <ReactModal
+            isOpen={this.state.showAddWorkoutModal}
+            contentLabel="Add Workout"
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+          >
+            <AddWorkoutForm
+              addWorkout={this.props.addWorkout}
+              userId={this.props.match.params.userId}
+              onModalClose={this.onAddWorkoutModalClose}
+            />
+          </ReactModal>
+          <ReactModal
+            isOpen={this.state.showViewResultsModal}
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+          >
+            {!this.props.isFetchingResults &&
+              <div className='results-modal-container'>
+                <ResultsView
+                  results={this.props.currentResults}
+                  teamWorkout={this.props.currentTeamWorkout}
+                  onDeleteClick={this.onResultDeleteClick}
+                  fetchDistResults={this.props.fetchDistResults}
+                  fetchTimeResults={this.props.fetchTimeResults}
+                  updateWorkout={this.props.updateWorkout}
+                  onModalClose={this.onViewResultsModalClose}
+                />
+              </div>
+            }
+          </ReactModal>
+          <ReactModal
+            isOpen={this.state.showAddTeamWorkoutModal}
+            contentLabel="Add Team Workout"
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+          >
+            <AddTeamWorkoutForm
+              addTeamWorkout={this.props.addTeamWorkout}
+              userId={this.props.match.params.userId}
+              teamId={this.props.team._id}
+              onModalClose={this.onAddTeamWorkoutModalClose}
+            />
+          </ReactModal>
+          <ReactModal
+            isOpen={this.state.showAddResultModal}
+            contentLabel="Add Result"
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+          >
+            {!this.props.isFetchingTeamWorkout &&
+              <AddResultForm
+                teamWorkout={this.props.currentTeamWorkout}
+                addResult={this.props.addResult}
+                matchAthlete={this.props.matchAthlete}
+                queryResults={this.props.queryResults}
+                onModalClose={this.onAddResultModalClose}
+              />
+            }
+          </ReactModal>
+        </div>
       </div>
     );
   }
@@ -74,8 +241,8 @@ class HomePage extends Component {
 export default withRouter(connect(
   mapStateToProps,
   {
-    fetchUser, fetchUserWorkouts, fetchTeamSoloWorkouts,
-    updateWorkout, fetchUserTeam, addWorkout, deleteWorkout,
+    fetchUser, fetchUserWorkouts,
+    updateWorkout, fetchUserTeam, addWorkout, deleteWorkout, fetchTeamSoloWorkouts,
     addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout,
     deleteTeamWorkout, addResult, fetchDistResults, fetchTimeResults, matchAthlete,
     deleteResult,

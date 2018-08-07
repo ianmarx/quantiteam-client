@@ -1,4 +1,5 @@
-import { ActionTypes } from '../actions';
+import { FETCH_USER } from '../actions/user';
+import { MATCH_ATHLETE } from '../actions/teamworkout';
 
 const initialState = {
   user: {},
@@ -7,12 +8,12 @@ const initialState = {
 
 const UserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_USER: {
+    case FETCH_USER: {
       return Object.assign({}, state, {
         user: action.payload,
       });
     }
-    case ActionTypes.MATCH_ATHLETE: {
+    case MATCH_ATHLETE: {
       return Object.assign({}, state, {
         queryResults: action.payload,
       });

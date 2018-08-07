@@ -39,7 +39,6 @@ TeamWorkoutFeed.propTypes = {
   onWorkoutDeleteClick: PropTypes.func,
   onTeamWorkoutDeleteClick: PropTypes.func,
   teamWorkouts: PropTypes.array,
-  team: PropTypes.object,
   userId: PropTypes.string,
   updateWorkout: PropTypes.func,
   updateTeamWorkout: PropTypes.func,

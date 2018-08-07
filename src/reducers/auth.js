@@ -1,4 +1,8 @@
-import { ActionTypes } from '../actions';
+import {
+  AUTH_USER,
+  DEAUTH_USER,
+  AUTH_ERROR,
+} from '../actions/auth';
 
 const initialState = {
   authenticated: false,
@@ -6,18 +10,15 @@ const initialState = {
 
 const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.AUTH_USER:
-      console.log('Reducer: AUTH_USER action triggered');
+    case AUTH_USER:
       return Object.assign({}, state, {
         authenticated: true,
       });
-    case ActionTypes.DEAUTH_USER:
-      console.log('Reducer: DEAUTH_USER action triggered');
+    case DEAUTH_USER:
       return Object.assign({}, state, {
         authenticated: false,
       });
-    case ActionTypes.AUTH_ERROR:
-      console.log('Reducer: AUTH_ERROR action triggered');
+    case AUTH_ERROR:
       return Object.assign({}, state, {
         authenticated: false,
       });
