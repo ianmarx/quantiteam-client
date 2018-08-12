@@ -57,13 +57,8 @@ class ResultPost extends Component {
     this.setState({ isEditing: true });
   }
 
-  async onLocalDeleteClick(event) {
+  onLocalDeleteClick(event) {
     this.props.onDeleteClick(this.props.workout._id, this.props.teamWorkoutId);
-    if (this.props.type === 'distance') {
-      this.props.fetchDistResults(this.props.teamWorkoutId);
-    } else if (this.props.type === 'time') {
-      this.props.fetchTimeResults(this.props.teamWorkoutId);
-    }
   }
 
   /* Handle changes in the add workout fields */
@@ -107,7 +102,8 @@ class ResultPost extends Component {
     this.setState({ isEditing: false });
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const activity = this.state.activity;
     const distance = this.state.distance;
     const distUnit = this.state.distUnit;
@@ -118,7 +114,10 @@ class ResultPost extends Component {
     const workoutObject = {
       activity, distance, distUnit, time, strokeRate, watts, avgHR,
     };
-    this.props.updateWorkout(this.props.workout._id, workoutObject);
+    await this.props.updateResult(this.props.workout._id, workoutObject);
+    this.setState({
+      isEditing: false,
+    });
   }
 
   /* convert the strings of each time values into the total number of seconds */

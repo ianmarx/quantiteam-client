@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import WorkoutPost from '../containers/WorkoutPost';
-import TeamWorkoutPost from '../containers/TeamWorkoutPost';
+import WorkoutPost from './WorkoutPost';
+import TeamWorkoutPost from './TeamWorkoutPost';
 
 const WorkoutFeed = (props) => {
   const unsortedWorkouts = props.soloWorkouts.concat(props.teamWorkouts);

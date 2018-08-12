@@ -14,6 +14,7 @@ class AddResultForm extends Component {
       strokeRate: '',
       watts: '',
       avgHR: '',
+      statusMessage: '',
     };
 
     this.onAthleteNameChange = this.onAthleteNameChange.bind(this);
@@ -87,7 +88,8 @@ class AddResultForm extends Component {
     this.setState({ avgHR: event.target.value });
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const activity = this.props.teamWorkout.activity;
     const distance = this.state.distance;
     const distUnit = this.props.teamWorkout.distUnit;
@@ -97,7 +99,13 @@ class AddResultForm extends Component {
     const avgHR = this.state.avgHR;
     const athleteName = this.state.athleteName;
     const resultObject = { athleteName, activity, distance, distUnit, time, strokeRate, watts, avgHR };
-    this.props.addResult(resultObject, this.props.teamWorkout._id);
+    await this.props.addResult(resultObject, this.props.teamWorkout._id);
+    this.setState({
+      statusMessage: 'Success!',
+    });
+    setTimeout(() => {
+      this.props.onModalClose();
+    }, 1500);
   }
 
   /* convert the strings of each time values into the total number of seconds */
@@ -204,6 +212,7 @@ class AddResultForm extends Component {
             />
             bpm
           </div>
+          <div>{this.state.statusMessage}</div>
           <button type="submit" className="modal-submit">Submit</button>
           <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
         </form>

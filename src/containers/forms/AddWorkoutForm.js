@@ -13,6 +13,7 @@ class AddWorkoutForm extends Component {
       strokeRate: '',
       watts: '',
       avgHR: '',
+      statusMessage: '',
     };
 
     this.onErgSelect = this.onErgSelect.bind(this);
@@ -91,7 +92,8 @@ class AddWorkoutForm extends Component {
   }
 
   /* Add a workout using the form */
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const activity = this.state.activity;
     const distance = this.state.distance;
     const distUnit = this.state.distUnit;
@@ -99,8 +101,16 @@ class AddWorkoutForm extends Component {
     const strokeRate = this.state.strokeRate;
     const watts = this.state.watts;
     const avgHR = this.state.avgHR;
-    const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR };
-    this.props.addWorkout(workoutObject, this.props.userId);
+    const creatorName = this.props.userName;
+    const creatorId = this.props.userId;
+    const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId };
+    await this.props.addWorkout(workoutObject);
+    this.setState({
+      statusMessage: 'Success!',
+    });
+    setTimeout(() => {
+      this.props.onModalClose();
+    }, 1500);
   }
 
   /* convert the strings of each time values into the total number of seconds */
@@ -204,6 +214,7 @@ class AddWorkoutForm extends Component {
             />
             bpm
           </div>
+          <div>{this.state.statusMessage}</div>
           <button type="submit" className="modal-submit">Submit</button>
           <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
         </form>

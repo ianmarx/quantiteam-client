@@ -11,6 +11,7 @@ class AddTeamWorkoutForm extends Component {
       hours: '',
       minutes: '',
       seconds: '',
+      statusMessage: '',
     };
 
     this.onErgSelect = this.onErgSelect.bind(this);
@@ -86,7 +87,8 @@ class AddTeamWorkoutForm extends Component {
   }
 
   /* Add a workout using the form */
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const activity = this.state.activity;
     const distance = this.state.distance;
     const distUnit = this.state.distUnit;
@@ -94,7 +96,13 @@ class AddTeamWorkoutForm extends Component {
     const teamId = this.props.teamId;
     const type = this.state.type;
     const workoutObject = { activity, distance, distUnit, time, teamId, type };
-    this.props.addTeamWorkout(workoutObject, this.props.userId);
+    await this.props.addTeamWorkout(workoutObject, this.props.userId);
+    this.setState({
+      statusMessage: 'Success!',
+    });
+    setTimeout(() => {
+      this.props.onModalClose();
+    }, 1500);
   }
 
   showActivitySelect() {
@@ -179,6 +187,7 @@ class AddTeamWorkoutForm extends Component {
               {this.state.activity}
             </div>
           }
+          <div>{this.state.statusMessage}</div>
           {!this.showActivitySelect() && !this.showTypeSelect() &&
             <button type="submit" className="modal-submit">Submit</button>
           }

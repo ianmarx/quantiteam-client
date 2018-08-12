@@ -29,7 +29,6 @@ class SignIn extends Component {
     this.setState({ password: event.target.value });
   }
   onSubmit(event) {
-    console.log('Sign in request submitted');
     event.preventDefault();
 
     const email = this.state.email;

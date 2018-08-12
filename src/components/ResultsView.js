@@ -27,7 +27,7 @@ const ResultsView = (props) => {
             teamWorkoutId={props.teamWorkout._id}
             type={props.teamWorkout.type}
             onDeleteClick={props.onDeleteClick}
-            updateWorkout={props.updateWorkout}
+            updateResult={props.updateResult}
             deleteResult={props.deleteResult}
             fetchDistResults={props.fetchDistResults}
             fetchTimeResults={props.fetchTimeResults}

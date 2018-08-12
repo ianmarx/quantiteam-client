@@ -15,6 +15,7 @@ import {
   addResult,
   matchAthlete,
   deleteResult,
+  updateResult,
   fetchTeamWorkout,
   fetchTimeResults,
   fetchDistResults,
@@ -87,14 +88,12 @@ class TeamProfile extends Component {
     this.onViewResultsModalOpen();
   }
 
-  async onResultDeleteClick(workoutId, teamWorkoutId) {
-    await this.props.deleteResult(workoutId, teamWorkoutId);
-    this.props.fetchTeamWorkout(teamWorkoutId);
+  onResultDeleteClick(workoutId, teamWorkoutId) {
+    this.props.deleteResult(workoutId, teamWorkoutId);
   }
 
-  async onTeamWorkoutDeleteClick(workoutId, teamId) {
-    await this.props.deleteTeamWorkout(workoutId, teamId);
-    this.props.fetchTeamWorkouts(this.props.match.params.userId);
+  onTeamWorkoutDeleteClick(workoutId, teamId) {
+    this.props.deleteTeamWorkout(workoutId, teamId);
   }
 
   onAddTeamWorkoutModalOpen(event) {
@@ -113,6 +112,7 @@ class TeamProfile extends Component {
   onAddResultModalOpen(event) {
     this.setState({ showAddResultModal: true });
   }
+
   onAddResultModalClose(event) {
     this.setState({ showAddResultModal: false });
   }
@@ -158,7 +158,7 @@ class TeamProfile extends Component {
                     onDeleteClick={this.onResultDeleteClick}
                     fetchDistResults={this.props.fetchDistResults}
                     fetchTimeResults={this.props.fetchTimeResults}
-                    updateWorkout={this.props.updateWorkout}
+                    updateResult={this.props.updateResult}
                     onModalClose={this.onViewResultsModalClose}
                   />
                 </div>
@@ -205,5 +205,5 @@ class TeamProfile extends Component {
 export default withRouter(connect(mapStateToProps, {
   fetchUser, fetchUserTeam, fetchTeamWorkouts, addTeamWorkout,
   updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, fetchDistResults, fetchTeamWorkout,
-  fetchTimeResults, deleteResult, updateWorkout,
+  fetchTimeResults, deleteResult, updateWorkout, updateResult,
 })(TeamProfile));

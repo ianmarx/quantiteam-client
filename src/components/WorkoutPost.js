@@ -104,7 +104,8 @@ class WorkoutPost extends Component {
     this.setState({ isEditing: false });
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const activity = this.state.activity;
     const distance = this.state.distance;
     const distUnit = this.state.distUnit;
@@ -118,7 +119,10 @@ class WorkoutPost extends Component {
     const workoutObject = {
       activity, distance, distUnit, time, strokeRate, watts, avgHR,
     };
-    this.props.updateWorkout(this.props.workout._id, workoutObject);
+    await this.props.updateWorkout(this.props.workout._id, workoutObject);
+    this.setState({
+      isEditing: false,
+    });
   }
 
   /* convert the strings of each time values into the total number of seconds */

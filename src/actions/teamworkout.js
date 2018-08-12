@@ -19,6 +19,10 @@ export const MATCH_ATHLETE = 'MATCH_ATHLETE';
 export const FETCH_WORKOUTS = 'FETCH_WORKOUTS';
 export const DELETE_TEAM_WORKOUT = 'DELETE_TEAM_WORKOUT';
 export const DELETE_RESULT = 'DELETE_RESULT';
+export const ADD_RESULT = 'ADD_RESULT';
+export const UPDATE_RESULT = 'UPDATE_RESULT';
+export const UPDATE_TEAM_WORKOUT = 'UPDATE_TEAM_WORKOUT';
+export const ADD_TEAM_WORKOUT = 'ADD_TEAM_WORKOUT';
 
 export function fetchTeamWorkoutSuccess(teamWorkout: Object) : Action {
   return {
@@ -103,7 +107,7 @@ export function addTeamWorkout({ teamId, activity, distance, distUnit, time, typ
   /* axios POST call */
   return async (dispatch) => {
     await axios.post(`${ROOT_URL}/teamworkouts/add`, info, headers).then((response) => {
-      dispatch({ type: FETCH_TEAM_WORKOUTS, payload: response.data });
+      dispatch({ type: ADD_TEAM_WORKOUT, payload: response.data });
     }).catch((error) => {
       console.log(`addTeamWorkout failed: ${error.message}`);
     });
@@ -127,7 +131,7 @@ export function updateTeamWorkout(teamWorkoutId, teamWorkout) {
   /* axios POST call */
   return async (dispatch) => {
     await axios.post(`${ROOT_URL}/teamworkouts/${teamWorkoutId}`, teamWorkout, headers).then((response) => {
-      dispatch({ type: FETCH_TEAM_WORKOUTS, payload: response.data });
+      dispatch({ type: UPDATE_TEAM_WORKOUT, payload: response.data });
     }).catch((error) => {
       console.log(`updateTeamWorkout failed: ${error.message}`);
     });
@@ -151,9 +155,21 @@ export function addResult(result, teamWorkoutId) {
   /* axios POST call */
   return async (dispatch) => {
     await axios.post(`${ROOT_URL}/result/add/${teamWorkoutId}`, result, headers).then((response) => {
-      dispatch({ type: FETCH_TEAM_WORKOUTS, payload: response.data });
+      dispatch({ type: ADD_RESULT, payload: response.data });
     }).catch((error) => {
       console.log(`addResult failed: ${error.message}`);
+    });
+  };
+}
+
+export function updateResult(workoutId, workout) {
+  const headers = { headers: { authorization: localStorage.getItem('token') } };
+  /* axios PUT call */
+  return async (dispatch) => {
+    await axios.put(`${ROOT_URL}/workouts/${workoutId}`, workout, headers).then((response) => {
+      dispatch({ type: UPDATE_RESULT, payload: response.data });
+    }).catch((error) => {
+      console.log(`updateResult failed: ${error.message}`);
     });
   };
 }

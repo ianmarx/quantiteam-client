@@ -153,6 +153,7 @@ class Profile extends Component {
             <AddWorkoutForm
               addWorkout={this.props.addWorkout}
               userId={this.props.match.params.userId}
+              userName={this.props.user.name}
               onModalClose={this.onAddWorkoutModalClose}
             />
           </ReactModal>

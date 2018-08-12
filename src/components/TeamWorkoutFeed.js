@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TeamWorkoutPost from '../containers/TeamWorkoutPost';
+import TeamWorkoutPost from './TeamWorkoutPost';
 
 const TeamWorkoutFeed = (props) => {
   const workoutList = props.teamWorkouts.sort((a, b) => {

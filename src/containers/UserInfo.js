@@ -62,7 +62,8 @@ class UserInfo extends Component {
     this.setState({ classYear: event.target.value });
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
+    event.preventDefault();
     const name = this.state.name;
     const position = this.state.position;
     const height = this.state.height;
@@ -71,7 +72,10 @@ class UserInfo extends Component {
     const userObject = {
       name, position, height, weight, classYear,
     };
-    this.props.updateUser(this.props.user._id, userObject);
+    await this.props.updateUser(this.props.user._id, userObject);
+    this.setState({
+      isEditing: false,
+    });
   }
 
   render() {

@@ -19,6 +19,7 @@ import {
   addResult,
   matchAthlete,
   deleteResult,
+  updateResult,
   fetchTeamWorkout,
   fetchTimeResults,
   fetchDistResults,
@@ -32,7 +33,7 @@ import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
 const mapStateToProps = state => (
   {
     user: state.profile.user,
-    teamSoloWorkouts: state.workouts.teamList,
+    teamSoloWorkouts: state.workouts.list,
     team: state.team.team,
     isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
@@ -73,25 +74,20 @@ class HomePage extends Component {
   componentDidMount() {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserTeam(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
     this.props.fetchTeamWorkouts(this.props.match.params.userId);
     this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
   }
 
-  async onResultDeleteClick(workoutId, teamWorkoutId) {
-    await this.props.deleteResult(workoutId, teamWorkoutId);
-    this.props.fetchTeamWorkout(teamWorkoutId);
+  onResultDeleteClick(workoutId, teamWorkoutId) {
+    this.props.deleteResult(workoutId, teamWorkoutId);
   }
 
-  async onWorkoutDeleteClick(workoutId, userId) {
-    await this.props.deleteWorkout(workoutId, userId);
-    this.props.fetchUser(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
+  onWorkoutDeleteClick(workoutId, userId) {
+    this.props.deleteWorkout(workoutId, userId);
   }
 
-  async onTeamWorkoutDeleteClick(workoutId, teamId) {
-    await this.props.deleteTeamWorkout(workoutId, teamId);
-    this.props.fetchTeamWorkouts(this.props.match.params.userId);
+  onTeamWorkoutDeleteClick(workoutId, teamId) {
+    this.props.deleteTeamWorkout(workoutId, teamId);
   }
 
   async onAddResultClick(teamWorkoutId, prevProps) {
@@ -166,6 +162,7 @@ class HomePage extends Component {
             teamName={this.props.team.name}
             userId={this.props.match.params.userId}
             updateWorkout={this.props.updateWorkout}
+            updateResult={this.props.updateResult}
             updateTeamWorkout={this.props.updateTeamWorkout}
           />
           <ReactModal
@@ -178,6 +175,7 @@ class HomePage extends Component {
             <AddWorkoutForm
               addWorkout={this.props.addWorkout}
               userId={this.props.match.params.userId}
+              userName={this.props.user.name}
               onModalClose={this.onAddWorkoutModalClose}
             />
           </ReactModal>
@@ -195,7 +193,7 @@ class HomePage extends Component {
                   onDeleteClick={this.onResultDeleteClick}
                   fetchDistResults={this.props.fetchDistResults}
                   fetchTimeResults={this.props.fetchTimeResults}
-                  updateWorkout={this.props.updateWorkout}
+                  updateResult={this.props.updateResult}
                   onModalClose={this.onViewResultsModalClose}
                 />
               </div>
@@ -226,8 +224,10 @@ class HomePage extends Component {
               <AddResultForm
                 teamWorkout={this.props.currentTeamWorkout}
                 addResult={this.props.addResult}
+                userId={this.props.match.params.userId}
                 matchAthlete={this.props.matchAthlete}
                 queryResults={this.props.queryResults}
+                fetchTeamWorkout={this.props.fetchTeamWorkout}
                 onModalClose={this.onAddResultModalClose}
               />
             }
@@ -245,6 +245,6 @@ export default withRouter(connect(
     updateWorkout, fetchUserTeam, addWorkout, deleteWorkout, fetchTeamSoloWorkouts,
     addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout,
     deleteTeamWorkout, addResult, fetchDistResults, fetchTimeResults, matchAthlete,
-    deleteResult,
+    deleteResult, updateResult,
   },
 )(HomePage));
