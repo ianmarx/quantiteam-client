@@ -1,13 +1,62 @@
+// @flow
+
 import axios from 'axios';
 import ROOT_URL from './index';
+import getErrorAction from '../utils/actions';
+import type { APIError } from '../types';
+import type { Action } from '../types/actions/workout';
 
 export const FETCH_WORKOUT = 'FETCH_WORKOUT';
-export const FETCH_WORKOUTS = 'FETCH_WORKOUTS';
+export const FETCH_USER_WORKOUTS_SUCCESS = 'FETCH_USER_WORKOUTS_SUCCESS';
+export const FETCH_USER_WORKOUTS_FAILURE = 'FETCH_USER_WORKOUTS_FAILURE';
+export const FETCH_USER_WORKOUTS_REQUEST = 'FETCH_USER_WORKOUTS_REQUEST';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';
-export const FETCH_TEAM_SOLO_WORKOUTS = 'FETCH_TEAM_SOLO_WORKOUTS';
+export const FETCH_SOLO_WORKOUTS_SUCCESS = 'FETCH_SOLO_WORKOUTS_SUCCESS';
+export const FETCH_SOLO_WORKOUTS_FAILURE = 'FETCH_SOLO_WORKOUTS_FAILURE';
+export const FETCH_SOLO_WORKOUTS_REQUEST = 'FETCH_SOLO_WORKOUTS_REQUEST';
 export const FETCH_USER = 'FETCH_USER';
 export const ADD_WORKOUT = 'ADD_WORKOUT';
 export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
+
+export function fetchSoloWorkoutsSuccess(soloWorkouts: Array<Object>) : Action {
+  return {
+    type: FETCH_SOLO_WORKOUTS_SUCCESS,
+    soloWorkouts,
+  };
+}
+
+export function fetchSoloWorkoutsFailure(error: APIError) : Action {
+  return getErrorAction(
+    FETCH_SOLO_WORKOUTS_FAILURE,
+    error,
+  );
+}
+
+export function fetchSoloWorkoutsRequest() : Action {
+  return {
+    type: FETCH_SOLO_WORKOUTS_REQUEST,
+  };
+}
+
+export function fetchUserWorkoutsSuccess(userWorkouts: Array<Object>) : Action {
+  return {
+    type: FETCH_USER_WORKOUTS_SUCCESS,
+    userWorkouts,
+  };
+}
+
+export function fetchUserWorkoutsFailure(error: APIError) : Action {
+  return getErrorAction(
+    FETCH_USER_WORKOUTS_FAILURE,
+    error,
+  );
+}
+
+export function fetchUserWorkoutsRequest() : Action {
+  return {
+    type: FETCH_USER_WORKOUTS_REQUEST,
+  };
+}
 
 export function addWorkout(workout) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
@@ -38,10 +87,11 @@ export function fetchUserWorkouts(userId) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
   /* axios GET call */
   return async (dispatch) => {
+    dispatch(fetchUserWorkoutsRequest());
     await axios.get(`${ROOT_URL}/feed/${userId}`, headers).then((response) => {
-      dispatch({ type: FETCH_WORKOUTS, payload: response.data });
+      dispatch(fetchUserWorkoutsSuccess(response.data));
     }).catch((error) => {
-      console.log(`fetchUserWorkouts failed: ${error.message}`);
+      dispatch(fetchUserWorkoutsFailure(error));
     });
   };
 }
@@ -70,14 +120,15 @@ export function deleteWorkout(workoutId, userId) {
   };
 }
 
-export function fetchTeamSoloWorkouts(userId) {
+export function fetchSoloWorkouts(userId) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
   /* axios GET call */
-  return (dispatch) => {
-    axios.get(`${ROOT_URL}/teamfeed/${userId}`, headers).then((response) => {
-      dispatch({ type: FETCH_TEAM_SOLO_WORKOUTS, payload: response.data });
+  return async (dispatch: Function) => {
+    dispatch(fetchSoloWorkoutsRequest());
+    await axios.get(`${ROOT_URL}/teamfeed/${userId}`, headers).then((response) => {
+      dispatch(fetchSoloWorkoutsSuccess(response.data));
     }).catch((error) => {
-      console.log(`fetchTeamSoloWorkouts failed: ${error.message}`);
+      dispatch(fetchSoloWorkoutsFailure(error));
     });
   };
 }

@@ -8,8 +8,8 @@
     "test": "jest test --coverage --maxWorkers=2",
     "build": "WEBPACK_ENV=production webpack --colors",
     "clean": "rimraf public/build",
-    "surge:dev": "npm run build; surge -p public -d staging.quantiteam.surge.sh; npm run clean",
-    "surge:prod": "npm run build; surge -p public -d quantiteam.com; npm run clean"
+    "deploy-staging": "npm run clean && npm run build; surge -p public -d staging.quantiteam.surge.sh",
+    "deploy-prod": "npm run clean && npm run build; surge -p public -d quantiteam.com"
   },
   "repository": {
     "type": "git",

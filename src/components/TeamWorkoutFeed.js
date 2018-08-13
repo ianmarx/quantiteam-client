@@ -3,32 +3,46 @@ import PropTypes from 'prop-types';
 import TeamWorkoutPost from './TeamWorkoutPost';
 
 const TeamWorkoutFeed = (props) => {
-  const workoutList = props.teamWorkouts.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+  if (props.isFetchingTeamWorkouts) {
+    return (
+      <div className="workout-feed">
+        <div className="feed-title">Team Workouts</div>
+        {props.isCoach &&
+          <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
+        }
+        <div className='loading-screen'>
+          <div>Loading...</div>
+        </div>
+      </div>
+    );
+  } else {
+    const workoutList = props.teamWorkouts.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
 
-  return (
-    <div className="workout-feed">
-      <div className="feed-title">Team Workouts</div>
-      {props.isCoach &&
-        <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
-      }
-      {workoutList.map((workout) => {
-        return (
-          <TeamWorkoutPost
-            userId={workout._creator}
-            teamWorkout={workout}
-            key={workout.date}
-            isCoach={props.isCoach}
-            onDeleteClick={props.onTeamWorkoutDeleteClick}
-            updateTeamWorkout={props.updateTeamWorkout}
-            onResultAddClick={props.onAddResultClick}
-            onViewResultsClick={props.onViewResultsClick}
-          />
-        );
-        })}
-    </div>
-  );
+    return (
+      <div className="workout-feed">
+        <div className="feed-title">Team Workouts</div>
+        {props.isCoach &&
+          <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
+        }
+        {workoutList.map((workout) => {
+          return (
+            <TeamWorkoutPost
+              userId={workout._creator}
+              teamWorkout={workout}
+              key={workout.date}
+              isCoach={props.isCoach}
+              onDeleteClick={props.onTeamWorkoutDeleteClick}
+              updateTeamWorkout={props.updateTeamWorkout}
+              onResultAddClick={props.onAddResultClick}
+              onViewResultsClick={props.onViewResultsClick}
+            />
+          );
+          })}
+      </div>
+    );
+  }
 };
 
 TeamWorkoutFeed.propTypes = {

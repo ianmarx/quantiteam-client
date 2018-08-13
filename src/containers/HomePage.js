@@ -5,7 +5,7 @@ import ReactModal from 'react-modal';
 import { fetchUser } from '../actions/user';
 import {
   fetchUserWorkouts,
-  fetchTeamSoloWorkouts,
+  fetchSoloWorkouts,
   updateWorkout,
   addWorkout,
   deleteWorkout,
@@ -34,10 +34,12 @@ const mapStateToProps = state => (
   {
     user: state.profile.user,
     teamSoloWorkouts: state.workouts.list,
+    isFetchingSoloWorkouts: state.workouts.isFetchingSoloWorkouts,
     team: state.team.team,
     isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
     teamWorkouts: state.teamWorkouts.list,
+    isFetchingTeamWorkouts: state.teamWorkouts.isFetchingTeamWorkouts,
     currentTeamWorkout: state.teamWorkouts.currentTeamWorkout,
     isFetchingTeamWorkout: state.teamWorkouts.isFetchingTeamWorkout,
     isFetchingResults: state.teamWorkouts.isFetchingResults,
@@ -75,7 +77,7 @@ class HomePage extends Component {
     this.props.fetchUser(this.props.match.params.userId);
     this.props.fetchUserTeam(this.props.match.params.userId);
     this.props.fetchTeamWorkouts(this.props.match.params.userId);
-    this.props.fetchTeamSoloWorkouts(this.props.match.params.userId);
+    this.props.fetchSoloWorkouts(this.props.match.params.userId);
   }
 
   onResultDeleteClick(workoutId, teamWorkoutId) {
@@ -140,16 +142,12 @@ class HomePage extends Component {
   }
 
   render() {
-    if (!this.props.user.team) {
-      return (
-        <div>Error 404: Team not found.</div>
-      );
-    }
-
     return (
       <div className="home-page">
         <div className='workout-feed-container'>
           <WorkoutFeed
+            isFetchingSoloWorkouts={this.props.isFetchingSoloWorkouts}
+            isFetchingTeamWorkouts={this.props.isFetchingTeamWorkouts}
             isCoach={this.props.isCoach}
             onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
             onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
@@ -242,7 +240,7 @@ export default withRouter(connect(
   mapStateToProps,
   {
     fetchUser, fetchUserWorkouts,
-    updateWorkout, fetchUserTeam, addWorkout, deleteWorkout, fetchTeamSoloWorkouts,
+    updateWorkout, fetchUserTeam, addWorkout, deleteWorkout, fetchSoloWorkouts,
     addTeamWorkout, fetchTeamWorkouts, fetchTeamWorkout, updateTeamWorkout,
     deleteTeamWorkout, addResult, fetchDistResults, fetchTimeResults, matchAthlete,
     deleteResult, updateResult,

@@ -3,6 +3,9 @@ import {
   FETCH_TEAM_WORKOUT_SUCCESS,
   FETCH_TEAM_WORKOUT_FAILURE,
   FETCH_TEAM_WORKOUT_REQUEST,
+  FETCH_TEAM_WORKOUTS_SUCCESS,
+  FETCH_TEAM_WORKOUTS_FAILURE,
+  FETCH_TEAM_WORKOUTS_REQUEST,
   FETCH_TEAM_WORKOUT_RESULTS_SUCCESS,
   FETCH_TEAM_WORKOUT_RESULTS_FAILURE,
   FETCH_TEAM_WORKOUT_RESULTS_REQUEST,
@@ -21,6 +24,7 @@ const initialState = {
   currentTeamWorkout: {},
   currentResults: [],
   isFetchingTeamWorkout: false,
+  isFetchingTeamWorkouts: false,
   isFetchingResults: false,
 };
 
@@ -41,20 +45,38 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     }
     case FETCH_TEAM_WORKOUT_SUCCESS: {
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingTeamWorkout: false,
         currentTeamWorkout: action.teamWorkout,
       });
     }
     case FETCH_TEAM_WORKOUT_FAILURE: {
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingTeamWorkout: false,
         currentTeamWorkout: {},
       });
     }
     case FETCH_TEAM_WORKOUT_REQUEST: {
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetchingTeamWorkout: true,
         currentTeamWorkout: {},
+      });
+    }
+    case FETCH_TEAM_WORKOUTS_SUCCESS: {
+      return Object.assign({}, state, {
+        isFetchingTeamWorkouts: false,
+        list: action.teamWorkouts,
+      });
+    }
+    case FETCH_TEAM_WORKOUTS_FAILURE: {
+      return Object.assign({}, state, {
+        isFetchingTeamWorkouts: false,
+        list: {},
+      });
+    }
+    case FETCH_TEAM_WORKOUTS_REQUEST: {
+      return Object.assign({}, state, {
+        isFetchingTeamWorkouts: true,
+        list: {},
       });
     }
     case FETCH_TEAM_WORKOUT_RESULTS_SUCCESS: {

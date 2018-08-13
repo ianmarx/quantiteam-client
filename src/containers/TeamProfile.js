@@ -33,6 +33,7 @@ const mapStateToProps = state => (
     isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
     teamWorkouts: state.teamWorkouts.list,
+    isFetchingTeamWorkouts: state.teamWorkouts.isFetchingTeamWorkouts,
     currentTeamWorkout: state.teamWorkouts.currentTeamWorkout,
     currentResults: state.teamWorkouts.currentResults,
     isFetchingTeamWorkout: state.teamWorkouts.isFetchingTeamWorkout,
@@ -68,13 +69,13 @@ class TeamProfile extends Component {
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.props.authenticated) {
       this.props.history.replace('/signin');
     }
-    await this.props.fetchUser(this.props.match.params.userId);
-    await this.props.fetchUserTeam(this.props.match.params.userId);
-    await this.props.fetchTeamWorkouts(this.props.match.params.userId);
+    this.props.fetchUser(this.props.match.params.userId);
+    this.props.fetchUserTeam(this.props.match.params.userId);
+    this.props.fetchTeamWorkouts(this.props.match.params.userId);
   }
 
   async onViewResultsClick(teamWorkoutId, type) {
@@ -134,6 +135,7 @@ class TeamProfile extends Component {
         <div className="team-column">
           <div className='workout-feed-container'>
             <TeamWorkoutFeed
+              isFetchingTeamWorkouts={this.props.isFetchingTeamWorkouts}
               isCoach={this.props.isCoach}
               onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
               onAddResultClick={this.onAddResultClick}

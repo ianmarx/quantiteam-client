@@ -9,6 +9,9 @@ import type { Action } from '../types/actions/teamworkout';
 export const FETCH_TEAM_WORKOUT_SUCCESS = 'FETCH_TEAM_WORKOUT_SUCCESS';
 export const FETCH_TEAM_WORKOUT_FAILURE = 'FETCH_TEAM_WORKOUT_FAILURE';
 export const FETCH_TEAM_WORKOUT_REQUEST = 'FETCH_TEAM_WORKOUT_REQUEST';
+export const FETCH_TEAM_WORKOUTS_SUCCESS = 'FETCH_TEAM_WORKOUTS_SUCCESS';
+export const FETCH_TEAM_WORKOUTS_FAILURE = 'FETCH_TEAM_WORKOUTS_FAILURE';
+export const FETCH_TEAM_WORKOUTS_REQUEST = 'FETCH_TEAM_WORKOUTS_REQUEST';
 export const FETCH_TEAM_WORKOUT_RESULTS_SUCCESS = 'FETCH_TEAM_WORKOUT_RESULTS_SUCCESS';
 export const FETCH_TEAM_WORKOUT_RESULTS_FAILURE = 'FETCH_TEAM_WORKOUT_RESULTS_FAILURE';
 export const FETCH_TEAM_WORKOUT_RESULTS_REQUEST = 'FETCH_TEAM_WORKOUT_RESULTS_REQUEST';
@@ -41,6 +44,26 @@ export function fetchTeamWorkoutFailure(error: APIError) : Action {
 export function fetchTeamWorkoutRequest() : Action {
   return {
     type: FETCH_TEAM_WORKOUT_REQUEST,
+  };
+}
+
+export function fetchTeamWorkoutsSuccess(teamWorkouts: Array<Object>) : Action {
+  return {
+    type: FETCH_TEAM_WORKOUTS_SUCCESS,
+    teamWorkouts,
+  };
+}
+
+export function fetchTeamWorkoutsFailure(error: APIError) : Action {
+  return getErrorAction(
+    FETCH_TEAM_WORKOUTS_FAILURE,
+    error,
+  );
+}
+
+export function fetchTeamWorkoutsRequest() : Action {
+  return {
+    type: FETCH_TEAM_WORKOUTS_REQUEST,
   };
 }
 
@@ -118,10 +141,11 @@ export function fetchTeamWorkouts(userId) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
   /* axios GET call */
   return async (dispatch) => {
+    dispatch(fetchTeamWorkoutsRequest());
     await axios.get(`${ROOT_URL}/teamworkouts/${userId}`, headers).then((response) => {
-      dispatch({ type: FETCH_TEAM_WORKOUTS, payload: response.data });
+      dispatch(fetchTeamWorkoutsSuccess(response.data));
     }).catch((error) => {
-      console.log(`fetchTeamWorkouts failed: ${error.message}`);
+      dispatch(fetchTeamWorkoutsFailure);
     });
   };
 }

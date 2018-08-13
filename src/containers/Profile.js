@@ -18,6 +18,7 @@ const mapStateToProps = state => (
   {
     user: state.profile.user,
     userWorkouts: state.workouts.list,
+    isFetchingUserWorkouts: state.workouts.isFetchingUserWorkouts,
     team: state.team.team,
     isCoach: state.team.isCoach,
     authenticated: state.auth.authenticated,
@@ -51,18 +52,14 @@ class Profile extends Component {
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.props.authenticated) {
       this.props.history.replace('/signin');
     }
 
     this.props.fetchUser(this.props.match.params.userId);
-    await this.props.fetchUserWorkouts(this.props.match.params.userId);
-    await this.props.fetchUserTeam(this.props.match.params.userId);
-
-    this.props.userWorkouts.sort((a, b) => {
-      return new Date(b.date) - new Date(a.date);
-    });
+    this.props.fetchUserTeam(this.props.match.params.userId);
+    this.props.fetchUserWorkouts(this.props.match.params.userId);
   }
 
   async onResultDeleteClick(workoutId, teamWorkoutId) {
@@ -136,6 +133,7 @@ class Profile extends Component {
         <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
         <div className='workout-feed-container'>
           <SoloWorkoutFeed
+            isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
             isCoach={this.props.isCoach}
             onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
             onWorkoutDeleteClick={this.onWorkoutDeleteClick}
