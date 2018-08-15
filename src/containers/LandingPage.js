@@ -43,7 +43,7 @@ class LandingPage extends Component {
           Quantiteam is the leading platform for tracking performance data in team-based endurance sports.
         </div>
         <div className="button-group">
-          <button className="sign-up button" onClick={this.onSignUpClick}>Join Quantiteam</button>
+          <button className="sign-up-button" onClick={this.onSignUpClick}>Join Quantiteam</button>
         </div>
         <div className="already-user">
           Already a user? <NavLink to="/signin"><strong>Sign in here.</strong></NavLink>

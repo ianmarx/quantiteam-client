@@ -7,19 +7,22 @@ $div-background: #e8e8e8;
   align-items: flex-start;
 
   margin-top: 50px;
-  margin-left: 80px;
-  margin-right: 80px;
   border-radius: 5px;
-  padding: 10px;
-  background-color: $div-background;
-  color: black;
-  height: 90%;
 
-  .profile-feed-title {
-    display: fixed;
-    font-size: 36px;
-    margin-top: 40px;
+  @media only screen and (max-width: 800px) {
+    margin-left: 20px;
+    margin-right: 20px;
   }
+
+  @media only screen and (max-width: 550px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  padding: 10px;
+  color: black;
 
   .user-info {
     display: flex;
@@ -32,10 +35,24 @@ $div-background: #e8e8e8;
     margin-left: 20px;
     width: 25%;
 
+    @media only screen and (max-width: 550px) {
+      justify-content: space-around;
+      margin-left: 0px;
+      margin-right: 0px;
+      width: 100%;
+      .info-list {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
     div {
       border-style: none;
       border-radius: 5px;
       margin: 10px 5px;
+      @media only screen and (max-width: 550px) {
+        margin: 5px 5px;
+      }
     }
 
     .row-unit {
@@ -44,19 +61,12 @@ $div-background: #e8e8e8;
 
     .user-name {
       font-size: 36px;
+      @media only screen and (max-width: 550px) {
+        font-size: 24px;
+      }
     }
     .team-name {
       font-weight: bold;
-    }
-
-    .profile-feed-title {
-      display: fixed;
-      font-size: 36px;
-      margin-top: 40px;
-    }
-
-    .VictoryContainer {
-      height: 50% !important;
     }
 
     &.edit {
@@ -97,9 +107,4 @@ $div-background: #e8e8e8;
       }
     }
   }
-}
-
-.user-column-group {
-  display: flex;
-  flex-direction: row;
 }

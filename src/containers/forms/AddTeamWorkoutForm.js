@@ -129,7 +129,7 @@ class AddTeamWorkoutForm extends Component {
             <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
           }
           {this.showActivitySelect() &&
-            <div className='form-row'>
+            <div className='form-row activity'>
               <button id="erg-select" className="activity-select" onClick={this.onErgSelect}>Erg</button>
               <button id="row-select" className="activity-select" onClick={this.onRowSelect}>Row</button>
               <button id="run-select" className="activity-select" onClick={this.onRunSelect}>Run</button>
@@ -137,7 +137,7 @@ class AddTeamWorkoutForm extends Component {
             </div>
           }
           {this.showTypeSelect() &&
-            <div className='form-row'>
+            <div className='form-row type'>
               <button className="type-select" onClick={this.onDistSelect}>Distance</button>
               <button className="type-select" onClick={this.onTimeSelect}>Time</button>
             </div>

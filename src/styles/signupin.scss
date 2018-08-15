@@ -12,6 +12,13 @@
   border-radius: 10px;
   font-size: 25px;
 
+  @media only screen and (max-width: 550px) {
+    width: 80%;
+    margin: 25% 10% 0%;
+    font-size: 24px;
+    height: auto;
+  }
+
   form {
     align-self: center;
     display: flex;
@@ -19,6 +26,11 @@
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
+
+    @media only screen and (max-width: 550px) {
+      padding: 10px;
+      width: 90%;
+    }
 
     h2, h3 {
       margin: 15px;
@@ -51,12 +63,19 @@
       margin-bottom: 5px;
       text-align: center;
 
+      @media only screen and (max-width: 550px) {
+        width: 100%;
+      }
+
     }
 
     .team-name, .team-code {
       input {
         margin-top: 15px;
         text-align: center;
+      }
+      @media only screen and (max-width: 550px) {
+        margin-top: 15px;
       }
     }
 
@@ -86,6 +105,14 @@
       border-style: none;
       border-radius: 5px;
       padding-left: 5px;
+
+      @media only screen and (max-width: 650px) {
+        width: 100%;
+      }
+      @media only screen and (max-width: 400px) {
+        height: 35px;
+        font-size: 16px;
+      }
     }
 
     button {
@@ -96,6 +123,10 @@
       font-size: 20px;
       color: white;
 
+      @media only screen and (max-width: 400px) {
+        font-size: 18px;
+      }
+
       &:hover {
         cursor: pointer;
       }
@@ -104,12 +135,22 @@
     .team-name {
       input {
         width: 95%;
+        @media only screen and (max-width: 550px) {
+          font-size: 18px;
+          width: 75%;
+        }
+        @media only screen and (max-width: 550px) {
+          width: 70%;
+        }
       }
     }
 
     .team-code {
       input {
         width: 50%;
+        @media only screen and (max-width: 400px) {
+          font-size: 18px;
+        }
       }
     }
 

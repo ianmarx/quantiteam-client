@@ -14,6 +14,11 @@
   &:active {
     background-color: #1c5b7f;
   }
+  @media only screen and (max-width: 550px) {
+    font-size: 16px;
+    height: 30px;
+    width: 140px;
+  }
 }
 #team-workout-modal-button {
   margin: 5px;
@@ -30,6 +35,11 @@
   }
   &:active {
     background-color: #1c5b7f;
+  }
+  @media only screen and (max-width: 550px) {
+    font-size: 16px;
+    height: 30px;
+    width: 180px;
   }
 }
 #create-modal-button {
@@ -80,6 +90,13 @@
   &:active {
     background-color: #577d93;
   }
+  @media only screen and (max-width: 550px) {
+    font-size: 16px;
+    height: 30px;
+  }
+  @media only screen and (max-width: 450px) {
+    font-size: 14px;
+  }
 }
 #view-result-modal-button {
   margin: 5px;
@@ -94,6 +111,13 @@
   }
   &:active {
     background-color: #54825d;
+  }
+  @media only screen and (max-width: 550px) {
+    font-size: 16px;
+    height: 30px;
+  }
+  @media only screen and (max-width: 450px) {
+    font-size: 14px;
   }
 }
 
