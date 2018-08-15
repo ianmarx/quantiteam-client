@@ -16,6 +16,7 @@ import AddWorkoutForm from './forms/AddWorkoutForm';
 
 const mapStateToProps = state => (
   {
+    currentUserId: localStorage.getItem('userId'),
     user: state.profile.user,
     userWorkouts: state.workouts.list,
     isFetchingUserWorkouts: state.workouts.isFetchingUserWorkouts,
@@ -133,12 +134,13 @@ class Profile extends Component {
         <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
         <div className='workout-feed-container'>
           <SoloWorkoutFeed
+            profileUserId={this.props.user._id}
             isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
             isCoach={this.props.isCoach}
             onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
             onWorkoutDeleteClick={this.onWorkoutDeleteClick}
             soloWorkouts={this.props.userWorkouts}
-            userId={this.props.match.params.userId}
+            currentUserId={this.props.currentUserId}
             updateWorkout={this.props.updateWorkout}
           />
           <ReactModal

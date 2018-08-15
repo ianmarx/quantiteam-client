@@ -16,6 +16,7 @@ class WorkoutPost extends Component {
       strokeRate: '',
       watts: '',
       avgHR: '',
+      showingDetails: false,
     };
 
     this.onActivityChange = this.onActivityChange.bind(this);
@@ -29,6 +30,8 @@ class WorkoutPost extends Component {
     this.onWattsChange = this.onWattsChange.bind(this);
     this.onLocalDeleteClick = this.onLocalDeleteClick.bind(this);
     this.onLocalEditClick = this.onLocalEditClick.bind(this);
+    this.onShowDetailsClick = this.onShowDetailsClick.bind(this);
+    this.onHideDetailsClick = this.onHideDetailsClick.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -60,7 +63,7 @@ class WorkoutPost extends Component {
   }
 
   onLocalDeleteClick(event) {
-    this.props.onDeleteClick(this.props.workout._id, this.props.userId);
+    this.props.onDeleteClick(this.props.workout._id, this.props.workout._creator);
   }
 
   /* Handle changes in the add workout fields */
@@ -104,6 +107,14 @@ class WorkoutPost extends Component {
     this.setState({ isEditing: false });
   }
 
+  onShowDetailsClick(event) {
+    this.setState({ showingDetails: true });
+  }
+
+  onHideDetailsClick(event) {
+    this.setState({ showingDetails: false });
+  }
+
   async onSubmit(event) {
     event.preventDefault();
     const activity = this.state.activity;
@@ -133,72 +144,108 @@ class WorkoutPost extends Component {
   }
 
   render() {
+    const date = this.props.workout.date;
+    const dateObject = new Date(date);
+    const month = dateObject.getMonth() + 1;
+    const day = dateObject.getDate();
+    const year = dateObject.getFullYear().toString().substr(-2);
+    const dateString = `${month}/${day}/${year}`;
+
     if (this.state.isEditing) {
       return (
         <form className="workout-post edit" onSubmit={this.onSubmit}>
-          <div className='row-unit'>
-            <input className='input-md' onChange={this.onDistanceChange} value={this.state.distance} type="text" />
-            <div>{this.props.workout.distUnit} {this.props.workout.activity}</div>
+          <div className="workout-post-header">
+            <NavLink className='workout-creator' to={`/profile/${this.props.workout._creator}`}>
+              {this.props.workout.creatorName}
+            </NavLink>
+            <div>{dateString}</div>
           </div>
-          <div className='row-unit'>
-            <div>H</div>
-            <input className='input-sm' onChange={this.onHoursChange} value={this.state.hours} type="text" />
-            <div>M</div>
-            <input className='input-sm' onChange={this.onMinutesChange} value={this.state.minutes} type="text" />
-            <div>S</div>
-            <input className='input-sm' onChange={this.onSecondsChange} value={this.state.seconds} type="text" />
+          <div className='workout-post-content'>
+            <div className='row-unit'>
+              <input className='input-md' onChange={this.onDistanceChange} value={this.state.distance} type="text" />
+              <div>{this.props.workout.distUnit} {this.props.workout.activity}</div>
+            </div>
+            <div className='row-unit'>
+              <div>H</div>
+              <input className='input-sm' onChange={this.onHoursChange} value={this.state.hours} type="text" />
+              <div>M</div>
+              <input className='input-sm' onChange={this.onMinutesChange} value={this.state.minutes} type="text" />
+              <div>S</div>
+              <input className='input-sm' onChange={this.onSecondsChange} value={this.state.seconds} type="text" />
+            </div>
           </div>
-          <div className='row-unit'>
-            <input className='input-sm' onChange={this.onHeartRateChange}
-              value={this.state.avgHR}
-              type="text"
-            />
-            <div>bpm</div>
+          <div className='workout-post-details'>
+            <div className='row-unit'>
+              <input className='input-sm' onChange={this.onHeartRateChange}
+                value={this.state.avgHR}
+                type="text"
+              />
+              <div>bpm</div>
+            </div>
+            <div className='row-unit'>
+              <input className='input-sm' onChange={this.onStrokeRateChange}
+                value={this.state.strokeRate}
+                type="text"
+              />
+              <div>s/m</div>
+            </div>
           </div>
-          <div className='row-unit'>
-            <input className='input-sm' onChange={this.onStrokeRateChange}
-              value={this.state.strokeRate}
-              type="text"
-            />
-            <div>s/m</div>
-          </div>
-          <div className='row-unit'>
-            <button type="button" className="workout-edit-cancel" onClick={this.onCancelClick}><i className="fas fa-times" /></button>
-            <button type="submit" className="workout-edit-submit"><i className="fas fa-check" /></button>
+          <div className='workout-post-footer'>
+            <div className='row-unit'>
+              <button type="button" className="workout-edit-cancel" onClick={this.onCancelClick}><i className="fas fa-times" /></button>
+              <button type="submit" className="workout-edit-submit"><i className="fas fa-check" /></button>
+            </div>
           </div>
         </form>
       );
     } else {
       return (
-        <div className="workout-post">
-          <div className="workout-div-creator">
-            <NavLink to={`/profile/${this.props.userId}`}>
-              <div className="profile-link">{this.props.workout.creatorName}</div>
+        <div className={`workout-post ${this.state.showingDetails && 'show-details'}`}>
+          <div className="workout-post-header">
+            <NavLink className='workout-creator' to={`/profile/${this.props.workout._creator}`}>
+              {this.props.workout.creatorName}
             </NavLink>
+            <div>{dateString}</div>
           </div>
-          <div className='row-unit'>
-            <div>{this.props.workout.distance} {this.props.workout.distUnit} {this.props.workout.activity}</div>
-            <div>{this.props.workout.timeString}</div>
-            {this.props.workout.splitString &&
-              <div>{this.props.workout.splitString} s/500m</div>
-            }
-            {this.props.workout.strokeRate &&
-              <div>{this.props.workout.strokeRate} s/m</div>
-            }
-            {this.props.workout.avgHR &&
-              <div>{this.props.workout.avgHR} bpm</div>
-            }
-          </div>
-          {!this.props.isCoach &&
+          <div className='workout-post-content'>
             <div className='row-unit'>
-              <div className="icon">
-                <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
-              </div>
-              <div className="icon">
-                <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
-              </div>
+              <div>{this.props.workout.distance} {this.props.workout.distUnit} {this.props.workout.activity}</div>
+              <div>{this.props.workout.timeString}</div>
+              {this.props.workout.splitString &&
+                <div>{this.props.workout.splitString} s/500m</div>
+              }
+            </div>
+          </div>
+          {this.state.showingDetails &&
+            <div className='workout-post-details'>
+              {(this.props.workout.strokeRate || this.props.workout.avgHR) ? (
+                <div className='row-unit'>
+                  {this.props.workout.strokeRate &&
+                    <div>{this.props.workout.strokeRate} s/m</div>
+                  }
+                  {this.props.workout.avgHR &&
+                    <div>{this.props.workout.avgHR} bpm</div>
+                  }
+                </div>
+              ) : (
+                <div>No workout details have been added.</div>
+              )}
             </div>
           }
+          <div className='workout-post-footer'>
+            {this.state.showingDetails ? (
+              <i className="fas fa-angle-double-up" onClick={this.onHideDetailsClick} />
+            ) : (
+              <i className="fas fa-angle-double-down" onClick={this.onShowDetailsClick} />
+            )}
+            {this.props.workout._creator === this.props.currentUserId &&
+              <div className='icon row-unit'>
+                <i onClick={this.onLocalEditClick} className="fas fa-edit" />
+                <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
+              </div>
+            }
+
+          </div>
         </div>
       );
     }

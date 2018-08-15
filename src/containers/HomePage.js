@@ -32,6 +32,7 @@ import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
 
 const mapStateToProps = state => (
   {
+    currentUserId: localStorage.getItem('userId'),
     user: state.profile.user,
     teamSoloWorkouts: state.workouts.list,
     isFetchingSoloWorkouts: state.workouts.isFetchingSoloWorkouts,
@@ -158,7 +159,7 @@ class HomePage extends Component {
             soloWorkouts={this.props.teamSoloWorkouts}
             teamWorkouts={this.props.teamWorkouts}
             teamName={this.props.team.name}
-            userId={this.props.match.params.userId}
+            currentUserId={this.props.currentUserId}
             updateWorkout={this.props.updateWorkout}
             updateResult={this.props.updateResult}
             updateTeamWorkout={this.props.updateTeamWorkout}
@@ -186,6 +187,7 @@ class HomePage extends Component {
             {!this.props.isFetchingResults &&
               <div className='results-modal-container'>
                 <ResultsView
+                  isCoach={this.props.isCoach}
                   results={this.props.currentResults}
                   teamWorkout={this.props.currentTeamWorkout}
                   onDeleteClick={this.onResultDeleteClick}

@@ -142,7 +142,6 @@ class TeamProfile extends Component {
               onViewResultsClick={this.onViewResultsClick}
               onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
               teamWorkouts={this.props.teamWorkouts}
-              userId={this.props.match.params.userId}
               updateWorkout={this.props.updateWorkout}
               updateTeamWorkout={this.props.updateTeamWorkout}
             />
@@ -155,6 +154,7 @@ class TeamProfile extends Component {
               {!this.props.isFetchingResults &&
                 <div className='results-modal-container'>
                   <ResultsView
+                    isCoach={this.props.isCoach}
                     results={this.props.currentResults}
                     teamWorkout={this.props.currentTeamWorkout}
                     onDeleteClick={this.onResultDeleteClick}

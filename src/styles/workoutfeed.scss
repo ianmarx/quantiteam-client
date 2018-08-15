@@ -1,4 +1,5 @@
 .workout-feed, .results-feed {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -18,8 +19,127 @@
     justify-content: flex-start;
   }
 
-
   .workout-post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f4f4f4;
+    margin: 5px 10px;
+    border-radius: 3px;
+    border-style: none;
+    width: 98%;
+
+    .workout-post-header {
+      width: 95%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 10px;
+    }
+
+    .workout-post-content {
+      width: 95%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 10px;
+    }
+
+    .workout-post-details {
+      width: 95%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 10px;
+    }
+
+    .workout-post-footer {
+      width: 95%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 10px;
+    }
+
+    .row-unit {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0px;
+
+      div {
+        margin: 0px 10px;
+      }
+
+      &.icon {
+        i {
+          font-size: 18px;
+          margin: 0px 8px;
+        }
+      }
+    }
+
+    i {
+      font-size: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    select {
+      height: 20px;
+      font-size: 16px;
+      border-style: none;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    input {
+      font-size: 20px;
+      border-style: none;
+      border-radius: 5px;
+    }
+
+    .workout-creator {
+      color: black;
+      background-color: none;
+      text-decoration: underline;
+    }
+
+    &.edit {
+      .row-unit {
+        margin: 0px;
+      }
+      .workout-post-footer {
+        justify-content: flex-end;
+      }
+
+      input {
+        height: 25px;
+        font-size: 16px;
+      }
+
+
+      .input-sm {
+        max-width: 30px;
+        height: 25px;
+      }
+
+      .input-md {
+        max-width: 50px;
+      }
+
+      button {
+        margin: 0px 5px;
+      }
+    }
+  }
+
+  .team-workout-post {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -28,7 +148,7 @@
     margin: 5px 10px;
     border-radius: 3px;
     border-style: none;
-    width: 100%;
+    width: 98%;
 
     div {
       margin: 5px 10px;
@@ -39,6 +159,13 @@
       flex-direction: row;
       align-items: center;
       margin: 0px;
+
+      &.icon {
+        i {
+          font-size: 18px;
+          margin: 0px 8px;
+        }
+      }
     }
 
     i {

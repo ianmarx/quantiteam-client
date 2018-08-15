@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import WorkoutPost from './WorkoutPost';
+import LoadingScreen from './mini/LoadingScreen';
 
 const SoloWorkoutFeed = (props) => {
   if (props.isFetchingUserWorkouts) {
     return (
       <div className="workout-feed">
         <div className="feed-title">Workouts</div>
-        <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
-        <div className='loading-screen'>
-          <div>Loading...</div>
-        </div>
+        {props.profileUserId === props.currentUserId &&
+          <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
+        }
+        <LoadingScreen />
       </div>
     );
   } else {
@@ -21,17 +22,18 @@ const SoloWorkoutFeed = (props) => {
     return (
       <div className="workout-feed">
         <div className="feed-title">Workouts</div>
-        <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
+        {props.profileUserId === props.currentUserId &&
+          <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
+        }
         {workoutList.map((workout) => {
           return (
             <WorkoutPost
-              userId={workout._creator}
               workout={workout}
               key={workout.date}
               isCoach={props.isCoach}
               onDeleteClick={props.onWorkoutDeleteClick}
               updateWorkout={props.updateWorkout}
-              currentUserId={props.userId}
+              currentUserId={props.currentUserId}
             />
           );
           })}

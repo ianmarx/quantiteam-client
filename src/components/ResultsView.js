@@ -22,6 +22,7 @@ const ResultsView = (props) => {
       {props.results.map((workout) => {
         return (
           <ResultPost
+            isCoach={props.isCoach}
             workout={workout}
             key={workout.date}
             teamWorkoutId={props.teamWorkout._id}

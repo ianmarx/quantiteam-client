@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import WorkoutPost from './WorkoutPost';
 import TeamWorkoutPost from './TeamWorkoutPost';
+import LoadingScreen from './mini/LoadingScreen';
 
 const WorkoutFeed = (props) => {
   if (props.isFetchingSoloWorkouts || props.isFetchingTeamWorkouts) {
@@ -14,9 +15,7 @@ const WorkoutFeed = (props) => {
           <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
         )
         }
-        <div className='loading-screen'>
-          <div>Loading...</div>
-        </div>
+        <LoadingScreen />
       </div>
     );
   } else {
@@ -38,19 +37,17 @@ const WorkoutFeed = (props) => {
           if (workout.creatorName) {
               return (
                 <WorkoutPost
-                  userId={workout._creator}
                   workout={workout}
                   key={workout.date}
                   isCoach={props.isCoach}
                   onDeleteClick={props.onWorkoutDeleteClick}
                   updateWorkout={props.updateWorkout}
-                  currentUserId={props.userId}
+                  currentUserId={props.currentUserId}
                 />
               );
             } else {
               return (
                 <TeamWorkoutPost
-                  userId={workout._creator}
                   teamWorkout={workout}
                   key={workout.date}
                   isCoach={props.isCoach}

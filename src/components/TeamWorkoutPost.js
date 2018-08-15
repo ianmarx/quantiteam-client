@@ -121,7 +121,7 @@ class TeamWorkoutPost extends Component {
   render() {
     if (this.state.isEditing) {
       return (
-        <form className="workout-post edit" key={this.props.index} onSubmit={this.onSubmit}>
+        <form className="team-workout-post edit" key={this.props.index} onSubmit={this.onSubmit}>
           {this.state.type === 'distance' &&
             <div className="row-unit">
               <input className='input-md' onChange={this.onDistanceChange} value={this.state.distance} type="text" />
@@ -163,7 +163,7 @@ class TeamWorkoutPost extends Component {
       );
     } else {
       return (
-        <div className="workout-post" key={this.props.index}>
+        <div className="team-workout-post">
           <div><strong>Team</strong></div>
           <div className="row-unit">
             {this.props.teamWorkout.type === 'distance' &&
@@ -180,13 +180,9 @@ class TeamWorkoutPost extends Component {
             <button id="view-result-modal-button" onClick={this.onLocalViewClick}>View</button>
           </div>
           {this.props.isCoach &&
-            <div className="row-unit">
-              <div className="icon">
-                <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
-              </div>
-              <div className="icon">
-                <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
-              </div>
+            <div className="icon row-unit">
+              <i onClick={this.onLocalEditClick} className="fas fa-edit" />
+              <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
             </div>
           }
         </div>

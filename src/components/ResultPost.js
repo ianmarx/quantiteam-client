@@ -188,14 +188,16 @@ class ResultPost extends Component {
           {this.props.workout.avgHR &&
             <div>{this.props.workout.avgHR} bpm</div>
           }
-          <div className='row-unit'>
-            <div className="icon">
-              <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+          {this.props.isCoach &&
+            <div className='row-unit'>
+              <div className="icon">
+                <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+              </div>
+              <div className="icon">
+                <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
+              </div>
             </div>
-            <div className="icon">
-              <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
-            </div>
-          </div>
+          }
         </div>
       );
     }

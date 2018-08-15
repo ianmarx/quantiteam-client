@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TeamWorkoutPost from './TeamWorkoutPost';
+import LoadingScreen from './mini/LoadingScreen';
 
 const TeamWorkoutFeed = (props) => {
   if (props.isFetchingTeamWorkouts) {
@@ -10,9 +11,7 @@ const TeamWorkoutFeed = (props) => {
         {props.isCoach &&
           <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
         }
-        <div className='loading-screen'>
-          <div>Loading...</div>
-        </div>
+        <LoadingScreen />
       </div>
     );
   } else {
@@ -29,7 +28,6 @@ const TeamWorkoutFeed = (props) => {
         {workoutList.map((workout) => {
           return (
             <TeamWorkoutPost
-              userId={workout._creator}
               teamWorkout={workout}
               key={workout.date}
               isCoach={props.isCoach}
