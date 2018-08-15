@@ -1,7 +1,7 @@
 # Quantiteam
 
 ## About
-Quantiteam is a website designed for athletes to track their performance data, whether training individually or in a team environment.
+Quantiteam is a website designed for athletes and coaches to track performance data in a team environment.
 
 ## Dependencies
 The Quantiteam front-end uses these web tools:
