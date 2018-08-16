@@ -170,7 +170,7 @@ class ResultPost extends Component {
     } else {
       return (
         <div className="result-post" key={this.props.index}>
-          <div className="workout-div-creator">
+          <div className='athlete-name'>
             <strong>{this.props.workout.creatorName}</strong>
           </div>
           {this.props.type === 'time' &&

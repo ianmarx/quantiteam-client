@@ -126,7 +126,7 @@ class AddWorkoutForm extends Component {
         <div className="form-container">
           <form className="modal-form" onSubmit={this.onSubmit}>
             <div className="form-title">New Workout</div>
-            <div className='form-row'>
+            <div className='form-row activity'>
               <button id="erg-select" className="activity-select" onClick={this.onErgSelect}>Erg</button>
               <button id="row-select" className="activity-select" onClick={this.onRowSelect}>Row</button>
               <button id="run-select" className="activity-select" onClick={this.onRunSelect}>Run</button>

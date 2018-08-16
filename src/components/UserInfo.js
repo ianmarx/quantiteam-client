@@ -119,14 +119,26 @@ class UserInfo extends Component {
       return (
         <div className="user-info">
           <div className="user-name">{this.props.user.name}</div>
-          <div className="team-name">{this.props.team.name}</div>
-          <div>{this.props.user.height} in</div>
-          <div>{this.props.user.weight} lb</div>
-          <div>{this.props.user.position}</div>
-          <div>{this.props.user.classYear}</div>
-          <div className="icon">
-            <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+          <div className='info-list'>
+            <div className="team-name">{this.props.team.name}</div>
+            {this.props.user.height !== 0 &&
+              <div>{this.props.user.height} in</div>
+            }
+            {this.props.user.weight !== 0 &&
+              <div>{this.props.user.weight} lb</div>
+            }
+            {this.props.user.position !== '' &&
+              <div>{this.props.user.position}</div>
+            }
+            {this.props.user.classYear !== 0 &&
+              <div>{this.props.user.classYear}</div>
+            }
           </div>
+          {this.props.currentUserId === this.props.user._id &&
+            <div className="icon">
+              <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+            </div>
+          }
         </div>
       );
     }

@@ -10,7 +10,7 @@ import {
   deleteWorkout,
 } from '../actions/workout';
 import { fetchUserTeam } from '../actions/team';
-import UserInfo from './UserInfo';
+import UserInfo from '../components/UserInfo';
 import SoloWorkoutFeed from '../components/SoloWorkoutFeed';
 import AddWorkoutForm from './forms/AddWorkoutForm';
 
@@ -131,7 +131,13 @@ class Profile extends Component {
   render() {
     return (
       <div className="profile-page">
-        <UserInfo user={this.props.user} team={this.props.team} updateUser={this.props.updateUser} />
+        <UserInfo
+          user={this.props.user}
+          currentUserId={this.props.currentUserId}
+          isCoach={this.props.isCoach}
+          team={this.props.team}
+          updateUser={this.props.updateUser}
+        />
         <div className='workout-feed-container'>
           <SoloWorkoutFeed
             profileUserId={this.props.user._id}

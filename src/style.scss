@@ -12,7 +12,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: white;
-  background-color: #242628;
+  background-color: #e8e8e8;
 }
 
 a {
@@ -45,11 +45,23 @@ nav {
     flex-direction: row;
     justify-content: flex-end;
 
+    @media only screen and (max-width: 650px) {
+      font-size: 16px;
+    }
+    @media only screen and (max-width: 400px) {
+      justify-content: center;
+    }
+
     div {
       margin: 5px;
       padding: 10px;
       border: 2px solid transparent;
       border-radius: 5px;
+      @media only screen and (max-width: 500px) {
+        padding: 8px;
+        margin: 2px;
+        font-size: 14px;
+      }
     }
 
     div:hover, #signout-button:hover {
@@ -64,9 +76,23 @@ nav {
       font-weight: 550;
       margin: 0px;
 
+      @media only screen and (max-width: 650px) {
+        font-size: 16px;
+        margin-top: 2px;
+      }
+
+      @media only screen and (max-width: 400px) {
+        display: none;
+      }
+
       sup {
         font-size: 16px;
         font-weight: 400;
+
+        @media only screen and (max-width: 650px) {
+          font-size: 8px;
+          font-weight: lighter;
+        }
       }
     }
 

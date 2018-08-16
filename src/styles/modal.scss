@@ -47,6 +47,12 @@
     align-items: center;
     width: 100%;
     margin: 10px 0px;
+
+    &.activity, &.type {
+      @media only screen and (max-width: 550px) {
+        flex-direction: column;
+      }
+    }
   }
 
   input {

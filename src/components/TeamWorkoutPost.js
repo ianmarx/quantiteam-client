@@ -175,7 +175,7 @@ class TeamWorkoutPost extends Component {
           </div>
           <div className="row-unit">
             {this.props.isCoach &&
-              <button id="result-modal-button" onClick={this.onLocalResultAddClick}>Add Result</button>
+              <button id="result-modal-button" onClick={this.onLocalResultAddClick}>Record</button>
             }
             <button id="view-result-modal-button" onClick={this.onLocalViewClick}>View</button>
           </div>

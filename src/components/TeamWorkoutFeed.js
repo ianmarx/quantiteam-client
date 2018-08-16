@@ -8,9 +8,6 @@ const TeamWorkoutFeed = (props) => {
     return (
       <div className="workout-feed">
         <div className="feed-title">Team Workouts</div>
-        {props.isCoach &&
-          <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
-        }
         <LoadingScreen />
       </div>
     );
