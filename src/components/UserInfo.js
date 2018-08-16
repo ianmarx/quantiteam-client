@@ -101,7 +101,7 @@ class UserInfo extends Component {
           <div className='row-unit'>
             <div>Position</div>
             <select value={this.state.position} onChange={this.onPositionChange}>
-              <option default value="None">Select</option>
+              <option default value="">Select</option>
               <option value="Port">Port</option>
               <option value="Starboard">Starboard</option>
               <option value="Port/Starboard">Port/Starboard</option>
@@ -136,7 +136,7 @@ class UserInfo extends Component {
           </div>
           {this.props.currentUserId === this.props.user._id &&
             <div className="icon">
-              <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+              <i onClick={this.onLocalEditClick} className="fas fa-edit" />
             </div>
           }
         </div>

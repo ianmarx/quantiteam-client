@@ -8,9 +8,11 @@
 @import '/styles/results.scss';
 @import '/styles/workoutfeed.scss';
 @import '/styles/loading.scss';
+@import '/styles/roster.scss';
 
 body {
   font-family: "Open Sans", sans-serif;
+  font-display: auto;
   color: white;
   background-color: #e8e8e8;
 }

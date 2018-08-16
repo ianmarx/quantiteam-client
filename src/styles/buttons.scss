@@ -42,10 +42,9 @@
     width: 180px;
   }
 }
-#create-modal-button {
-  margin: 5px;
-  margin-top: 10px;
-  height: 40px;
+
+.view-roster-button {
+  height: 30px;
   width: 120px;
   font-size: 18px;
   border: none;
@@ -57,6 +56,11 @@
   }
   &:active {
     background-color: #d68e08;
+  }
+  @media only screen and (max-width: 550px) {
+    font-size: 16px;
+    height: 30px;
+    width: 120px;
   }
 }
 #join-modal-button {
@@ -144,5 +148,27 @@
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.modal-submit, .modal-close {
+  margin: 10px 5px 5px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  background-color: #1da55f;
+  &:not(.modal-submit) {
+    background-color: #595959;
+    &:active {
+      background-color: #3d3d3d;
+    }
+  }
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    background-color: #106b3c;
   }
 }

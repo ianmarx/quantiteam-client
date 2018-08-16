@@ -21,6 +21,7 @@ import {
   fetchDistResults,
 } from '../actions/teamworkout';
 import TeamInfo from '../components/TeamInfo';
+import TeamRoster from '../components/mini/TeamRoster';
 import TeamWorkoutFeed from '../components/TeamWorkoutFeed';
 import ResultsView from '../components/ResultsView';
 import AddResultForm from './forms/AddResultForm';
@@ -49,7 +50,7 @@ class TeamProfile extends Component {
       showAddResultModal: false,
       showViewResultsModal: false,
       showAddTeamWorkoutModal: false,
-      showRoster: true,
+      showTeamRosterModal: false,
     };
 
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
@@ -64,6 +65,8 @@ class TeamProfile extends Component {
     this.onAddResultModalClose = this.onAddResultModalClose.bind(this);
     this.onViewResultsModalOpen = this.onViewResultsModalOpen.bind(this);
     this.onViewResultsModalClose = this.onViewResultsModalClose.bind(this);
+    this.onTeamRosterModalOpen = this.onTeamRosterModalOpen.bind(this);
+    this.onTeamRosterModalClose = this.onTeamRosterModalClose.bind(this);
     this.onAddResultClick = this.onAddResultClick.bind(this);
     this.onResultDeleteClick = this.onResultDeleteClick.bind(this);
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
@@ -126,10 +129,22 @@ class TeamProfile extends Component {
     this.setState({ showViewResultsModal: false });
   }
 
+  onTeamRosterModalOpen(event) {
+    this.setState({ showTeamRosterModal: true });
+  }
+
+  onTeamRosterModalClose(event) {
+    this.setState({ showTeamRosterModal: false });
+  }
+
   render() {
     return (
       <div className="team-page">
-        <TeamInfo team={this.props.team} />
+        <TeamInfo
+          team={this.props.team}
+          isCoach={this.props.isCoach}
+          onViewRosterClick={this.onTeamRosterModalOpen}
+        />
         <div className='workout-feed-container'>
           <TeamWorkoutFeed
             isFetchingTeamWorkouts={this.props.isFetchingTeamWorkouts}
@@ -193,6 +208,19 @@ class TeamProfile extends Component {
                 onModalClose={this.onAddResultModalClose}
               />
             }
+          </ReactModal>
+          <ReactModal
+            isOpen={this.state.showTeamRosterModal}
+            contentLabel={`${this.props.team.name} Roster`}
+            className="modal"
+            overlayClassName="overlay"
+            ariaHideApp={false}
+          >
+            <TeamRoster
+              coaches={this.props.team.coaches}
+              athletes={this.props.team.athletes}
+              onCloseRosterClick={this.onTeamRosterModalClose}
+            />
           </ReactModal>
         </div>
       </div>

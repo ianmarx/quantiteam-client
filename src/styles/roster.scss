@@ -1,0 +1,33 @@
+.team-roster-modal-container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+  color: black;
+  border-radius: 5px;
+  border: none;
+  margin-left: 25%;
+  margin-right: 25%;
+
+  @media only screen and (max-width: 550px) {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .team-roster {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 50%;
+  }
+
+  .list-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}

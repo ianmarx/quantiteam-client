@@ -42,7 +42,7 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    document.body.style.background = 'url("/img/erging.jpg") no-repeat center center fixed';
+    document.body.style.background = 'url("/img/erging-compressed.jpg") no-repeat center center fixed';
     document.body.style.backgroundSize = 'cover';
   }
 

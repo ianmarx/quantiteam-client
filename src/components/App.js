@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, browserHistory, Switch, Route } from 'react-router-dom';
+import loadable from 'react-loadable';
+import LoadingScreen from './mini/LoadingScreen';
 import Nav from './Nav';
 import PrivateRoute from './PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import SignUp from '../containers/SignUp';
 import SignIn from '../containers/SignIn';
-import HomePage from '../containers/HomePage';
-import Profile from '../containers/Profile';
-import TeamProfile from '../containers/TeamProfile';
 import '../style.scss';
 
 const mapStateToProps = state => (
@@ -16,6 +15,21 @@ const mapStateToProps = state => (
     authenticated: state.auth.authenticated,
   }
 );
+
+const HomePage = loadable({
+  loader: () => import('../containers/HomePage'),
+  loading: LoadingScreen,
+});
+
+const Profile = loadable({
+  loader: () => import('../containers/Profile'),
+  loading: LoadingScreen,
+});
+
+const TeamProfile = loadable({
+  loader: () => import('../containers/TeamProfile'),
+  loading: LoadingScreen,
+});
 
 const App = (props) => {
   return (

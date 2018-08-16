@@ -1,11 +1,10 @@
-
 .home-page {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-start;
   overflow: auto;
-
+  color: black;
   margin-top: 50px;
 
   @media only screen and (max-width: 800px) {
@@ -13,36 +12,9 @@
     margin-right: 0px;
   }
   @media only screen and (max-width: 500px) {
-    border-radius: 0px;
     margin-top: 30px;
   }
-
-
-  border-radius: 5px;
-  padding: 10px;
-  color: black;
 }
-
-.workout-feed-container {
-  width: 40%;
-
-  @media only screen and (max-width: 1500px) {
-    width: 50%;
-  }
-  @media only screen and (max-width: 1250px) {
-    width: 60%;
-  }
-  @media only screen and (max-width: 900px) {
-    width: 70%;
-  }
-  @media only screen and (max-width: 800px) {
-    width: 80%;
-  }
-  @media only screen and (max-width: 575px) {
-    width: 100%;
-  }
-}
-
 
 #addTeam {
   width: 25%;

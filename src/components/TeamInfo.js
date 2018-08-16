@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 
 class TeamInfo extends Component {
   constructor(props) {
@@ -12,23 +11,17 @@ class TeamInfo extends Component {
   render() {
     return (
       <div className="team-info">
-        <div id="teamName">
+        <div className='team-name'>
           {this.props.team.name}
         </div>
-        {this.props.team.athletes &&
-          <div className="team-leaderboard">
-            <strong>Roster</strong>
-            {this.props.team.athletes.map((athlete, i) => {
-              return (
-                <div key={`athlete-${i}`}>
-                  <NavLink to={`/profile/${athlete._id}`}>
-                    <div className="profile-link">{athlete.name}</div>
-                  </NavLink>
-                </div>
-              );
-            })}
-          </div>
-        }
+        <div className='team-details'>
+          {this.props.isCoach &&
+            <div className='team-code'>
+              Team Code: <strong>{this.props.team.teamCode}</strong>
+            </div>
+          }
+          <button type='button' className='view-roster-button' onClick={this.props.onViewRosterClick}>View Roster</button>
+        </div>
       </div>
     );
   }

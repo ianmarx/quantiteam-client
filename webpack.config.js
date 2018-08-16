@@ -1,6 +1,10 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
   filename: 'style.css',
@@ -15,6 +19,11 @@ module.exports = {
     publicPath: '/build/',
     filename: 'bundle.js',
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin(),
+    ],
+  },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     historyApiFallback: true,
@@ -27,18 +36,25 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
-              options: { sourceMap: true },
+              options: {
+                sourceMap: true,
+                minimize: true,
+              },
             },
             {
               loader: 'postcss-loader',
               options: {
                 plugins: () => [autoprefixer()],
                 sourceMap: true,
+                minimize: true,
               },
             },
             {
               loader: 'sass-loader',
-              options: { sourceMap: true },
+              options: {
+                sourceMap: true,
+                minimize: true,
+              },
             },
           ],
           fallback: 'style-loader',
@@ -53,5 +69,25 @@ module.exports = {
   },
   plugins: [
     extractSass,
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),
+      DEVELOPMENT: JSON.stringify(process.env.NODE_ENV === 'development'),
+    }),
+    new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production',
+      pngquant: {
+        quality: '65-80',
+      },
+      mozjpeg: {
+        quality: '65-80',
+      },
+    }),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 0,
+      minRatio: 0.8,
+    }),
   ],
 };
