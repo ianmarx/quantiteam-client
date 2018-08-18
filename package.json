@@ -9,8 +9,8 @@
     "test": "jest test --coverage --maxWorkers=2",
     "build": "WEBPACK_ENV=production webpack --mode=production --colors",
     "clean": "rimraf public/build",
-    "deploy-staging": "npm run clean && npm run build; surge -p public -d staging.quantiteam.com",
-    "deploy-prod": "npm run clean && npm run build; surge -p public -d quantiteam.com"
+    "deploy-staging": "yarn clean && yarn build && aws s3 sync public/ s3://staging.quantiteam.com",
+    "deploy-prod": "yarn clean && yarn build && aws s3 sync public/ s3://quantiteam.com"
   },
   "repository": {
     "type": "git",
