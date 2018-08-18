@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import WorkoutPost from './WorkoutPost';
 import LoadingScreen from './mini/LoadingScreen';
 
@@ -37,15 +36,6 @@ const SoloWorkoutFeed = (props) => {
       </div>
     );
   }
-};
-
-SoloWorkoutFeed.propTypes = {
-  isCoach: PropTypes.bool,
-  onAddWorkoutModalOpen: PropTypes.func,
-  onWorkoutDeleteClick: PropTypes.func,
-  soloWorkouts: PropTypes.array,
-  userId: PropTypes.string,
-  updateWorkout: PropTypes.func,
 };
 
 export default SoloWorkoutFeed;

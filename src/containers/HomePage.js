@@ -29,23 +29,30 @@ import ResultsView from '../components/ResultsView';
 import AddWorkoutForm from './forms/AddWorkoutForm';
 import AddResultForm from './forms/AddResultForm';
 import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
+import LoadingScreen from '../components/mini/LoadingScreen';
 
 const mapStateToProps = state => (
   {
-    currentUserId: localStorage.getItem('userId'),
-    user: state.profile.user,
+    userId: state.auth.userId,
+    user: state.auth.user,
+    isFetchingUser: state.auth.isFetchingUser,
+    userIsFetched: state.auth.userIsFetched,
     teamSoloWorkouts: state.workouts.list,
     isFetchingSoloWorkouts: state.workouts.isFetchingSoloWorkouts,
+    soloWorkoutsFetched: state.workouts.soloWorkoutsFetched,
     team: state.team.team,
+    isFetchingTeam: state.team.isFetchingTeam,
+    teamIsFetched: state.team.teamIsFetched,
     isCoach: state.team.isCoach,
-    authenticated: state.auth.authenticated,
+    isAuthenticated: state.auth.isAuthenticated,
     teamWorkouts: state.teamWorkouts.list,
     isFetchingTeamWorkouts: state.teamWorkouts.isFetchingTeamWorkouts,
+    teamWorkoutsFetched: state.teamWorkouts.teamWorkoutsFetched,
     currentTeamWorkout: state.teamWorkouts.currentTeamWorkout,
     isFetchingTeamWorkout: state.teamWorkouts.isFetchingTeamWorkout,
     isFetchingResults: state.teamWorkouts.isFetchingResults,
     currentResults: state.teamWorkouts.currentResults,
-    queryResults: state.profile.queryResults,
+    queryResults: state.user.queryResults,
   }
 );
 
@@ -75,10 +82,15 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchUser(this.props.match.params.userId);
-    this.props.fetchUserTeam(this.props.match.params.userId);
-    this.props.fetchTeamWorkouts(this.props.match.params.userId);
-    this.props.fetchSoloWorkouts(this.props.match.params.userId);
+    if (!this.props.team) {
+      this.props.fetchUserTeam(this.props.userId);
+    }
+    if (!this.props.teamWorkouts) {
+      this.props.fetchTeamWorkouts(this.props.userId);
+    }
+    if (!this.props.soloWorkouts) {
+      this.props.fetchSoloWorkouts(this.props.userId);
+    }
   }
 
   onResultDeleteClick(workoutId, teamWorkoutId) {
@@ -143,98 +155,106 @@ class HomePage extends Component {
   }
 
   render() {
-    return (
-      <div className="home-page">
-        <div className='workout-feed-container'>
-          <WorkoutFeed
-            isFetchingSoloWorkouts={this.props.isFetchingSoloWorkouts}
-            isFetchingTeamWorkouts={this.props.isFetchingTeamWorkouts}
-            isCoach={this.props.isCoach}
-            onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
-            onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
-            onAddResultClick={this.onAddResultClick}
-            onViewResultsClick={this.onViewResultsClick}
-            onWorkoutDeleteClick={this.onWorkoutDeleteClick}
-            onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
-            soloWorkouts={this.props.teamSoloWorkouts}
-            teamWorkouts={this.props.teamWorkouts}
-            teamName={this.props.team.name}
-            currentUserId={this.props.currentUserId}
-            updateWorkout={this.props.updateWorkout}
-            updateResult={this.props.updateResult}
-            updateTeamWorkout={this.props.updateTeamWorkout}
-          />
-          <ReactModal
-            isOpen={this.state.showAddWorkoutModal}
-            contentLabel="Add Workout"
-            className="modal"
-            overlayClassName="overlay"
-            ariaHideApp={false}
-          >
-            <AddWorkoutForm
-              addWorkout={this.props.addWorkout}
-              userId={this.props.match.params.userId}
-              userName={this.props.user.name}
-              onModalClose={this.onAddWorkoutModalClose}
-            />
-          </ReactModal>
-          <ReactModal
-            isOpen={this.state.showViewResultsModal}
-            className="modal"
-            overlayClassName="overlay"
-            ariaHideApp={false}
-          >
-            {!this.props.isFetchingResults &&
-              <div className='results-modal-container'>
-                <ResultsView
-                  isCoach={this.props.isCoach}
-                  results={this.props.currentResults}
-                  teamWorkout={this.props.currentTeamWorkout}
-                  onDeleteClick={this.onResultDeleteClick}
-                  fetchDistResults={this.props.fetchDistResults}
-                  fetchTimeResults={this.props.fetchTimeResults}
-                  updateResult={this.props.updateResult}
-                  onModalClose={this.onViewResultsModalClose}
-                />
-              </div>
-            }
-          </ReactModal>
-          <ReactModal
-            isOpen={this.state.showAddTeamWorkoutModal}
-            contentLabel="Add Team Workout"
-            className="modal"
-            overlayClassName="overlay"
-            ariaHideApp={false}
-          >
-            <AddTeamWorkoutForm
-              addTeamWorkout={this.props.addTeamWorkout}
-              userId={this.props.match.params.userId}
-              teamId={this.props.team._id}
-              onModalClose={this.onAddTeamWorkoutModalClose}
-            />
-          </ReactModal>
-          <ReactModal
-            isOpen={this.state.showAddResultModal}
-            contentLabel="Add Result"
-            className="modal"
-            overlayClassName="overlay"
-            ariaHideApp={false}
-          >
-            {!this.props.isFetchingTeamWorkout &&
-              <AddResultForm
-                teamWorkout={this.props.currentTeamWorkout}
-                addResult={this.props.addResult}
-                userId={this.props.match.params.userId}
-                matchAthlete={this.props.matchAthlete}
-                queryResults={this.props.queryResults}
-                fetchTeamWorkout={this.props.fetchTeamWorkout}
-                onModalClose={this.onAddResultModalClose}
-              />
-            }
-          </ReactModal>
+    if (!this.props.userIsFetched || !this.props.teamIsFetched || !this.props.soloWorkoutsFetched || !this.props.teamWorkoutsFetched) {
+      return (
+        <div className="home-page">
+          <LoadingScreen />
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="home-page">
+          <div className='workout-feed-container'>
+            <WorkoutFeed
+              isFetchingSoloWorkouts={this.props.isFetchingSoloWorkouts}
+              isFetchingTeamWorkouts={this.props.isFetchingTeamWorkouts}
+              isCoach={this.props.isCoach}
+              onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
+              onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
+              onAddResultClick={this.onAddResultClick}
+              onViewResultsClick={this.onViewResultsClick}
+              onWorkoutDeleteClick={this.onWorkoutDeleteClick}
+              onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
+              soloWorkouts={this.props.teamSoloWorkouts}
+              teamWorkouts={this.props.teamWorkouts}
+              teamName={this.props.team.name}
+              currentUserId={this.props.userId}
+              updateWorkout={this.props.updateWorkout}
+              updateResult={this.props.updateResult}
+              updateTeamWorkout={this.props.updateTeamWorkout}
+            />
+            <ReactModal
+              isOpen={this.state.showAddWorkoutModal}
+              contentLabel="Add Workout"
+              className="modal"
+              overlayClassName="overlay"
+              ariaHideApp={false}
+            >
+              <AddWorkoutForm
+                addWorkout={this.props.addWorkout}
+                userId={this.props.userId}
+                userName={this.props.user.name}
+                onModalClose={this.onAddWorkoutModalClose}
+              />
+            </ReactModal>
+            <ReactModal
+              isOpen={this.state.showViewResultsModal}
+              className="modal"
+              overlayClassName="overlay"
+              ariaHideApp={false}
+            >
+              {!this.props.isFetchingResults &&
+                <div className='results-modal-container'>
+                  <ResultsView
+                    isCoach={this.props.isCoach}
+                    results={this.props.currentResults}
+                    teamWorkout={this.props.currentTeamWorkout}
+                    onDeleteClick={this.onResultDeleteClick}
+                    fetchDistResults={this.props.fetchDistResults}
+                    fetchTimeResults={this.props.fetchTimeResults}
+                    updateResult={this.props.updateResult}
+                    onModalClose={this.onViewResultsModalClose}
+                  />
+                </div>
+              }
+            </ReactModal>
+            <ReactModal
+              isOpen={this.state.showAddTeamWorkoutModal}
+              contentLabel="Add Team Workout"
+              className="modal"
+              overlayClassName="overlay"
+              ariaHideApp={false}
+            >
+              <AddTeamWorkoutForm
+                addTeamWorkout={this.props.addTeamWorkout}
+                userId={this.props.userId}
+                teamId={this.props.team._id}
+                onModalClose={this.onAddTeamWorkoutModalClose}
+              />
+            </ReactModal>
+            <ReactModal
+              isOpen={this.state.showAddResultModal}
+              contentLabel="Add Result"
+              className="modal"
+              overlayClassName="overlay"
+              ariaHideApp={false}
+            >
+              {!this.props.isFetchingTeamWorkout &&
+                <AddResultForm
+                  teamWorkout={this.props.currentTeamWorkout}
+                  addResult={this.props.addResult}
+                  userId={this.props.userId}
+                  matchAthlete={this.props.matchAthlete}
+                  queryResults={this.props.queryResults}
+                  fetchTeamWorkout={this.props.fetchTeamWorkout}
+                  onModalClose={this.onAddResultModalClose}
+                />
+              }
+            </ReactModal>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

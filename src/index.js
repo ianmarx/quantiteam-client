@@ -4,8 +4,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
-import App from './components/App';
-import { AUTH_USER } from './actions/auth';
+import App from './containers/App';
+import { reAuthUser } from './actions/auth';
 import './style.scss';
 
 
@@ -15,8 +15,9 @@ const store = createStore(reducers, {}, compose(
 ));
 
 const token = localStorage.getItem('token');
-if (token) {
-  store.dispatch({ type: AUTH_USER });
+const userId = localStorage.getItem('userId');
+if (token && userId) {
+  store.dispatch(reAuthUser(token, userId));
 }
 
 ReactDOM.render(

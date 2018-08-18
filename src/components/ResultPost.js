@@ -191,10 +191,10 @@ class ResultPost extends Component {
           {this.props.isCoach &&
             <div className='row-unit'>
               <div className="icon">
-                <i onClick={this.onLocalEditClick} className="fa fa-pencil-square-o" />
+                <i onClick={this.onLocalEditClick} className="fas fa-edit" />
               </div>
               <div className="icon">
-                <i onClick={this.onLocalDeleteClick} className="fa fa-trash-o" />
+                <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
               </div>
             </div>
           }

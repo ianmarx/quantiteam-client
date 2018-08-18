@@ -1,16 +1,64 @@
-import { FETCH_USER } from '../actions/user';
+import {
+  FETCH_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_FAILURE,
+  FETCH_USER_PROFILE_REQUEST,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAILURE,
+  UPDATE_USER_PROFILE_REQUEST,
+} from '../actions/user';
 import { MATCH_ATHLETE } from '../actions/teamworkout';
 
 const initialState = {
-  user: {},
+  userProfile: null,
   queryResults: [],
+  isFetchingUserProfile: false,
+  userProfileIsFetched: false,
+  isUpdatingUserProfile: false,
+  userProfileIsUpdated: false,
+  statusText: null,
 };
 
 const UserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_USER: {
+    case FETCH_USER_PROFILE_SUCCESS: {
       return Object.assign({}, state, {
-        user: action.payload,
+        isFetchingUserProfile: false,
+        userProfileIsFetched: true,
+        userProfile: action.userProfile,
+      });
+    }
+    case FETCH_USER_PROFILE_FAILURE: {
+      return Object.assign({}, state, {
+        isFetchingUserProfile: false,
+        userProfile: null,
+        statusText: action.payload.statusText,
+      });
+    }
+    case FETCH_USER_PROFILE_REQUEST: {
+      return Object.assign({}, state, {
+        isFetchingUserProfile: true,
+        userProfileIsFetched: false,
+        userProfile: null,
+      });
+    }
+    case UPDATE_USER_PROFILE_SUCCESS: {
+      return Object.assign({}, state, {
+        isUpdatingUserProfile: false,
+        userProfileIsUpdated: true,
+        userProfile: action.userProfile,
+      });
+    }
+    case UPDATE_USER_PROFILE_FAILURE: {
+      return Object.assign({}, state, {
+        isUpdatingUserProfile: false,
+        userProfileIsUpdated: false,
+        statusText: action.payload.statusText,
+      });
+    }
+    case UPDATE_USER_PROFILE_REQUEST: {
+      return Object.assign({}, state, {
+        isUpdatingUserProfile: true,
+        userProfileIsUpdated: false,
       });
     }
     case MATCH_ATHLETE: {

@@ -1,3 +1,15 @@
+.loading-page {
+  margin-top: 50px;
+
+  @media only screen and (max-width: 800px) {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  @media only screen and (max-width: 500px) {
+    margin-top: 30px;
+  }
+}
+
 .loading-screen {
   margin-top: 10px;
   display: flex;

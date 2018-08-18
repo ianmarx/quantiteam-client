@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import WorkoutPost from './WorkoutPost';
 import TeamWorkoutPost from './TeamWorkoutPost';
 import LoadingScreen from './mini/LoadingScreen';
@@ -56,22 +55,6 @@ const WorkoutFeed = (props) => {
       </div>
     );
   }
-};
-
-WorkoutFeed.propTypes = {
-  isCoach: PropTypes.bool,
-  onAddWorkoutModalOpen: PropTypes.func,
-  onAddTeamWorkoutModalOpen: PropTypes.func,
-  onAddResultClick: PropTypes.func,
-  onViewResultsClick: PropTypes.func,
-  onWorkoutDeleteClick: PropTypes.func,
-  onTeamWorkoutDeleteClick: PropTypes.func,
-  soloWorkouts: PropTypes.array,
-  teamWorkouts: PropTypes.array,
-  teamName: PropTypes.string,
-  userId: PropTypes.string,
-  updateWorkout: PropTypes.func,
-  updateTeamWorkout: PropTypes.func,
 };
 
 export default WorkoutFeed;

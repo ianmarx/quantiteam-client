@@ -11,10 +11,19 @@
   border-style: none;
   border-radius: 10px;
   font-size: 25px;
-
+  @media only screen and (max-width: 1350px) {
+    margin-top: 10%;
+  }
+  @media only screen and (max-width: 750px) {
+    margin-top: 15%;
+  }
+  @media only screen and (max-width: 650px) {
+    margin: 20% 15% 0%;
+    width: 70%;
+  }
   @media only screen and (max-width: 550px) {
     width: 80%;
-    margin: 25% 10% 0%;
+    margin: 25% 10%;
     font-size: 24px;
     height: auto;
   }
@@ -109,6 +118,9 @@
       @media only screen and (max-width: 650px) {
         width: 100%;
       }
+      @media only screen and (max-width: 500px) {
+        width: 90%;
+      }
       @media only screen and (max-width: 400px) {
         height: 35px;
         font-size: 16px;
@@ -140,7 +152,7 @@
           width: 75%;
         }
         @media only screen and (max-width: 550px) {
-          width: 70%;
+          width: 60%;
         }
       }
     }
@@ -179,6 +191,11 @@
         background-color: #5fbf8e;
         cursor: default;
       }
+    }
+
+    .status-text {
+      text-align: center;
+      margin-top: 10px;
     }
 
   }

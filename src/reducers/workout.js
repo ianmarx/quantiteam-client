@@ -15,7 +15,9 @@ import {
 const initialState = {
   list: [],
   isFetchingSoloWorkouts: false,
+  soloWorkoutsFetched: false,
   isFetchingUserWorkouts: false,
+  userWorkoutsFetched: false,
 };
 
 /* Take in the workout and add it to an array of workouts in the redux state */
@@ -32,6 +34,7 @@ const WorkoutReducer = (state = initialState, action) => {
     case FETCH_SOLO_WORKOUTS_SUCCESS: {
       return Object.assign({}, state, {
         isFetchingSoloWorkouts: false,
+        soloWorkoutsFetched: true,
         list: action.soloWorkouts,
       });
     }
@@ -44,12 +47,14 @@ const WorkoutReducer = (state = initialState, action) => {
     case FETCH_SOLO_WORKOUTS_REQUEST: {
       return Object.assign({}, state, {
         isFetchingSoloWorkouts: true,
+        soloWorkoutsFetched: false,
         list: {},
       });
     }
     case FETCH_USER_WORKOUTS_SUCCESS: {
       return Object.assign({}, state, {
         isFetchingUserWorkouts: false,
+        userWorkoutsFetched: true,
         list: action.userWorkouts,
       });
     }
@@ -62,6 +67,7 @@ const WorkoutReducer = (state = initialState, action) => {
     case FETCH_USER_WORKOUTS_REQUEST: {
       return Object.assign({}, state, {
         isFetchingUserWorkouts: true,
+        userWorkoutsFetched: false,
         list: {},
       });
     }

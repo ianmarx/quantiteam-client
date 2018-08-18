@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, browserHistory, Switch, Route } from 'react-router-dom';
 import loadable from 'react-loadable';
-import LoadingScreen from './mini/LoadingScreen';
-import Nav from './Nav';
-import PrivateRoute from './PrivateRoute';
+import LoadingPage from '../components/mini/LoadingPage';
+import Nav from '../components/Nav';
+import PrivateRoute from '../components/PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import SignUp from '../containers/SignUp';
 import SignIn from '../containers/SignIn';
@@ -12,23 +12,23 @@ import '../style.scss';
 
 const mapStateToProps = state => (
   {
-    authenticated: state.auth.authenticated,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 );
 
 const HomePage = loadable({
   loader: () => import('../containers/HomePage'),
-  loading: LoadingScreen,
+  loading: LoadingPage,
 });
 
 const Profile = loadable({
   loader: () => import('../containers/Profile'),
-  loading: LoadingScreen,
+  loading: LoadingPage,
 });
 
 const TeamProfile = loadable({
   loader: () => import('../containers/TeamProfile'),
-  loading: LoadingScreen,
+  loading: LoadingPage,
 });
 
 const App = (props) => {
@@ -37,12 +37,11 @@ const App = (props) => {
       <div>
         <Nav />
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/" component={props.isAuthenticated ? HomePage : LandingPage} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
-          <PrivateRoute path="/home/:userId" component={HomePage} isAuthenticated={props.authenticated} />
-          <PrivateRoute path="/profile/:userId" component={Profile} isAuthenticated={props.authenticated} />
-          <PrivateRoute path="/team/:userId" component={TeamProfile} isAuthenticated={props.authenticated} />
+          <PrivateRoute path="/profile/:userId" component={Profile} isAuthenticated={props.isAuthenticated} />
+          <PrivateRoute path="/team" component={TeamProfile} isAuthenticated={props.isAuthenticated} />
           <Route render={() => (<div>Page not found.</div>)} />
         </Switch>
       </div>

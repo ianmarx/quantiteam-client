@@ -4,7 +4,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => (
   {
-    authenticated: state.auth.authenticated,
+    userId: state.auth.userId,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 );
 
@@ -13,11 +14,6 @@ class LandingPage extends Component {
     super(props);
     this.onSignUpClick = this.onSignUpClick.bind(this);
     this.onSignInClick = this.onSignInClick.bind(this);
-  }
-  componentWillMount() {
-    if (this.props.authenticated) {
-      this.props.history.push(`/home/${localStorage.getItem('userId')}`);
-    }
   }
   componentDidMount() {
     document.body.style.background = 'url("/img/erging-compressed.jpg") no-repeat center center fixed';
@@ -40,10 +36,10 @@ class LandingPage extends Component {
           Make your workouts work for you.
         </div>
         <div className='info'>
-          Quantiteam is the leading platform for tracking performance data in team-based endurance sports.
+          QuantiTeam is the leading platform for tracking performance data in team-based endurance sports.
         </div>
         <div className="button-group">
-          <button className="sign-up-button" onClick={this.onSignUpClick}>Join Quantiteam</button>
+          <button className="sign-up-button" onClick={this.onSignUpClick}>Join QuantiTeam</button>
         </div>
         <div className="already-user">
           Already a user? <NavLink to="/signin"><strong>Sign in here.</strong></NavLink>

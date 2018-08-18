@@ -25,6 +25,7 @@ const initialState = {
   currentResults: [],
   isFetchingTeamWorkout: false,
   isFetchingTeamWorkouts: false,
+  teamWorkoutsFetched: false,
   isFetchingResults: false,
 };
 
@@ -64,6 +65,7 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     case FETCH_TEAM_WORKOUTS_SUCCESS: {
       return Object.assign({}, state, {
         isFetchingTeamWorkouts: false,
+        teamWorkoutsFetched: true,
         list: action.teamWorkouts,
       });
     }
@@ -76,6 +78,7 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     case FETCH_TEAM_WORKOUTS_REQUEST: {
       return Object.assign({}, state, {
         isFetchingTeamWorkouts: true,
+        teamWorkoutsFetched: false,
         list: {},
       });
     }

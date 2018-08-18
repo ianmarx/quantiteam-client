@@ -7,7 +7,7 @@ import TeamWorkoutReducer from './teamworkout';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
-  profile: UserReducer,
+  user: UserReducer,
   workouts: WorkoutReducer,
   team: TeamReducer,
   teamWorkouts: TeamWorkoutReducer,

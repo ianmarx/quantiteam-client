@@ -6,6 +6,10 @@ import { checkTeamNameAvailability, checkTeamCodeValidity } from '../actions/tea
 
 const mapStateToProps = state => (
   {
+    userId: state.auth.userId,
+    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticating: state.auth.isAuthenticating,
+    statusText: state.auth.statusText,
     teamNameIsAvailable: state.team.teamNameIsAvailable,
     teamCodeIsValid: state.team.teamCodeIsValid,
   }
@@ -42,6 +46,9 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
+    if (this.props.isAuthenticated) {
+      this.props.history.replace('/');
+    }
     document.body.style.background = 'url("/img/erging-compressed.jpg") no-repeat center center fixed';
     document.body.style.backgroundSize = 'cover';
   }
@@ -207,6 +214,7 @@ class SignUp extends Component {
                   type="text"
                   required
                   placeholder='Name'
+                  autoComplete='name'
                 />
               </div>
               <div className="email field">
@@ -216,6 +224,7 @@ class SignUp extends Component {
                   type="text"
                   required
                   placeholder='Email'
+                  autoComplete='email'
                 />
               </div>
               <div className="password field">
@@ -225,6 +234,7 @@ class SignUp extends Component {
                   type="password"
                   required
                   placeholder='Password'
+                  autoComplete='new-password'
                 />
               </div>
               <div className='field'>
@@ -251,6 +261,11 @@ class SignUp extends Component {
               <NavLink to="/">
                 <button className="back-button">Back</button>
               </NavLink>
+              <div className='status-text'>
+                {this.props.isAuthenticating &&
+                  <div>Signing Up . . . </div>
+                }
+              </div>
             </div>
           }
         </form>
