@@ -10,13 +10,18 @@ export const FETCH_WORKOUT = 'FETCH_WORKOUT';
 export const FETCH_USER_WORKOUTS_SUCCESS = 'FETCH_USER_WORKOUTS_SUCCESS';
 export const FETCH_USER_WORKOUTS_FAILURE = 'FETCH_USER_WORKOUTS_FAILURE';
 export const FETCH_USER_WORKOUTS_REQUEST = 'FETCH_USER_WORKOUTS_REQUEST';
-export const DELETE_WORKOUT = 'DELETE_WORKOUT';
+export const DELETE_WORKOUT_SUCCESS = 'DELETE_WORKOUT_SUCCESS';
+export const DELETE_WORKOUT_FAILURE = 'DELETE_WORKOUT_FAILURE';
+export const DELETE_WORKOUT_REQUEST = 'DELETE_WORKOUT_REQUEST';
 export const FETCH_SOLO_WORKOUTS_SUCCESS = 'FETCH_SOLO_WORKOUTS_SUCCESS';
 export const FETCH_SOLO_WORKOUTS_FAILURE = 'FETCH_SOLO_WORKOUTS_FAILURE';
 export const FETCH_SOLO_WORKOUTS_REQUEST = 'FETCH_SOLO_WORKOUTS_REQUEST';
-export const FETCH_USER = 'FETCH_USER';
-export const ADD_WORKOUT = 'ADD_WORKOUT';
-export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
+export const ADD_WORKOUT_SUCCESS = 'ADD_WORKOUT_SUCCESS';
+export const ADD_WORKOUT_FAILURE = 'ADD_WORKOUT_FAILURE';
+export const ADD_WORKOUT_REQUEST = 'ADD_WORKOUT_REQUEST';
+export const UPDATE_WORKOUT_SUCCESS = 'UPDATE_WORKOUT_SUCCESS';
+export const UPDATE_WORKOUT_FAILURE = 'UPDATE_WORKOUT_FAILURE';
+export const UPDATE_WORKOUT_REQUEST = 'UPDATE_WORKOUT_REQUEST';
 
 export function fetchSoloWorkoutsSuccess(soloWorkouts: Array<Object>) : Action {
   return {
@@ -35,6 +40,66 @@ export function fetchSoloWorkoutsFailure(error: APIError) : Action {
 export function fetchSoloWorkoutsRequest() : Action {
   return {
     type: FETCH_SOLO_WORKOUTS_REQUEST,
+  };
+}
+
+export function addWorkoutSuccess(workout: Object) : Action {
+  return {
+    type: ADD_WORKOUT_SUCCESS,
+    workout,
+  };
+}
+
+export function addWorkoutFailure(error: APIError) : Action {
+  return getErrorAction(
+    ADD_WORKOUT_FAILURE,
+    error,
+  );
+}
+
+export function addWorkoutRequest() : Action {
+  return {
+    type: ADD_WORKOUT_REQUEST,
+  };
+}
+
+export function updateWorkoutSuccess(workout: Object) : Action {
+  return {
+    type: UPDATE_WORKOUT_SUCCESS,
+    workout,
+  };
+}
+
+export function updateWorkoutFailure(error: APIError) : Action {
+  return getErrorAction(
+    UPDATE_WORKOUT_FAILURE,
+    error,
+  );
+}
+
+export function updateWorkoutRequest() : Action {
+  return {
+    type: UPDATE_WORKOUT_REQUEST,
+  };
+}
+
+export function deleteWorkoutSuccess(workoutId: String) : Action {
+  return {
+    type: DELETE_WORKOUT_SUCCESS,
+    workoutId,
+  };
+}
+
+export function deleteWorkoutFailure(error: APIError) : Action {
+  return getErrorAction(
+    DELETE_WORKOUT_FAILURE,
+    error,
+  );
+}
+
+export function deleteWorkoutRequest() : Action {
+  return {
+    type: DELETE_WORKOUT_REQUEST,
   };
 }
 
@@ -60,13 +125,12 @@ export function fetchUserWorkoutsRequest() : Action {
 
 export function addWorkout(workout) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
-  /* axios POST call */
   return async (dispatch) => {
-    /* organize parameters into a single object to pass into POST request */
+    dispatch(addWorkoutRequest());
     await axios.post(`${ROOT_URL}/workouts/add`, workout, headers).then((response) => {
-      dispatch({ type: ADD_WORKOUT, payload: response.data });
+      dispatch(addWorkoutSuccess(response.data));
     }).catch((error) => {
-      console.log(`addWorkout() failed: ${error.message}`);
+      dispatch(addWorkoutFailure(error));
     });
   };
 }
@@ -98,24 +162,24 @@ export function fetchUserWorkouts(userId) {
 
 export function updateWorkout(workoutId, workout) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
-  /* axios PUT call */
   return async (dispatch) => {
+    dispatch(updateWorkoutRequest());
     await axios.put(`${ROOT_URL}/workouts/${workoutId}`, workout, headers).then((response) => {
-      dispatch({ type: UPDATE_WORKOUT, payload: response.data });
+      dispatch(updateWorkoutSuccess(response.data));
     }).catch((error) => {
-      console.log(`updateWorkout failed: ${error.message}`);
+      dispatch(updateWorkoutFailure(error));
     });
   };
 }
 
 export function deleteWorkout(workoutId, userId) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
-  /* axios DELETE call */
-  return (dispatch) => {
-    axios.delete(`${ROOT_URL}/workouts/${workoutId}/${userId}`, headers).then((response) => {
-      dispatch({ type: DELETE_WORKOUT, payload: workoutId });
+  return async (dispatch) => {
+    dispatch(deleteWorkoutRequest());
+    await axios.delete(`${ROOT_URL}/workouts/${workoutId}/${userId}`, headers).then((response) => {
+      dispatch(deleteWorkoutSuccess(response.data));
     }).catch((error) => {
-      console.log(`deleteWorkout failed: ${error.message}`);
+      dispatch(deleteWorkoutFailure(error));
     });
   };
 }

@@ -23,8 +23,8 @@ import TeamInfo from '../components/TeamInfo';
 import TeamRoster from '../components/mini/TeamRoster';
 import TeamWorkoutFeed from '../components/TeamWorkoutFeed';
 import ResultsView from '../components/ResultsView';
-import AddResultForm from './forms/AddResultForm';
-import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
+import AddResultForm from '../components/forms/AddResultForm';
+import AddTeamWorkoutForm from '../components/forms/AddTeamWorkoutForm';
 import LoadingScreen from '../components/mini/LoadingScreen';
 
 const mapStateToProps = state => (
@@ -105,41 +105,49 @@ class TeamProfile extends Component {
     this.props.deleteTeamWorkout(workoutId, teamId);
   }
 
-  onAddTeamWorkoutModalOpen(event) {
-    this.setState({ showAddTeamWorkoutModal: true });
-  }
-
-  onAddTeamWorkoutModalClose(event) {
-    this.setState({ showAddTeamWorkoutModal: false });
-  }
-
   async onAddResultClick(teamWorkoutId, prevProps) {
     await this.props.fetchTeamWorkout(teamWorkoutId);
     this.onAddResultModalOpen();
   }
 
+  onAddTeamWorkoutModalOpen(event) {
+    this.setState({ showAddTeamWorkoutModal: true });
+    document.body.classList.add('no-scroll');
+  }
+
+  onAddTeamWorkoutModalClose(event) {
+    this.setState({ showAddTeamWorkoutModal: false });
+    document.body.classList.remove('no-scroll');
+  }
+
   onAddResultModalOpen(event) {
     this.setState({ showAddResultModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onAddResultModalClose(event) {
     this.setState({ showAddResultModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   onViewResultsModalOpen(event) {
     this.setState({ showViewResultsModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onViewResultsModalClose(event) {
     this.setState({ showViewResultsModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   onTeamRosterModalOpen(event) {
     this.setState({ showTeamRosterModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onTeamRosterModalClose(event) {
     this.setState({ showTeamRosterModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   render() {
@@ -174,6 +182,7 @@ class TeamProfile extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onViewResultsModalClose}
             >
               {!this.props.isFetchingResults &&
                 <div className='results-modal-container'>
@@ -196,6 +205,7 @@ class TeamProfile extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddTeamWorkoutModalClose}
             >
               <AddTeamWorkoutForm
                 addTeamWorkout={this.props.addTeamWorkout}
@@ -210,6 +220,7 @@ class TeamProfile extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddResultModalClose}
             >
               {!this.props.isFetchingTeamWorkout &&
                 <AddResultForm
@@ -227,6 +238,7 @@ class TeamProfile extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onTeamRosterModalClose}
             >
               <TeamRoster
                 coaches={this.props.team.coaches}

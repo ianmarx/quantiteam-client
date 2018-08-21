@@ -26,9 +26,9 @@ import {
 } from '../actions/teamworkout';
 import WorkoutFeed from '../components/WorkoutFeed';
 import ResultsView from '../components/ResultsView';
-import AddWorkoutForm from './forms/AddWorkoutForm';
-import AddResultForm from './forms/AddResultForm';
-import AddTeamWorkoutForm from './forms/AddTeamWorkoutForm';
+import AddWorkoutForm from '../components/forms/AddWorkoutForm';
+import AddResultForm from '../components/forms/AddResultForm';
+import AddTeamWorkoutForm from '../components/forms/AddTeamWorkoutForm';
 import LoadingScreen from '../components/mini/LoadingScreen';
 
 const mapStateToProps = state => (
@@ -38,8 +38,10 @@ const mapStateToProps = state => (
     isFetchingUser: state.auth.isFetchingUser,
     userIsFetched: state.auth.userIsFetched,
     teamSoloWorkouts: state.workouts.list,
+    workoutIsAdded: state.workouts.workoutIsAdded,
     isFetchingSoloWorkouts: state.workouts.isFetchingSoloWorkouts,
     soloWorkoutsFetched: state.workouts.soloWorkoutsFetched,
+    workoutStatusText: state.workouts.statusText,
     team: state.team.team,
     isFetchingTeam: state.team.isFetchingTeam,
     teamIsFetched: state.team.teamIsFetched,
@@ -124,34 +126,42 @@ class HomePage extends Component {
 
   onAddWorkoutModalOpen(event) {
     this.setState({ showAddWorkoutModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onAddWorkoutModalClose(event) {
     this.setState({ showAddWorkoutModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   onTeamWorkoutModalOpen(event) {
     this.setState({ showAddTeamWorkoutModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onTeamWorkoutModalClose(event) {
     this.setState({ showAddTeamWorkoutModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   onAddResultModalOpen(event) {
     this.setState({ showAddResultModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onAddResultModalClose(event) {
     this.setState({ showAddResultModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   onViewResultsModalOpen(event) {
     this.setState({ showViewResultsModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onViewResultsModalClose(event) {
     this.setState({ showViewResultsModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   render() {
@@ -189,12 +199,15 @@ class HomePage extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddWorkoutModalClose}
             >
               <AddWorkoutForm
                 addWorkout={this.props.addWorkout}
                 userId={this.props.userId}
                 userName={this.props.user.name}
                 onModalClose={this.onAddWorkoutModalClose}
+                statusText={this.props.workoutStatusText}
+                workoutIsAdded={this.props.workoutIsAdded}
               />
             </ReactModal>
             <ReactModal
@@ -202,6 +215,7 @@ class HomePage extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onViewResultsModalClose}
             >
               {!this.props.isFetchingResults &&
                 <div className='results-modal-container'>
@@ -224,6 +238,7 @@ class HomePage extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddTeamWorkoutModalClose}
             >
               <AddTeamWorkoutForm
                 addTeamWorkout={this.props.addTeamWorkout}
@@ -238,6 +253,7 @@ class HomePage extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddResultModalClose}
             >
               {!this.props.isFetchingTeamWorkout &&
                 <AddResultForm

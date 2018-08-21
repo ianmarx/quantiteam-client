@@ -107,12 +107,13 @@ class SignUp extends Component {
     const password = this.state.password;
     const teamName = this.state.teamName;
     const teamCode = this.state.teamCode;
+    const userType = this.state.userType;
 
     if (this.state.userType === 'athlete') {
-      const userObject = { name, email, password, teamCode };
+      const userObject = { name, email, password, teamCode, userType };
       await this.props.signUpAthlete(userObject, this.props.history);
     } else if (this.state.userType === 'coach') {
-      const userObject = { name, email, password, teamName };
+      const userObject = { name, email, password, teamName, userType };
       await this.props.signUpCoach(userObject, this.props.history);
     }
   }

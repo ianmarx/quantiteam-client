@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import round from 'lodash.round';
+import { NavLink } from 'react-router-dom';
+import timeStringToSeconds from '../utils/workout';
 
 class TeamWorkoutPost extends Component {
   constructor(props) {
@@ -9,43 +10,30 @@ class TeamWorkoutPost extends Component {
       activity: '',
       distance: '',
       distUnit: '',
-      hours: '',
-      minutes: '',
-      seconds: '',
+      timeString: '',
+      statusMessage: '',
+      distanceIsValid: true,
+      timeIsValid: true,
     };
 
     this.onActivityChange = this.onActivityChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onDistUnitChange = this.onDistUnitChange.bind(this);
-    this.onHoursChange = this.onHoursChange.bind(this);
-    this.onMinutesChange = this.onMinutesChange.bind(this);
-    this.onSecondsChange = this.onSecondsChange.bind(this);
+    this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onLocalResultAddClick = this.onLocalResultAddClick.bind(this);
     this.onLocalDeleteClick = this.onLocalDeleteClick.bind(this);
     this.onLocalEditClick = this.onLocalEditClick.bind(this);
     this.onLocalViewClick = this.onLocalViewClick.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.timeConvert = this.timeConvert.bind(this);
+    this.validateInput = this.validateInput.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.teamWorkout.type === 'time') {
-      /* split up the time value into separate units for editing mode */
-      const h = Math.floor(this.props.teamWorkout.time / 3600);
-      const remainder = this.props.teamWorkout.time % 3600;
-      const m = Math.floor(remainder / 60);
-      const s = round((remainder % 60), 1);
-      this.setState({
-        hours: h,
-        minutes: m,
-        seconds: s,
-      });
-    }
-
     this.setState({
+      distance: this.props.teamWorkout.distance || '',
+      timeString: this.props.teamWorkout.timeString || '',
       activity: this.props.teamWorkout.activity,
-      distance: this.props.teamWorkout.distance,
       distUnit: this.props.teamWorkout.distUnit,
       type: this.props.teamWorkout.type,
     });
@@ -67,7 +55,6 @@ class TeamWorkoutPost extends Component {
     this.props.onViewResultsClick(this.props.teamWorkout._id, this.props.teamWorkout.type);
   }
 
-  /* Handle changes in the add workout fields */
   onActivityChange(event) {
     this.setState({ activity: event.target.value });
   }
@@ -80,111 +67,158 @@ class TeamWorkoutPost extends Component {
     this.setState({ distUnit: event.target.value });
   }
 
-  onHoursChange(event) {
-    this.setState({ hours: event.target.value });
-  }
-
-  onMinutesChange(event) {
-    this.setState({ minutes: event.target.value });
-  }
-
-  onSecondsChange(event) {
-    this.setState({ seconds: event.target.value });
+  onTimeStringChange(event) {
+    this.setState({ timeString: event.target.value });
   }
 
   onCancelClick(event) {
     this.setState({ isEditing: false });
+    this.setState({
+      isEditing: false,
+      distance: this.props.teamWorkout.distance,
+      distUnit: this.props.teamWorkout.distUnit,
+      timeString: this.props.teamWorkout.timeString,
+      statusMessage: '',
+      distanceIsValid: true,
+      timeIsValid: true,
+    });
   }
 
   async onSubmit(event) {
     event.preventDefault();
-    const activity = this.state.activity;
-    const distance = this.state.distance;
-    const distUnit = this.state.distUnit;
-    const time = this.timeConvert();
-    const teamWorkoutObject = {
-      activity, distance, distUnit, time,
-    };
-    await this.props.updateTeamWorkout(this.props.teamWorkout._id, teamWorkoutObject);
-    this.setState({
-      isEditing: false,
-    });
+    if (this.validateInput()) {
+      const activity = this.state.activity;
+      const distance = this.state.distance;
+      const distUnit = this.state.distUnit;
+      const time = timeStringToSeconds(this.state.timeStringToSeconds);
+      const teamWorkoutObject = {
+        activity, distance, distUnit, time,
+      };
+      await this.props.updateTeamWorkout(this.props.teamWorkout._id, teamWorkoutObject);
+      this.setState({
+        isEditing: false,
+      });
+    }
   }
 
-  /* convert the strings of each time values into the total number of seconds */
-  timeConvert() {
-    return ((parseFloat(this.state.hours, 10) * 3600) +
-            (parseFloat(this.state.minutes, 10) * 60) +
-            (parseFloat(this.state.seconds, 10).toPrecision(3) * 1));
+  validateInput() {
+    this.setState({
+      statusMessage: '',
+      distanceIsValid: true,
+      timeIsValid: true,
+    });
+    let isValid = true;
+    const invalidMessage = 'One or more input parameters are invalid.';
+    if (this.state.distance !== '' && isNaN(this.state.distance)) {
+      this.setState({ statusMessage: invalidMessage, distanceIsValid: false });
+      isValid = false;
+    }
+    if (this.state.timeString !== '' && isNaN(timeStringToSeconds(this.state.timeString))) {
+      this.setState({ statusMessage: invalidMessage, timeIsValid: false });
+      isValid = false;
+    }
+    return isValid;
   }
 
   render() {
+    const date = this.props.teamWorkout.date;
+    const dateObject = new Date(date);
+    const month = dateObject.getMonth() + 1;
+    const day = dateObject.getDate();
+    const year = dateObject.getFullYear().toString().substr(-2);
+    const dateString = `${month}/${day}/${year}`;
+
     if (this.state.isEditing) {
       return (
         <form className="team-workout-post edit" key={this.props.index} onSubmit={this.onSubmit}>
-          {this.state.type === 'distance' &&
+          <div className='header'>
+            <NavLink className='profile-link' to='/team'>
+              <strong>Team</strong>
+            </NavLink>
+            <div>{dateString}</div>
+          </div>
+          <div className='content'>
+            {this.state.type === 'distance' &&
+              <div className="row-unit">
+                <input
+                  className={`input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                  onChange={this.onDistanceChange}
+                  value={this.state.distance}
+                  type="text"
+                />
+                <div>{this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
+              </div>
+            }
+            {this.state.type === 'time' &&
+              <div className='row-unit'>
+                <input
+                  className={`input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
+                  onChange={this.onTimeStringChange}
+                  value={this.state.timeString}
+                  type="text"
+                />
+              </div>
+            }
             <div className="row-unit">
-              <input className='input-md' onChange={this.onDistanceChange} value={this.state.distance} type="text" />
-              <div>{this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
+              <select value={this.state.activity} onChange={this.onActivityChange}>
+                <option value="erg">Erg</option>
+                <option value="row">Row</option>
+                <option value="run">Run</option>
+                <option value="bike">Bike</option>
+              </select>
             </div>
-          }
-          {this.state.type === 'time' &&
             <div className='row-unit'>
-              <div>H</div>
-              <input className='input-sm' onChange={this.onHoursChange} value={this.state.hours} type="text" />
-              <div>M</div>
-              <input className='input-sm' onChange={this.onMinutesChange} value={this.state.minutes} type="text" />
-              <div>S</div>
-              <input className='input-sm' onChange={this.onSecondsChange} value={this.state.seconds} type="text" />
+              <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                <option value="m">m</option>
+                <option value="km">km</option>
+                <option value="mi">mi</option>
+              </select>
             </div>
-          }
-          <div className="row-unit">
-            <select value={this.state.activity} onChange={this.onActivityChange}>
-              <option default>Select</option>
-              <option value="erg">Ergometer</option>
-              <option value="row">Rowing</option>
-              <option value="run">Running</option>
-              <option value="bike">Cycling</option>
-            </select>
           </div>
-          <div className='row-unit'>
-            <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
-              <option default>Select</option>
-              <option value="m">m</option>
-              <option value="km">km</option>
-              <option value="mi">mi</option>
-            </select>
-          </div>
-          <div className='row-unit'>
-            <button type="button" className="workout-edit-cancel" onClick={this.onCancelClick}><i className="fas fa-times" /></button>
-            <button type="submit" className="workout-edit-submit"><i className="fas fa-check" /></button>
+          <div className='footer'>
+            {this.state.statusMessage !== '' &&
+              <div className='status-text error'>{this.state.statusMessage}</div>
+            }
+            <div className='row-unit'>
+              <button type="button" className="workout-edit-cancel" onClick={this.onCancelClick}><i className="fas fa-times" /></button>
+              <button type="submit" className="workout-edit-submit"><i className="fas fa-check" /></button>
+            </div>
           </div>
         </form>
       );
     } else {
       return (
         <div className="team-workout-post">
-          <div><strong>Team</strong></div>
-          <div className="row-unit">
-            {this.props.teamWorkout.type === 'distance' &&
-              <div>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
-            }
-            {this.props.teamWorkout.type === 'time' &&
-              <div>{this.props.teamWorkout.timeString} {this.props.teamWorkout.activity}</div>
-            }
+          <div className='header'>
+            <NavLink className='profile-link' to='/team'>
+              <strong>Team</strong>
+            </NavLink>
+            <div>{dateString}</div>
           </div>
-          <div className="row-unit">
-            {this.props.isCoach &&
-              <button id="result-modal-button" onClick={this.onLocalResultAddClick}>Record</button>
-            }
-            <button id="view-result-modal-button" onClick={this.onLocalViewClick}>View</button>
-          </div>
-          {this.props.isCoach &&
-            <div className="icon row-unit">
-              <i onClick={this.onLocalEditClick} className="fas fa-edit" />
-              <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
+          <div className='content'>
+            <div className="row-unit data">
+              {this.props.teamWorkout.type === 'distance' &&
+                <div>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
+              }
+              {this.props.teamWorkout.type === 'time' &&
+                <div>{this.props.teamWorkout.timeString} {this.props.teamWorkout.activity}</div>
+              }
             </div>
-          }
+            <div className="row-unit button">
+              {this.props.isCoach &&
+                <button id="result-modal-button" onClick={this.onLocalResultAddClick}>Record</button>
+              }
+              <button id="view-result-modal-button" onClick={this.onLocalViewClick}>View</button>
+            </div>
+          </div>
+          <div className='footer'>
+            {this.props.isCoach &&
+              <div className="icon row-unit">
+                <i onClick={this.onLocalEditClick} className="fas fa-edit" />
+                <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
+              </div>
+            }
+          </div>
         </div>
       );
     }

@@ -1,5 +1,4 @@
 .results-modal-container {
-  margin-top: 60px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -9,8 +8,8 @@
   color: black;
   border-radius: 5px;
   border: none;
-  margin: 70px 50px 0px;
-  max-height: 70%;
+  max-height: 75vh;
+  width: 80vw;
 
   @media only screen and (max-width: 650px) {
     margin: 70px 25px 0px;
@@ -67,9 +66,7 @@
 
 .result-post {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
   background-color: #f4f4f4;
   margin: 0px;
   border-radius: 3px;
@@ -80,6 +77,20 @@
     font-size: 14px;
   }
 
+  .content {
+    margin: 0px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 
   div {
     margin: 10px;
@@ -102,6 +113,12 @@
     font-size: 20px;
     border-style: none;
     border-radius: 5px;
+
+    &.invalid {
+      border-style: solid;
+      border-width: 2px;
+      border-color: #d12600;
+    }
   }
 
   select {
@@ -124,11 +141,13 @@
   }
 
   &.edit {
-    @media only screen and (max-width: 500px) {
-      flex-direction: column;
+    .content {
+      justify-content: center;
+      @media only screen and (max-width: 500px) {
+        flex-direction: column;
+      }
     }
 
-    justify-content: center;
     div {
       margin: 5px 10px;
     }
@@ -136,16 +155,17 @@
     input {
       height: 25px;
       font-size: 16px;
+      text-align: center;
     }
 
 
     .input-sm {
-      max-width: 30px;
+      max-width: 40px;
       height: 25px;
     }
 
     .input-md {
-      max-width: 50px;
+      max-width: 80px;
     }
 
     .input-row {
@@ -156,6 +176,11 @@
 
     button {
       margin: 0px 5px;
+    }
+    .status-text {
+      &.error {
+        color: #d12600;
+      }
     }
   }
 }

@@ -9,13 +9,8 @@
   color: black;
   border-radius: 5px;
   border: none;
-  margin-left: 25%;
-  margin-right: 25%;
-
-  @media only screen and (max-width: 550px) {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
+  max-height: 75vh;
+  width: 80vw;
 
   .team-roster {
       display: flex;

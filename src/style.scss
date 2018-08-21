@@ -15,6 +15,24 @@ body {
   font-display: auto;
   color: white;
   background-color: #e8e8e8;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  input {
+    box-shadow: none;
+  }
+  input, button, .button {
+    font-family: "Open Sans", sans-serif;
+    font-display: auto;
+  }
+  :focus {
+    outline: none;
+  }
+  ::-moz-focus-inner {
+    border: 0;
+  }
 }
 
 a {
@@ -103,6 +121,9 @@ nav {
       @media only screen and (max-width: 425px) {
         font-size: 12px;
       }
+      @media only screen and (max-width: 350px) {
+        margin-left: 8px;
+      }
 
       sup {
         font-size: 16px;
@@ -111,6 +132,9 @@ nav {
         @media only screen and (max-width: 650px) {
           font-size: 12px;
           font-weight: lighter;
+        }
+        @media only screen and (max-width: 425px) {
+          font-size: 10px;
         }
       }
     }

@@ -13,7 +13,7 @@ import { fetchUserTeam } from '../actions/team';
 import UserInfo from '../components/UserInfo';
 import SoloWorkoutFeed from '../components/SoloWorkoutFeed';
 import LoadingScreen from '../components/mini/LoadingScreen';
-import AddWorkoutForm from './forms/AddWorkoutForm';
+import AddWorkoutForm from '../components/forms/AddWorkoutForm';
 
 const mapStateToProps = state => (
   {
@@ -25,6 +25,8 @@ const mapStateToProps = state => (
     userWorkouts: state.workouts.list,
     isFetchingUserWorkouts: state.workouts.isFetchingUserWorkouts,
     userWorkoutsFetched: state.workouts.userWorkoutsFetched,
+    workoutStatusText: state.workouts.statusText,
+    workoutIsAdded: state.workouts.workoutIsAdded,
     team: state.team.team,
     isFetchingTeam: state.team.isFetchingTeam,
     teamIsFetched: state.team.teamIsFetched,
@@ -70,10 +72,12 @@ class Profile extends Component {
 
   onAddWorkoutModalOpen(event) {
     this.setState({ showAddWorkoutModal: true });
+    document.body.classList.add('no-scroll');
   }
 
   onAddWorkoutModalClose(event) {
     this.setState({ showAddWorkoutModal: false });
+    document.body.classList.remove('no-scroll');
   }
 
   render() {
@@ -110,12 +114,15 @@ class Profile extends Component {
               className="modal"
               overlayClassName="overlay"
               ariaHideApp={false}
+              onRequestClose={this.onAddWorkoutModalClose}
             >
               <AddWorkoutForm
                 addWorkout={this.props.addWorkout}
                 userId={this.props.userProfile._id}
                 userName={this.props.userProfile.name}
                 onModalClose={this.onAddWorkoutModalClose}
+                workoutIsAdded={this.props.workoutIsAdded}
+                statusText={this.props.workoutStatusText}
               />
             </ReactModal>
           </div>

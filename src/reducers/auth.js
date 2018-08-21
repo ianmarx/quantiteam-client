@@ -27,18 +27,19 @@ const AuthReducer = (state = initialState, action) => {
         isAuthenticating: false,
         isAuthenticated: true,
         userId: action.userId,
+        statusText: null,
       });
     case AUTH_USER_FAILURE:
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: false,
-        statusText: action.payload.statusText,
+        statusText: action.payload.statusText || action.payload.message,
         userId: null,
       });
     case AUTH_USER_REQUEST:
       return Object.assign({}, state, {
         isAuthenticating: true,
-        statusText: null,
+        statusText: 'Authorizing...',
       });
     case DEAUTH_USER:
       return Object.assign({}, state, {
@@ -57,7 +58,6 @@ const AuthReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         user: null,
         isFetchingUser: false,
-        statusText: action.payload.statusText,
       });
     }
     case FETCH_USER_REQUEST: {

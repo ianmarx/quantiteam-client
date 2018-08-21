@@ -64,6 +64,7 @@ class SignIn extends Component {
               value={this.state.email}
               type="text"
               required
+              autoFocus
               placeholder='Email'
               autoComplete='email'
             />
@@ -81,14 +82,9 @@ class SignIn extends Component {
           <NavLink to="/">
             <button className="back-button">Back</button>
           </NavLink>
-          <div className='status-text'>
-            {this.props.isAuthenticating &&
-              <div>Authorizing . . . </div>
-            }
-            {this.props.statusText === 'Unauthorized' &&
-              <div>{this.props.statusText}: email/password not found.</div>
-            }
-          </div>
+          {this.props.statusText &&
+            <div className='status-text'>{this.props.statusText}</div>
+          }
         </form>
       </div>
     );
