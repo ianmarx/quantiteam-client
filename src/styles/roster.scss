@@ -13,11 +13,15 @@
   width: 80vw;
 
   .team-roster {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+  }
+
+  .athlete-list {
+    margin-bottom: 20px;
   }
 
   .list-title {
