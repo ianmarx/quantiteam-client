@@ -22,6 +22,7 @@ const mapStateToProps = state => (
     userProfile: state.user.userProfile,
     isFetchingUserProfile: state.user.isFetchingUserProfile,
     userProfileIsFetched: state.user.userProfileIsFetched,
+    userProfileIsUpdated: state.user.userProfileIsUpdated,
     userWorkouts: state.workouts.list,
     isFetchingUserWorkouts: state.workouts.isFetchingUserWorkouts,
     userWorkoutsFetched: state.workouts.userWorkoutsFetched,
@@ -94,38 +95,41 @@ class Profile extends Component {
             user={this.props.userProfile}
             currentUserId={this.props.userId}
             isCoach={this.props.isCoach}
-            team={this.props.userProfile.team}
+            team={this.props.team}
             updateUser={this.props.updateUserProfile}
+            profileIsUpdated={this.props.userProfileIsUpdated}
           />
-          <div className='workout-feed-container'>
-            <SoloWorkoutFeed
-              profileUserId={this.props.userProfile._id}
-              isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
-              isCoach={this.props.isCoach}
-              onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
-              onWorkoutDeleteClick={this.onWorkoutDeleteClick}
-              soloWorkouts={this.props.userWorkouts}
-              currentUserId={this.props.userId}
-              updateWorkout={this.props.updateWorkout}
-            />
-            <ReactModal
-              isOpen={this.state.showAddWorkoutModal}
-              contentLabel="Add Workout"
-              className="modal"
-              overlayClassName="overlay"
-              ariaHideApp={false}
-              onRequestClose={this.onAddWorkoutModalClose}
-            >
-              <AddWorkoutForm
-                addWorkout={this.props.addWorkout}
-                userId={this.props.userProfile._id}
-                userName={this.props.userProfile.name}
-                onModalClose={this.onAddWorkoutModalClose}
-                workoutIsAdded={this.props.workoutIsAdded}
-                statusText={this.props.workoutStatusText}
+          {!this.props.isCoach &&
+            <div className='workout-feed-container'>
+              <SoloWorkoutFeed
+                profileUserId={this.props.userProfile._id}
+                isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
+                isCoach={this.props.isCoach}
+                onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
+                onWorkoutDeleteClick={this.onWorkoutDeleteClick}
+                soloWorkouts={this.props.userWorkouts}
+                currentUserId={this.props.userId}
+                updateWorkout={this.props.updateWorkout}
               />
-            </ReactModal>
-          </div>
+              <ReactModal
+                isOpen={this.state.showAddWorkoutModal}
+                contentLabel="Add Workout"
+                className="modal"
+                overlayClassName="overlay"
+                ariaHideApp={false}
+                onRequestClose={this.onAddWorkoutModalClose}
+              >
+                <AddWorkoutForm
+                  addWorkout={this.props.addWorkout}
+                  userId={this.props.userProfile._id}
+                  userName={this.props.userProfile.name}
+                  onModalClose={this.onAddWorkoutModalClose}
+                  workoutIsAdded={this.props.workoutIsAdded}
+                  statusText={this.props.workoutStatusText}
+                />
+              </ReactModal>
+            </div>
+          }
         </div>
       );
     }

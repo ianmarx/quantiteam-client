@@ -23,7 +23,7 @@ class UserInfo extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     this.setState({
       name: this.props.user.name,
       team: this.props.team.name,
@@ -73,9 +73,11 @@ class UserInfo extends Component {
       name, position, height, weight, classYear,
     };
     await this.props.updateUser(this.props.user._id, userObject);
-    this.setState({
-      isEditing: false,
-    });
+    if (this.props.profileIsUpdated) {
+      this.setState({
+        isEditing: false,
+      });
+    }
   }
 
   render() {
@@ -86,29 +88,37 @@ class UserInfo extends Component {
             <div>Name</div>
             <input onChange={this.onNameChange} value={this.state.name} type="text" />
           </div>
-          <div className='row-unit'>
-            <div>Height</div>
-            <input onChange={this.onHeightChange} value={this.state.height} type="text" />
-          </div>
-          <div className='row-unit'>
-            <div>Weight (lb)</div>
-            <input onChange={this.onWeightChange} value={this.state.weight} type="text" />
-          </div>
-          <div className='row-unit'>
-            <div>Class Year</div>
-            <input onChange={this.onClassYearChange} value={this.state.classYear} type="text" />
-          </div>
-          <div className='row-unit'>
-            <div>Position</div>
-            <select value={this.state.position} onChange={this.onPositionChange}>
-              <option default value="">Select</option>
-              <option value="Port">Port</option>
-              <option value="Starboard">Starboard</option>
-              <option value="Port/Starboard">Port/Starboard</option>
-              <option value="Coxswain">Coxswain</option>
-              <option value="Sculler">Sculler</option>
-            </select>
-          </div>
+          {!this.props.isCoach &&
+            <div className='row-unit'>
+              <div>Height</div>
+              <input onChange={this.onHeightChange} value={this.state.height} type="text" />
+            </div>
+          }
+          {!this.props.isCoach &&
+            <div className='row-unit'>
+              <div>Weight (lb)</div>
+              <input onChange={this.onWeightChange} value={this.state.weight} type="text" />
+            </div>
+          }
+          {!this.props.isCoach &&
+            <div className='row-unit'>
+              <div>Class Year</div>
+              <input onChange={this.onClassYearChange} value={this.state.classYear} type="text" />
+            </div>
+          }
+          {!this.props.isCoach &&
+            <div className='row-unit'>
+              <div>Position</div>
+              <select value={this.state.position} onChange={this.onPositionChange}>
+                <option default value="">Select</option>
+                <option value="Port">Port</option>
+                <option value="Starboard">Starboard</option>
+                <option value="Port/Starboard">Port/Starboard</option>
+                <option value="Coxswain">Coxswain</option>
+                <option value="Sculler">Sculler</option>
+              </select>
+            </div>
+          }
           <div className='row-unit'>
             <button type="button" className="user-edit-cancel" onClick={this.onCancelClick}>Cancel</button>
             <button type="submit" className="user-edit-submit">Save</button>
@@ -121,16 +131,16 @@ class UserInfo extends Component {
           <div className="user-name">{this.props.user.name}</div>
           <div className='info-list'>
             <div className="team-name">{this.props.team.name}</div>
-            {this.props.user.height !== 0 &&
+            {this.props.user.height !== 0 && !this.props.isCoach &&
               <div>{this.props.user.height} in</div>
             }
-            {this.props.user.weight !== 0 &&
+            {this.props.user.weight !== 0 && !this.props.isCoach &&
               <div>{this.props.user.weight} lb</div>
             }
-            {this.props.user.position !== '' &&
+            {this.props.user.position !== '' && !this.props.isCoach &&
               <div>{this.props.user.position}</div>
             }
-            {this.props.user.classYear !== 0 &&
+            {this.props.user.classYear !== 0 && !this.props.isCoach &&
               <div>{this.props.user.classYear}</div>
             }
           </div>
