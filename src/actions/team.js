@@ -7,8 +7,12 @@ import type { Action } from '../types/actions/team';
 export const FETCH_USER_TEAM_SUCCESS = 'FETCH_USER_TEAM_SUCCESS';
 export const FETCH_USER_TEAM_FAILURE = 'FETCH_USER_TEAM_FAILURE';
 export const FETCH_USER_TEAM_REQUEST = 'FETCH_USER_TEAM_REQUEST';
-export const CHECK_TEAM_NAME_AVAILABILITY = 'CHECK_TEAM_NAME_AVAILABILITY';
-export const CHECK_TEAM_CODE_VALIDITY = 'CHECK_TEAM_CODE_VALIDITY';
+export const CHECK_TEAM_NAME_SUCCESS = 'CHECK_TEAM_NAME_SUCCESS';
+export const CHECK_TEAM_NAME_FAILURE = 'CHECK_TEAM_NAME_FAILURE';
+export const CHECK_TEAM_NAME_REQUEST = 'CHECK_TEAM_NAME_REQUEST';
+export const CHECK_TEAM_CODE_SUCCESS = 'CHECK_TEAM_CODE_SUCCESS';
+export const CHECK_TEAM_CODE_FAILURE = 'CHECK_TEAM_CODE_FAILURE';
+export const CHECK_TEAM_CODE_REQUEST = 'CHECK_TEAM_CODE_REQUEST';
 
 export function fetchUserTeamSuccess(team: Object, isCoach: Boolean) : Action {
   return {
@@ -19,15 +23,55 @@ export function fetchUserTeamSuccess(team: Object, isCoach: Boolean) : Action {
 }
 
 export function fetchUserTeamFailure(error: APIError) : Action {
-  return getErrorAction({
-    type: FETCH_USER_TEAM_FAILURE,
+  return getErrorAction(
+    FETCH_USER_TEAM_FAILURE,
     error,
-  });
+  );
 }
 
 export function fetchUserTeamRequest() : Action {
   return {
     type: FETCH_USER_TEAM_REQUEST,
+  };
+}
+
+export function checkTeamCodeSuccess(response: Object) : Action {
+  return {
+    type: CHECK_TEAM_CODE_SUCCESS,
+    payload: response.data,
+  };
+}
+
+export function checkTeamCodeFailure(error: APIError) : Action {
+  return getErrorAction(
+    CHECK_TEAM_CODE_FAILURE,
+    error,
+  );
+}
+
+export function checkTeamCodeRequest() : Action {
+  return {
+    type: CHECK_TEAM_CODE_REQUEST,
+  };
+}
+
+export function checkTeamNameSuccess(response: Object) : Action {
+  return {
+    type: CHECK_TEAM_NAME_SUCCESS,
+    payload: response.data,
+  };
+}
+
+export function checkTeamNameFailure(error: APIError) : Action {
+  return getErrorAction(
+    CHECK_TEAM_NAME_FAILURE,
+    error,
+  );
+}
+
+export function checkTeamNameRequest() : Action {
+  return {
+    type: CHECK_TEAM_NAME_REQUEST,
   };
 }
 
@@ -44,22 +88,24 @@ export function fetchUserTeam(userId) {
   };
 }
 
-export function checkTeamNameAvailability(query) {
-  return (dispatch) => {
-    axios.get(`${ROOT_URL}/team/name/${query}`).then((response) => {
-      dispatch({ type: CHECK_TEAM_NAME_AVAILABILITY, payload: response.data });
+export function checkTeamName(query) {
+  return async (dispatch) => {
+    dispatch(checkTeamNameRequest());
+    await axios.get(`${ROOT_URL}/team/name/${query}`).then((response) => {
+      dispatch(checkTeamNameSuccess(response));
     }).catch((error) => {
-      console.log(`failed to check team name availability ${error.message}`);
+      dispatch(checkTeamNameFailure(error));
     });
   };
 }
 
-export function checkTeamCodeValidity(teamCode) {
-  return (dispatch) => {
-    axios.get(`${ROOT_URL}/team/code/${teamCode}`).then((response) => {
-      dispatch({ type: CHECK_TEAM_CODE_VALIDITY, payload: response.data });
+export function checkTeamCode(teamCode) {
+  return async (dispatch) => {
+    dispatch(checkTeamCodeRequest());
+    await axios.get(`${ROOT_URL}/team/code/${teamCode}`).then((response) => {
+      dispatch(checkTeamCodeSuccess(response));
     }).catch((error) => {
-      console.log(`failed to check team name availability ${error.message}`);
+      dispatch(checkTeamCodeFailure(error));
     });
   };
 }

@@ -6,11 +6,15 @@ import {
   UPDATE_USER_PROFILE_FAILURE,
   UPDATE_USER_PROFILE_REQUEST,
 } from '../actions/user';
-import { MATCH_ATHLETE } from '../actions/teamworkout';
+import {
+  MATCH_ATHLETE_SUCCESS,
+  MATCH_ATHLETE_FAILURE,
+  MATCH_ATHLETE_REQUEST,
+} from '../actions/teamworkout';
 
 const initialState = {
   userProfile: null,
-  queryResults: [],
+  queryResults: null,
   isFetchingUserProfile: false,
   userProfileIsFetched: false,
   isUpdatingUserProfile: false,
@@ -61,10 +65,18 @@ const UserReducer = (state = initialState, action) => {
         userProfileIsUpdated: false,
       });
     }
-    case MATCH_ATHLETE: {
+    case MATCH_ATHLETE_SUCCESS: {
       return Object.assign({}, state, {
         queryResults: action.payload,
       });
+    }
+    case MATCH_ATHLETE_FAILURE: {
+      return Object.assign({}, state, {
+        queryResults: null,
+      });
+    }
+    case MATCH_ATHLETE_REQUEST: {
+      return state;
     }
     default:
       return state;

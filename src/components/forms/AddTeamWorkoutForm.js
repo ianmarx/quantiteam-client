@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import timeStringToSeconds from '../../utils/workout';
 
 class AddTeamWorkoutForm extends Component {
@@ -21,7 +22,6 @@ class AddTeamWorkoutForm extends Component {
     this.onBikeSelect = this.onBikeSelect.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
-    this.onTypeChange = this.onTypeChange.bind(this);
     this.onDistSelect = this.onDistSelect.bind(this);
     this.onTimeSelect = this.onTimeSelect.bind(this);
     this.onPrevClick = this.onPrevClick.bind(this);
@@ -30,7 +30,6 @@ class AddTeamWorkoutForm extends Component {
     this.showTypeSelect = this.showTypeSelect.bind(this);
   }
 
-  /* Handle changes in the add workout fields */
   onErgSelect(event) {
     this.setState({ activity: 'erg', distUnit: 'm' });
   }
@@ -55,10 +54,6 @@ class AddTeamWorkoutForm extends Component {
     this.setState({ timeString: event.target.value });
   }
 
-  onTypeChange(event) {
-    this.setState({ type: event.target.value });
-  }
-
   onDistSelect(event) {
     this.setState({ type: 'distance' });
   }
@@ -68,6 +63,9 @@ class AddTeamWorkoutForm extends Component {
   }
 
   onPrevClick(event) {
+    if (this.showTypeSelect()) {
+      this.setState({ activity: '' });
+    }
     if (!this.showActivitySelect() && !this.showTypeSelect()) {
       this.setState({
         type: '',
@@ -78,12 +76,8 @@ class AddTeamWorkoutForm extends Component {
         timeIsValid: true,
       });
     }
-    if (this.showTypeSelect()) {
-      this.setState({ activity: '' });
-    }
   }
 
-  /* Add a workout using the form */
   async onSubmit(event) {
     event.preventDefault();
     if (this.validateInput()) {
@@ -100,13 +94,17 @@ class AddTeamWorkoutForm extends Component {
   }
 
   validateInput() {
+    let isValid = true;
+    const invalidMessage = 'The input parameter is invalid.';
+
+    /* reset validation-related variables */
     this.setState({
       statusMessage: '',
       distanceIsValid: true,
       timeIsValid: true,
     });
-    let isValid = true;
-    const invalidMessage = 'The input parameter is invalid.';
+
+    /* validate form input variables */
     if (this.state.distance !== '' && isNaN(this.state.distance)) {
       this.setState({ statusMessage: invalidMessage, distanceIsValid: false });
       isValid = false;
@@ -143,14 +141,14 @@ class AddTeamWorkoutForm extends Component {
         }
         {this.showTypeSelect() &&
           <div className='form-row type'>
-            <button className="type-select" onClick={this.onDistSelect}>Distance</button>
-            <button className="type-select" onClick={this.onTimeSelect}>Time</button>
+            <button className="type-select distance" onClick={this.onDistSelect}>Distance</button>
+            <button className="type-select time" onClick={this.onTimeSelect}>Time</button>
           </div>
         }
         {this.state.type === 'distance' &&
           <div className='form-row'>
             <input
-              className={`${this.state.distanceIsValid ? '' : 'invalid'}`}
+              className={`distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
               onChange={this.onDistanceChange}
               value={this.state.distance}
               type="text"
@@ -164,7 +162,7 @@ class AddTeamWorkoutForm extends Component {
         {this.state.type === 'time' &&
           <div className='form-row'>
             <input
-              className={`${this.state.timeIsValid ? '' : 'invalid'}`}
+              className={`time ${this.state.timeIsValid ? '' : 'invalid'}`}
               onChange={this.onTimeStringChange}
               value={this.state.timeString}
               type="text"
@@ -186,5 +184,12 @@ class AddTeamWorkoutForm extends Component {
     );
   }
 }
+
+AddTeamWorkoutForm.propTypes = {
+  addTeamWorkout: PropTypes.func,
+  onModalClose: PropTypes.func,
+  userId: PropTypes.string,
+  teamId: PropTypes.string,
+};
 
 export default AddTeamWorkoutForm;

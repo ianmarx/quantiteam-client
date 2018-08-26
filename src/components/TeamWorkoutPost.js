@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import timeStringToSeconds from '../utils/workout';
 
@@ -20,10 +21,10 @@ class TeamWorkoutPost extends Component {
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onDistUnitChange = this.onDistUnitChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
-    this.onLocalResultAddClick = this.onLocalResultAddClick.bind(this);
-    this.onLocalDeleteClick = this.onLocalDeleteClick.bind(this);
-    this.onLocalEditClick = this.onLocalEditClick.bind(this);
-    this.onLocalViewClick = this.onLocalViewClick.bind(this);
+    this.onRecordClick = this.onRecordClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.onViewClick = this.onViewClick.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.validateInput = this.validateInput.bind(this);
@@ -39,19 +40,19 @@ class TeamWorkoutPost extends Component {
     });
   }
 
-  onLocalResultAddClick(event) {
-    this.props.onResultAddClick(this.props.teamWorkout._id);
+  onRecordClick(event) {
+    this.props.onAddResultClick(this.props.teamWorkout._id);
   }
 
-  onLocalEditClick(event) {
+  onEditClick(event) {
     this.setState({ isEditing: true });
   }
 
-  onLocalDeleteClick(event) {
-    this.props.onDeleteClick(this.props.teamWorkout._id, this.props.teamWorkout._team);
+  onDeleteClick(event) {
+    this.props.deleteTeamWorkout(this.props.teamWorkout._id, this.props.teamWorkout._team);
   }
 
-  onLocalViewClick(event) {
+  onViewClick(event) {
     this.props.onViewResultsClick(this.props.teamWorkout._id, this.props.teamWorkout.type);
   }
 
@@ -74,9 +75,10 @@ class TeamWorkoutPost extends Component {
   onCancelClick(event) {
     this.setState({
       isEditing: false,
-      distance: this.props.teamWorkout.distance,
+      activity: this.props.teamWorkout.activity,
+      distance: this.props.teamWorkout.distance || '',
       distUnit: this.props.teamWorkout.distUnit,
-      timeString: this.props.teamWorkout.timeString,
+      timeString: this.props.teamWorkout.timeString || '',
       statusMessage: '',
       distanceIsValid: true,
       timeIsValid: true,
@@ -89,12 +91,7 @@ class TeamWorkoutPost extends Component {
       const activity = this.state.activity;
       const distance = this.state.distance;
       const distUnit = this.state.distUnit;
-      let time;
-      if (this.state.timeString !== '') {
-        time = timeStringToSeconds(this.state.timeString);
-      } else {
-        time = '';
-      }
+      const time = timeStringToSeconds(this.state.timeString);
       const teamWorkoutObject = {
         activity, distance, distUnit, time,
       };
@@ -145,7 +142,7 @@ class TeamWorkoutPost extends Component {
             {this.state.type === 'distance' &&
               <div className="row-unit">
                 <input
-                  className={`input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                  className={`distance input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
                   onChange={this.onDistanceChange}
                   value={this.state.distance}
                   type="text"
@@ -156,7 +153,7 @@ class TeamWorkoutPost extends Component {
             {this.state.type === 'time' &&
               <div className='row-unit'>
                 <input
-                  className={`input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
+                  className={`time-string input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
                   onChange={this.onTimeStringChange}
                   value={this.state.timeString}
                   type="text"
@@ -164,7 +161,7 @@ class TeamWorkoutPost extends Component {
               </div>
             }
             <div className="row-unit">
-              <select value={this.state.activity} onChange={this.onActivityChange}>
+              <select className='activity' value={this.state.activity} onChange={this.onActivityChange}>
                 <option value="erg">Erg</option>
                 <option value="row">Row</option>
                 <option value="run">Run</option>
@@ -172,7 +169,7 @@ class TeamWorkoutPost extends Component {
               </select>
             </div>
             <div className='row-unit'>
-              <select value={this.state.distUnit} onChange={this.onDistUnitChange}>
+              <select className='dist-unit' value={this.state.distUnit} onChange={this.onDistUnitChange}>
                 <option value="m">m</option>
                 <option value="km">km</option>
                 <option value="mi">mi</option>
@@ -202,24 +199,24 @@ class TeamWorkoutPost extends Component {
           <div className='content'>
             <div className="row-unit data">
               {this.props.teamWorkout.type === 'distance' &&
-                <div>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
+                <div className='distance'>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
               }
               {this.props.teamWorkout.type === 'time' &&
-                <div>{this.props.teamWorkout.timeString} {this.props.teamWorkout.activity}</div>
+                <div className='time'>{this.props.teamWorkout.timeString} {this.props.teamWorkout.activity}</div>
               }
             </div>
             <div className="row-unit button">
               {this.props.isCoach &&
-                <button id="result-modal-button" onClick={this.onLocalResultAddClick}>Record</button>
+                <button id="result-modal-button" onClick={this.onRecordClick}>Record</button>
               }
-              <button id="view-result-modal-button" onClick={this.onLocalViewClick}>View</button>
+              <button id="view-result-modal-button" onClick={this.onViewClick}>View</button>
             </div>
           </div>
           <div className='footer'>
             {this.props.isCoach &&
               <div className="icon row-unit">
-                <i onClick={this.onLocalEditClick} className="fas fa-edit" />
-                <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
+                <i onClick={this.onEditClick} className="fas fa-edit" />
+                <i onClick={this.onDeleteClick} className="fas fa-trash" />
               </div>
             }
           </div>
@@ -228,5 +225,14 @@ class TeamWorkoutPost extends Component {
     }
   }
 }
+
+TeamWorkoutPost.propTypes = {
+  deleteTeamWorkout: PropTypes.func,
+  isCoach: PropTypes.bool,
+  onAddResultClick: PropTypes.func,
+  onViewResultsClick: PropTypes.func,
+  teamWorkout: PropTypes.object,
+  updateTeamWorkout: PropTypes.func,
+};
 
 export default TeamWorkoutPost;

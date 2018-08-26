@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TeamWorkoutPost from './TeamWorkoutPost';
 import LoadingScreen from './mini/LoadingScreen';
 
 const TeamWorkoutFeed = (props) => {
   if (props.isFetchingTeamWorkouts) {
     return (
-      <div className="workout-feed">
+      <div className="workout-feed loading">
         <div className="feed-title">Team Workouts</div>
         <LoadingScreen />
       </div>
@@ -27,9 +28,10 @@ const TeamWorkoutFeed = (props) => {
               teamWorkout={workout}
               key={workout.date}
               isCoach={props.isCoach}
-              onDeleteClick={props.onTeamWorkoutDeleteClick}
+              fetchTeamWorkout={props.fetchTeamWorkout}
+              deleteTeamWorkout={props.deleteTeamWorkout}
               updateTeamWorkout={props.updateTeamWorkout}
-              onResultAddClick={props.onAddResultClick}
+              onAddResultClick={props.onAddResultClick}
               onViewResultsClick={props.onViewResultsClick}
             />
           );
@@ -37,6 +39,17 @@ const TeamWorkoutFeed = (props) => {
       </div>
     );
   }
+};
+
+TeamWorkoutFeed.propTypes = {
+  deleteTeamWorkout: PropTypes.func,
+  isFetchingTeamWorkouts: PropTypes.bool,
+  isCoach: PropTypes.bool,
+  onAddResultClick: PropTypes.func,
+  onViewResultsClick: PropTypes.func,
+  onAddTeamWorkoutModalOpen: PropTypes.func,
+  teamWorkouts: PropTypes.array,
+  updateTeamWorkout: PropTypes.func,
 };
 
 export default TeamWorkoutFeed;

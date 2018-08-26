@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import timeStringToSeconds from '../utils/workout';
 
 class ResultPost extends Component {
@@ -20,15 +21,13 @@ class ResultPost extends Component {
       avgHRIsValid: true,
     };
 
-    this.onActivityChange = this.onActivityChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
-    this.onDistUnitChange = this.onDistUnitChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
     this.onWattsChange = this.onWattsChange.bind(this);
-    this.onLocalDeleteClick = this.onLocalDeleteClick.bind(this);
-    this.onLocalEditClick = this.onLocalEditClick.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.validateInput = this.validateInput.bind(this);
@@ -45,24 +44,16 @@ class ResultPost extends Component {
     });
   }
 
-  onLocalEditClick(event) {
+  onEditClick(event) {
     this.setState({ isEditing: true });
   }
 
-  onLocalDeleteClick(event) {
-    this.props.onDeleteClick(this.props.workout._id, this.props.teamWorkoutId);
-  }
-
-  onActivityChange(event) {
-    this.setState({ activity: event.target.value });
+  onDeleteClick(event) {
+    this.props.deleteResult(this.props.workout._id, this.props.teamWorkoutId);
   }
 
   onDistanceChange(event) {
     this.setState({ distance: event.target.value });
-  }
-
-  onDistUnitChange(event) {
-    this.setState({ distUnit: event.target.value });
   }
 
   onTimeStringChange(event) {
@@ -155,12 +146,12 @@ class ResultPost extends Component {
   render() {
     if (this.state.isEditing) {
       return (
-        <form className="result-post edit" key={this.props.index} onSubmit={this.onSubmit}>
+        <form className="result-post edit" onSubmit={this.onSubmit}>
           <div className='content'>
             {this.props.type === 'time' &&
               <div className='row-unit'>
                 <input
-                  className={`input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                  className={`distance input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
                   onChange={this.onDistanceChange}
                   value={this.state.distance}
                   type="text"
@@ -171,7 +162,7 @@ class ResultPost extends Component {
             {this.props.type === 'distance' &&
               <div className='row-unit'>
                 <input
-                  className={`input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
+                  className={`time input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
                   onChange={this.onTimeStringChange}
                   value={this.state.timeString}
                   type="text"
@@ -180,22 +171,35 @@ class ResultPost extends Component {
             }
             <div className='row-unit'>
               <input
-                className={`input-sm ${this.state.avgHRIsValid ? '' : 'invalid'}`}
+                className={`heart-rate input-sm ${this.state.avgHRIsValid ? '' : 'invalid'}`}
                 onChange={this.onHeartRateChange}
                 value={this.state.avgHR}
                 type="text"
               />
               <div>bpm</div>
             </div>
-            <div className='row-unit'>
-              <input
-                className={`input-sm ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
-                onChange={this.onStrokeRateChange}
-                value={this.state.strokeRate}
-                type="text"
-              />
-              <div>s/m</div>
-            </div>
+            {(this.props.workout.activity === 'erg' || this.props.workout.activity === 'row') &&
+              <div className='row-unit'>
+                <input
+                  className={`stroke-rate input-sm ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
+                  onChange={this.onStrokeRateChange}
+                  value={this.state.strokeRate}
+                  type="text"
+                />
+                <div>s/m</div>
+              </div>
+            }
+            {this.props.workout.activity === 'bike' &&
+              <div className='row-unit'>
+                <input
+                  className={`watts input-sm ${this.state.wattsIsValid ? '' : 'invalid'}`}
+                  onChange={this.onWattsChange}
+                  value={this.state.watts}
+                  type="text"
+                />
+                <div>s/m</div>
+              </div>
+            }
             <div className='row-unit'>
               <button type="button" className="workout-edit-cancel" onClick={this.onCancelClick}><i className="fas fa-times" /></button>
               <button type="submit" className="workout-edit-submit"><i className="fas fa-check" /></button>
@@ -210,33 +214,36 @@ class ResultPost extends Component {
       );
     } else {
       return (
-        <div className="result-post" key={this.props.index}>
+        <div className="result-post">
           <div className='content'>
             <div className='athlete-name'>
               <strong>{this.props.workout.creatorName}</strong>
             </div>
             {this.props.type === 'time' &&
-              <div>{this.props.workout.distance} {this.props.workout.distUnit}</div>
+              <div className='distance'>{this.props.workout.distance} {this.props.workout.distUnit}</div>
             }
             {this.props.type === 'distance' &&
-              <div>{this.props.workout.timeString}</div>
+              <div className='time-string'>{this.props.workout.timeString}</div>
             }
             {this.props.workout.splitString &&
-              <div>{this.props.workout.splitString} s/500m</div>
+              <div className='split-string'>{this.props.workout.splitString} s/500m</div>
             }
             {this.props.workout.strokeRate &&
-              <div>{this.props.workout.strokeRate} s/m</div>
+              <div className='stroke-rate'>{this.props.workout.strokeRate} s/m</div>
             }
             {this.props.workout.avgHR &&
-              <div>{this.props.workout.avgHR} bpm</div>
+              <div className='heart-rate'>{this.props.workout.avgHR} bpm</div>
+            }
+            {this.props.workout.watts &&
+              <div className='watts'>{this.props.workout.watts} watts</div>
             }
             {this.props.isCoach &&
               <div className='row-unit'>
                 <div className="icon">
-                  <i onClick={this.onLocalEditClick} className="fas fa-edit" />
+                  <i onClick={this.onEditClick} id='editWorkout' className="fas fa-edit" />
                 </div>
                 <div className="icon">
-                  <i onClick={this.onLocalDeleteClick} className="fas fa-trash" />
+                  <i onClick={this.onDeleteClick} id='deleteWorkout' className="fas fa-trash" />
                 </div>
               </div>
             }
@@ -246,5 +253,14 @@ class ResultPost extends Component {
     }
   }
 }
+
+ResultPost.propTypes = {
+  deleteResult: PropTypes.func,
+  isCoach: PropTypes.bool,
+  teamWorkoutId: PropTypes.string,
+  type: PropTypes.string,
+  updateResult: PropTypes.func,
+  workout: PropTypes.object,
+};
 
 export default ResultPost;

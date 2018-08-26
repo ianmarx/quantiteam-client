@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signUpAthlete, signUpCoach } from '../actions/auth';
-import { checkTeamNameAvailability, checkTeamCodeValidity } from '../actions/team';
+import { checkTeamName, checkTeamCode } from '../actions/team';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
-    userId: state.auth.userId,
     isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     statusText: state.auth.statusText,
@@ -15,7 +15,7 @@ const mapStateToProps = state => (
   }
 );
 
-class SignUp extends Component {
+export class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +36,8 @@ class SignUp extends Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onTeamCodeChange = this.onTeamCodeChange.bind(this);
     this.onTeamNameChange = this.onTeamNameChange.bind(this);
-    this.onPhoneNumberChange = this.onPhoneNumberChange.bind(this);
+    this.onNextClick = this.onNextClick.bind(this);
+    this.onBackClick = this.onBackClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.shouldDisableNextButton = this.shouldDisableNextButton.bind(this);
     this.shouldShowTeamCode = this.shouldShowTeamCode.bind(this);
@@ -78,27 +79,31 @@ class SignUp extends Component {
     this.setState({ password: event.target.value });
   }
 
-  async onTeamCodeChange(event) {
-    await this.setState({ teamCode: event.target.value });
-
-    if (this.state.teamCode !== '') {
-      this.props.checkTeamCodeValidity(this.state.teamCode);
-    }
+  onTeamCodeChange(event) {
+    this.setState({ teamCode: event.target.value }, () => {
+      if (this.state.teamCode !== '') {
+        this.props.checkTeamCode(this.state.teamCode);
+      }
+    });
   }
 
-  async onTeamNameChange(event) {
-    await this.setState({ teamName: event.target.value });
-
-    if (this.state.teamName !== '') {
-      this.props.checkTeamNameAvailability(this.state.teamName);
-    }
+  onTeamNameChange(event) {
+    this.setState({ teamName: event.target.value }, () => {
+      if (this.state.teamName !== '') {
+        this.props.checkTeamName(this.state.teamName);
+      }
+    });
   }
 
-  onPhoneNumberChange(event) {
-    this.setState({ phoneNumber: event.target.value });
+  onNextClick(event) {
+    this.setState({ firstStepComplete: true });
   }
 
-  async onSubmit(event) {
+  onBackClick(event) {
+    this.setState({ firstStepComplete: false });
+  }
+
+  onSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -111,10 +116,11 @@ class SignUp extends Component {
 
     if (this.state.userType === 'athlete') {
       const userObject = { name, email, password, teamCode, userType };
-      await this.props.signUpAthlete(userObject, this.props.history);
-    } else if (this.state.userType === 'coach') {
+      this.props.signUpAthlete(userObject, this.props.history);
+    }
+    if (this.state.userType === 'coach') {
       const userObject = { name, email, password, teamName, userType };
-      await this.props.signUpCoach(userObject, this.props.history);
+      this.props.signUpCoach(userObject, this.props.history);
     }
   }
 
@@ -151,14 +157,14 @@ class SignUp extends Component {
           {!this.state.firstStepComplete &&
             <div className='button-group'>
               <button
-                className={this.state.userType === 'athlete' ? 'athlete' : 'disabled'}
+                className={`athlete ${this.state.userType !== 'athlete' && 'disabled'}`}
                 type='button'
                 onClick={this.onAthleteSelect}
               >
                 Athlete
               </button>
               <button
-                className={this.state.userType === 'coach' ? 'coach' : 'disabled'}
+                className={`coach ${this.state.userType !== 'coach' && 'disabled'}`}
                 type='button'
                 onClick={this.onCoachSelect}
               >
@@ -170,6 +176,7 @@ class SignUp extends Component {
             <div className="team-code field">
               <div>Enter the team code provided by your coach.</div>
               <input
+                className='team-code-input'
                 onChange={this.onTeamCodeChange}
                 value={this.state.teamCode}
                 type="text"
@@ -190,6 +197,7 @@ class SignUp extends Component {
             <div className="team-name field">
               <div>Enter your desired team name to check availability.</div>
               <input
+                className='team-name-input'
                 onChange={this.onTeamNameChange}
                 value={this.state.teamName}
                 type="text"
@@ -206,10 +214,11 @@ class SignUp extends Component {
               }
             </div>
           }
-          {this.state.firstStepComplete &&
+          {this.state.firstStepComplete ? (
             <div>
-              <div className="name field">
+              <div className="field">
                 <input
+                  className='name'
                   onChange={this.onNameChange}
                   value={this.state.name}
                   type="text"
@@ -218,8 +227,9 @@ class SignUp extends Component {
                   autoComplete='name'
                 />
               </div>
-              <div className="email field">
+              <div className="field">
                 <input
+                  className='email'
                   onChange={this.onEmailChange}
                   value={this.state.email}
                   type="text"
@@ -228,8 +238,9 @@ class SignUp extends Component {
                   autoComplete='email'
                 />
               </div>
-              <div className="password field">
+              <div className="field">
                 <input
+                  className='password'
                   onChange={this.onPasswordChange}
                   value={this.state.password}
                   type="password"
@@ -241,38 +252,39 @@ class SignUp extends Component {
               <div className='field'>
                 <button type="submit" className="signup-button">Sign Up</button>
                 <br />
-                <button className='back-button' onClick={() => {
-                  this.setState({ firstStepComplete: false });
-                }}
-                >
-                Back
+                <button className='back-button' onClick={this.onBackClick}>
+                  Back
                 </button>
               </div>
+              {this.props.statusText &&
+                <div className='status-text'>
+                  {this.props.statusText}
+                </div>
+              }
             </div>
-          }
-          {!this.state.firstStepComplete &&
+          ) : (
             <div>
-              <button className='next-button' disabled={this.shouldDisableNextButton()} onClick={() => {
-                this.setState({ firstStepComplete: true });
-              }}
-              >
-              Next
+              <button className='next-button' disabled={this.shouldDisableNextButton()} onClick={this.onNextClick}>
+                Next
               </button>
               <br />
               <NavLink to="/">
                 <button className="back-button">Back</button>
               </NavLink>
-              <div className='status-text'>
-                {this.props.isAuthenticating &&
-                  <div>Signing Up . . . </div>
-                }
-              </div>
             </div>
-          }
+          )}
         </form>
       </div>
     );
   }
 }
 
-export default withRouter(connect(mapStateToProps, { signUpAthlete, signUpCoach, checkTeamNameAvailability, checkTeamCodeValidity })(SignUp));
+SignUp.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  isAuthenticating: PropTypes.bool,
+  statusText: PropTypes.string,
+  teamCodeIsValid: PropTypes.bool,
+  teamNameIsAvailable: PropTypes.bool,
+};
+
+export default withRouter(connect(mapStateToProps, { signUpAthlete, signUpCoach, checkTeamName, checkTeamCode })(SignUp));

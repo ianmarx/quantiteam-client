@@ -17,7 +17,8 @@ import {
 } from '../actions/workout';
 
 const initialState = {
-  list: [],
+  soloList: null,
+  userList: null,
   isFetchingSoloWorkouts: false,
   soloWorkoutsFetched: false,
   isFetchingUserWorkouts: false,
@@ -38,14 +39,14 @@ const WorkoutReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetchingSoloWorkouts: false,
         soloWorkoutsFetched: true,
-        list: action.soloWorkouts,
+        soloList: action.soloWorkouts,
         statusText: null,
       });
     }
     case FETCH_SOLO_WORKOUTS_FAILURE: {
       return Object.assign({}, state, {
         isFetchingSoloWorkouts: false,
-        list: {},
+        soloList: {},
         statusText: action.payload.statusText,
       });
     }
@@ -53,21 +54,21 @@ const WorkoutReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetchingSoloWorkouts: true,
         soloWorkoutsFetched: false,
-        list: {},
+        soloList: {},
       });
     }
     case FETCH_USER_WORKOUTS_SUCCESS: {
       return Object.assign({}, state, {
         isFetchingUserWorkouts: false,
         userWorkoutsFetched: true,
-        list: action.userWorkouts,
+        userList: action.userWorkouts,
         statusText: null,
       });
     }
     case FETCH_USER_WORKOUTS_FAILURE: {
       return Object.assign({}, state, {
         isFetchingUserWorkouts: false,
-        list: {},
+        userList: {},
         statusText: action.payload.statusText,
       });
     }
@@ -75,17 +76,21 @@ const WorkoutReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetchingUserWorkouts: true,
         userWorkoutsFetched: false,
-        list: {},
+        userList: {},
       });
     }
     case DELETE_WORKOUT_SUCCESS: {
-      const updatedList = state.list.filter((workout) => {
+      const updatedSoloList = state.soloList ? state.soloList.filter((workout) => {
         return workout._id !== action.workoutId;
-      });
+      }) : null;
+      const updatedUserList = state.userList ? state.userList.filter((workout) => {
+        return workout._id !== action.workoutId;
+      }) : null;
       return Object.assign({}, state, {
         isDeletingWorkout: false,
         workoutIsDeleted: true,
-        list: updatedList,
+        soloList: updatedSoloList,
+        userList: updatedUserList,
         statusText: null,
       });
     }
@@ -104,12 +109,15 @@ const WorkoutReducer = (state = initialState, action) => {
       });
     }
     case ADD_WORKOUT_SUCCESS: {
-      const newWorkoutList = state.list;
-      newWorkoutList.unshift(action.workout);
+      const newSoloWorkoutList = state.soloList;
+      newSoloWorkoutList.unshift(action.workout);
+      const newUserWorkoutList = state.userList;
+      newUserWorkoutList.unshift(action.workout);
       return Object.assign({}, state, {
         isAddingWorkout: false,
         workoutIsAdded: true,
-        list: newWorkoutList,
+        soloList: newSoloWorkoutList,
+        userList: newUserWorkoutList,
         statusText: null,
       });
     }
@@ -128,18 +136,26 @@ const WorkoutReducer = (state = initialState, action) => {
       });
     }
     case UPDATE_WORKOUT_SUCCESS: {
-      const newWorkouts = [];
-      Object.assign(newWorkouts, state.list);
-      const oldWorkoutIndex = newWorkouts.findIndex((workout) => {
+      const newSoloWorkouts = [];
+      Object.assign(newSoloWorkouts, state.soloList);
+      const oldSoloWorkoutIndex = newSoloWorkouts.findIndex((workout) => {
+        return workout._id === action.workout._id;
+      });
+      newSoloWorkouts[oldSoloWorkoutIndex] = action.workout;
+
+      const newUserWorkouts = [];
+      Object.assign(newUserWorkouts, state.userList);
+      const oldUserWorkoutIndex = newUserWorkouts.findIndex((workout) => {
         return workout._id === action.workout._id;
       });
 
-      newWorkouts[oldWorkoutIndex] = action.workout;
+      newUserWorkouts[oldUserWorkoutIndex] = action.workout;
 
       return Object.assign({}, state, {
         isUpdatingWorkout: false,
         workoutIsUpdated: true,
-        list: newWorkouts,
+        soloList: newSoloWorkouts,
+        userList: newUserWorkouts,
         statusText: null,
       });
     }

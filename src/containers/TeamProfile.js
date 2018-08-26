@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
+import PropTypes from 'prop-types';
 import {
   updateWorkout,
 } from '../actions/workout';
+import { fetchUser } from '../actions/user';
 import { fetchUserTeam } from '../actions/team';
 import {
   addTeamWorkout,
@@ -27,15 +29,16 @@ import AddResultForm from '../components/forms/AddResultForm';
 import AddTeamWorkoutForm from '../components/forms/AddTeamWorkoutForm';
 import LoadingScreen from '../components/mini/LoadingScreen';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
     userId: state.auth.userId,
     user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
+    userIsFetched: state.auth.userIsFetched,
     team: state.team.team,
     isFetchingTeam: state.team.isFetchingTeam,
     teamIsFetched: state.team.teamIsFetched,
     isCoach: state.team.isCoach,
-    isAuthenticated: state.auth.isAuthenticated,
     teamWorkouts: state.teamWorkouts.list,
     isFetchingTeamWorkouts: state.teamWorkouts.isFetchingTeamWorkouts,
     teamWorkoutsFetched: state.teamWorkouts.teamWorkoutsFetched,
@@ -47,7 +50,7 @@ const mapStateToProps = state => (
   }
 );
 
-class TeamProfile extends Component {
+export class TeamProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +67,6 @@ class TeamProfile extends Component {
     this.onAddResultModalClose = this.onAddResultModalClose.bind(this);
     this.onAddTeamWorkoutModalOpen = this.onAddTeamWorkoutModalOpen.bind(this);
     this.onAddTeamWorkoutModalClose = this.onAddTeamWorkoutModalClose.bind(this);
-    this.onTeamWorkoutDeleteClick = this.onTeamWorkoutDeleteClick.bind(this);
     this.onAddResultModalOpen = this.onAddResultModalOpen.bind(this);
     this.onAddResultModalClose = this.onAddResultModalClose.bind(this);
     this.onViewResultsModalOpen = this.onViewResultsModalOpen.bind(this);
@@ -72,7 +74,6 @@ class TeamProfile extends Component {
     this.onTeamRosterModalOpen = this.onTeamRosterModalOpen.bind(this);
     this.onTeamRosterModalClose = this.onTeamRosterModalClose.bind(this);
     this.onAddResultClick = this.onAddResultClick.bind(this);
-    this.onResultDeleteClick = this.onResultDeleteClick.bind(this);
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
   }
 
@@ -80,10 +81,15 @@ class TeamProfile extends Component {
     if (!this.props.isAuthenticated) {
       this.props.history.replace('/signin');
     }
+    if (!this.props.userIsFetched) {
+      this.props.fetchUser(this.props.userId);
+    }
     if (!this.props.teamIsFetched) {
       this.props.fetchUserTeam(this.props.userId);
     }
-    this.props.fetchTeamWorkouts(this.props.userId);
+    if (!this.props.teamWorkoutsFetched) {
+      this.props.fetchTeamWorkouts(this.props.userId);
+    }
   }
 
   async onViewResultsClick(teamWorkoutId, type) {
@@ -91,21 +97,14 @@ class TeamProfile extends Component {
 
     if (type === 'distance') {
       await this.props.fetchTimeResults(teamWorkoutId);
-    } else if (type === 'time') {
+    }
+    if (type === 'time') {
       await this.props.fetchDistResults(teamWorkoutId);
     }
     this.onViewResultsModalOpen();
   }
 
-  onResultDeleteClick(workoutId, teamWorkoutId) {
-    this.props.deleteResult(workoutId, teamWorkoutId);
-  }
-
-  onTeamWorkoutDeleteClick(workoutId, teamId) {
-    this.props.deleteTeamWorkout(workoutId, teamId);
-  }
-
-  async onAddResultClick(teamWorkoutId, prevProps) {
+  async onAddResultClick(teamWorkoutId) {
     await this.props.fetchTeamWorkout(teamWorkoutId);
     this.onAddResultModalOpen();
   }
@@ -153,7 +152,7 @@ class TeamProfile extends Component {
   render() {
     if (!this.props.teamIsFetched || !this.props.teamWorkoutsFetched) {
       return (
-        <div className="team-page">
+        <div className="team-page loading">
           <LoadingScreen />
         </div>
       );
@@ -172,9 +171,8 @@ class TeamProfile extends Component {
               onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
               onAddResultClick={this.onAddResultClick}
               onViewResultsClick={this.onViewResultsClick}
-              onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
+              deleteTeamWorkout={this.props.deleteTeamWorkout}
               teamWorkouts={this.props.teamWorkouts}
-              updateWorkout={this.props.updateWorkout}
               updateTeamWorkout={this.props.updateTeamWorkout}
             />
             <ReactModal
@@ -190,9 +188,7 @@ class TeamProfile extends Component {
                     isCoach={this.props.isCoach}
                     results={this.props.currentResults}
                     teamWorkout={this.props.currentTeamWorkout}
-                    onDeleteClick={this.onResultDeleteClick}
-                    fetchDistResults={this.props.fetchDistResults}
-                    fetchTimeResults={this.props.fetchTimeResults}
+                    deleteResult={this.props.deleteResult}
                     updateResult={this.props.updateResult}
                     onModalClose={this.onViewResultsModalClose}
                   />
@@ -253,8 +249,26 @@ class TeamProfile extends Component {
   }
 }
 
+TeamProfile.propTypes = {
+  userId: PropTypes.string,
+  user: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
+  team: PropTypes.object,
+  isFetchingTeam: PropTypes.bool,
+  teamIsFetched: PropTypes.bool,
+  isCoach: PropTypes.bool,
+  teamWorkouts: PropTypes.array,
+  isFetchingTeamWorkouts: PropTypes.bool,
+  teamWorkoutsFetched: PropTypes.bool,
+  currentTeamWorkout: PropTypes.object,
+  currentResults: PropTypes.array,
+  isFetchingTeamWorkout: PropTypes.bool,
+  isFetchingResults: PropTypes.bool,
+  queryResults: PropTypes.array,
+};
+
 export default withRouter(connect(mapStateToProps, {
-  fetchUserTeam, fetchTeamWorkouts, addTeamWorkout,
+  fetchUser, fetchUserTeam, fetchTeamWorkouts, addTeamWorkout,
   updateTeamWorkout, deleteTeamWorkout, addResult, matchAthlete, fetchDistResults, fetchTeamWorkout,
   fetchTimeResults, deleteResult, updateWorkout, updateResult,
 })(TeamProfile));

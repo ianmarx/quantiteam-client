@@ -1,5 +1,4 @@
 import {
-  FETCH_TEAM_WORKOUTS,
   FETCH_TEAM_WORKOUT_SUCCESS,
   FETCH_TEAM_WORKOUT_FAILURE,
   FETCH_TEAM_WORKOUT_REQUEST,
@@ -9,20 +8,20 @@ import {
   FETCH_TEAM_WORKOUT_RESULTS_SUCCESS,
   FETCH_TEAM_WORKOUT_RESULTS_FAILURE,
   FETCH_TEAM_WORKOUT_RESULTS_REQUEST,
-  UPDATE_TEAM_WORKOUT,
-  DELETE_TEAM_WORKOUT,
-  DELETE_RESULT,
-  ADD_RESULT,
-  UPDATE_RESULT,
-  ADD_TEAM_WORKOUT,
+  UPDATE_TEAM_WORKOUT_SUCCESS,
+  DELETE_TEAM_WORKOUT_SUCCESS,
+  DELETE_RESULT_SUCCESS,
+  ADD_RESULT_SUCCESS,
+  UPDATE_RESULT_SUCCESS,
+  ADD_TEAM_WORKOUT_SUCCESS,
 } from '../actions/teamworkout';
 
 import sortTeamWorkoutResults from '../utils/results';
 
 const initialState = {
-  list: [],
-  currentTeamWorkout: {},
-  currentResults: [],
+  list: null,
+  currentTeamWorkout: null,
+  currentResults: null,
   isFetchingTeamWorkout: false,
   isFetchingTeamWorkouts: false,
   teamWorkoutsFetched: false,
@@ -31,17 +30,12 @@ const initialState = {
 
 const TeamWorkoutReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TEAM_WORKOUT: {
+    case ADD_TEAM_WORKOUT_SUCCESS: {
       const newTeamWorkoutList = [];
       Object.assign(newTeamWorkoutList, state.list);
       newTeamWorkoutList.unshift(action.payload);
       return Object.assign({}, state, {
         list: newTeamWorkoutList,
-      });
-    }
-    case FETCH_TEAM_WORKOUTS: {
-      return Object.assign({}, state, {
-        list: action.payload,
       });
     }
     case FETCH_TEAM_WORKOUT_SUCCESS: {
@@ -53,13 +47,13 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     case FETCH_TEAM_WORKOUT_FAILURE: {
       return Object.assign({}, state, {
         isFetchingTeamWorkout: false,
-        currentTeamWorkout: {},
+        currentTeamWorkout: null,
       });
     }
     case FETCH_TEAM_WORKOUT_REQUEST: {
       return Object.assign({}, state, {
         isFetchingTeamWorkout: true,
-        currentTeamWorkout: {},
+        currentTeamWorkout: null,
       });
     }
     case FETCH_TEAM_WORKOUTS_SUCCESS: {
@@ -72,7 +66,7 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     case FETCH_TEAM_WORKOUTS_FAILURE: {
       return Object.assign({}, state, {
         isFetchingTeamWorkouts: false,
-        list: {},
+        list: null,
       });
     }
     case FETCH_TEAM_WORKOUTS_REQUEST: {
@@ -91,16 +85,16 @@ const TeamWorkoutReducer = (state = initialState, action) => {
     case FETCH_TEAM_WORKOUT_RESULTS_FAILURE: {
       return Object.assign({}, state, {
         isFetchingResults: false,
-        currentResults: [],
+        currentResults: null,
       });
     }
     case FETCH_TEAM_WORKOUT_RESULTS_REQUEST: {
       return Object.assign({}, state, {
         isFetchingResults: true,
-        currentResults: [],
+        currentResults: null,
       });
     }
-    case UPDATE_TEAM_WORKOUT: {
+    case UPDATE_TEAM_WORKOUT_SUCCESS: {
       const newTeamWorkouts = [];
       Object.assign(newTeamWorkouts, state.list);
       const oldTeamWorkoutIndex = newTeamWorkouts.findIndex((teamWorkout) => {
@@ -113,15 +107,16 @@ const TeamWorkoutReducer = (state = initialState, action) => {
         list: newTeamWorkouts,
       });
     }
-    case DELETE_TEAM_WORKOUT: {
-      const updatedTeamWorkouts = state.list.filter((teamWorkout) => {
+    case DELETE_TEAM_WORKOUT_SUCCESS: {
+      const oldTeamWorkouts = state.list;
+      const updatedTeamWorkouts = oldTeamWorkouts.filter((teamWorkout) => {
         return teamWorkout._id !== action.payload;
       });
       return Object.assign({}, state, {
         list: updatedTeamWorkouts,
       });
     }
-    case DELETE_RESULT: {
+    case DELETE_RESULT_SUCCESS: {
       const updatedResults = state.currentResults.filter((result) => {
         return result._id !== action.payload;
       });
@@ -129,10 +124,10 @@ const TeamWorkoutReducer = (state = initialState, action) => {
         currentResults: updatedResults,
       });
     }
-    case ADD_RESULT: {
+    case ADD_RESULT_SUCCESS: {
       return state;
     }
-    case UPDATE_RESULT: {
+    case UPDATE_RESULT_SUCCESS: {
       const newResults = [];
       Object.assign(newResults, state.currentResults);
       const oldResultIndex = newResults.findIndex((result) => {

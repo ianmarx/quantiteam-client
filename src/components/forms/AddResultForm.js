@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { debounce } from 'debounce';
+import PropTypes from 'prop-types';
 import timeStringToSeconds from '../../utils/workout';
 
 class AddResultForm extends Component {
@@ -48,10 +48,11 @@ class AddResultForm extends Component {
   }
 
   onAthleteNameChange(event) {
-    this.setState({ athleteName: event.target.value });
-    if (this.state.athleteName !== '') {
-      debounce(this.props.matchAthlete(this.state.athleteName, this.props.teamWorkout._team), 200);
-    }
+    this.setState({ athleteName: event.target.value }, () => {
+      if (/^[a-z0-9 _]+$/i.test(this.state.athleteName)) {
+        this.props.matchAthlete(this.state.athleteName, this.props.teamWorkout._team);
+      }
+    });
   }
 
   onDistanceChange(event) {
@@ -131,7 +132,7 @@ class AddResultForm extends Component {
         <div className="form-title">Add Result</div>
         <div className='form-row'>
           <input
-            className='athlete-names'
+            className='athlete-name'
             list="athletes"
             onChange={this.onAthleteNameChange}
             value={this.state.athleteName}
@@ -140,7 +141,7 @@ class AddResultForm extends Component {
             required
           />
           <datalist id="athletes">
-            {this.props.queryResults.map((athlete, i) => {
+            {this.props.queryResults && this.props.queryResults.map((athlete, i) => {
               return (
                 <option key={i} value={athlete.name} />
               );
@@ -150,7 +151,7 @@ class AddResultForm extends Component {
         {this.state.type === 'time' &&
           <div className='form-row'>
             <input
-              className={`${this.state.distanceIsValid ? '' : 'invalid'}`}
+              className={`distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
               onChange={this.onDistanceChange}
               value={this.state.distance}
               type="text"
@@ -164,7 +165,7 @@ class AddResultForm extends Component {
         {this.state.type === 'distance' &&
           <div className='form-row'>
             <input
-              className={`${this.state.timeIsValid ? '' : 'invalid'}`}
+              className={`time ${this.state.timeIsValid ? '' : 'invalid'}`}
               onChange={this.onTimeStringChange}
               value={this.state.timeString}
               type="text"
@@ -178,7 +179,7 @@ class AddResultForm extends Component {
         {(this.props.teamWorkout.activity === 'erg' || this.props.teamWorkout.activity === 'row') &&
           <div className='form-row'>
             <input
-              className={`${this.state.strokeRateIsValid ? '' : 'invalid'}`}
+              className={`stroke-rate ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
               onChange={this.onStrokeRateChange}
               value={this.state.strokeRate}
               type="text"
@@ -189,7 +190,7 @@ class AddResultForm extends Component {
         {(this.props.teamWorkout.activity === 'bike') &&
           <div className='form-row'>
             <input
-              className={`${this.state.wattsIsValid ? '' : 'invalid'}`}
+              className={`watts ${this.state.wattsIsValid ? '' : 'invalid'}`}
               onChange={this.onWattsChange}
               value={this.state.watts}
               type="text"
@@ -199,7 +200,7 @@ class AddResultForm extends Component {
         }
         <div className='form-row'>
           <input
-            className={`${this.state.avgHRIsValid ? '' : 'invalid'}`}
+            className={`heart-rate ${this.state.avgHRIsValid ? '' : 'invalid'}`}
             onChange={this.onHeartRateChange}
             value={this.state.avgHR}
             type="text"
@@ -216,5 +217,13 @@ class AddResultForm extends Component {
     );
   }
 }
+
+AddResultForm.propTypes = {
+  teamWorkout: PropTypes.object,
+  queryResults: PropTypes.array,
+  matchAthlete: PropTypes.func,
+  addResult: PropTypes.func,
+  onModalClose: PropTypes.func,
+};
 
 export default AddResultForm;

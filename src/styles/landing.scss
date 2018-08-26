@@ -2,10 +2,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin: 5% 20% 0%;
-  height: 430px;
+  padding: 20px;
+  margin: 5% 15% 0%;
   background-color: rgba(50, 50, 50, 0.7);
   background-repeat: no-repeat;
   border-style: none;
@@ -19,16 +19,13 @@
   }
   @media only screen and (max-width: 650px) {
     margin: 20% 15% 0%;
-    width: 70%;
   }
   @media only screen and (max-width: 550px) {
-    width: 80%;
     margin: 25% 10%;
   }
 
-  .tagline {
+  .header {
     color: white;
-    margin: 20px;
     font-size: 60px;
     font-weight: 550;
     text-align: center;
@@ -46,17 +43,20 @@
   }
 
   .info {
-    width: 80%;
-    font-size: 25px;
-    margin-bottom: 15px;
+    margin: 20px;
+    font-size: 30px;
     @media only screen and (max-width: 850px) {
-      font-size: 20px;
+      font-size: 25px;
     }
     @media only screen and (max-width: 550px) {
       font-size: 20px;
     }
     @media only screen and (max-width: 325px) {
       margin: 0px;
+    }
+
+    .tagline {
+      margin-top: 10px;
     }
   }
 
@@ -70,7 +70,6 @@
     background-color: #1da55f;
     @media only screen and (max-width: 1350px) {
       font-size: 28px;
-      height: 50px;
     }
     @media only screen and (max-width: 850px) {
       font-size: 24px;
@@ -80,7 +79,6 @@
     }
     @media only screen and (max-width: 400px) {
       font-size: 28px;
-      height: 35px;
     }
     @media only screen and (max-width: 400px) {
       font-size: 20px;

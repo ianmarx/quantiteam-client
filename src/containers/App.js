@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, browserHistory, Switch, Route } from 'react-router-dom';
 import loadable from 'react-loadable';
 import LoadingPage from '../components/mini/LoadingPage';
-import Nav from '../components/Nav';
+import Nav from '../containers/Nav';
 import PrivateRoute from '../components/PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import SignUp from '../containers/SignUp';

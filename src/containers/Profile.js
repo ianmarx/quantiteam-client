@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
-import { fetchUserProfile, updateUserProfile } from '../actions/user';
+import PropTypes from 'prop-types';
+import { fetchUser, fetchUserProfile, updateUserProfile } from '../actions/user';
 import {
   fetchUserWorkouts,
   updateWorkout,
@@ -15,15 +16,17 @@ import SoloWorkoutFeed from '../components/SoloWorkoutFeed';
 import LoadingScreen from '../components/mini/LoadingScreen';
 import AddWorkoutForm from '../components/forms/AddWorkoutForm';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
     userId: state.auth.userId,
     user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
+    userIsFetched: state.auth.userIsFetched,
     userProfile: state.user.userProfile,
     isFetchingUserProfile: state.user.isFetchingUserProfile,
     userProfileIsFetched: state.user.userProfileIsFetched,
     userProfileIsUpdated: state.user.userProfileIsUpdated,
-    userWorkouts: state.workouts.list,
+    userWorkouts: state.workouts.userList,
     isFetchingUserWorkouts: state.workouts.isFetchingUserWorkouts,
     userWorkoutsFetched: state.workouts.userWorkoutsFetched,
     workoutStatusText: state.workouts.statusText,
@@ -32,12 +35,10 @@ const mapStateToProps = state => (
     isFetchingTeam: state.team.isFetchingTeam,
     teamIsFetched: state.team.teamIsFetched,
     isCoach: state.team.isCoach,
-    isAuthenticated: state.auth.isAuthenticated,
-    userDistTotal: state.workouts.userDistTotal,
   }
 );
 
-class Profile extends Component {
+export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,17 +47,24 @@ class Profile extends Component {
 
     this.onAddWorkoutModalOpen = this.onAddWorkoutModalOpen.bind(this);
     this.onAddWorkoutModalClose = this.onAddWorkoutModalClose.bind(this);
-    this.onWorkoutDeleteClick = this.onWorkoutDeleteClick.bind(this);
   }
 
   componentDidMount() {
     if (!this.props.isAuthenticated) {
       this.props.history.replace('/signin');
     }
-
-    this.props.fetchUserProfile(this.props.match.params.userId);
-    this.props.fetchUserTeam(this.props.match.params.userId);
-    this.props.fetchUserWorkouts(this.props.match.params.userId);
+    if (!this.props.user) {
+      this.props.fetchUser(this.props.userId);
+    }
+    if (!this.props.userProfileIsFetched || this.props.match.params.userId !== this.props.userId) {
+      this.props.fetchUserProfile(this.props.match.params.userId);
+    }
+    if (!this.props.teamIsFetched) {
+      this.props.fetchUserTeam(this.props.match.params.userId);
+    }
+    if (!this.props.userWorkoutsFetched || this.props.match.params.userId !== this.props.userId) {
+      this.props.fetchUserWorkouts(this.props.match.params.userId);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -65,10 +73,6 @@ class Profile extends Component {
       this.props.fetchUserTeam(this.props.match.params.userId);
       this.props.fetchUserWorkouts(this.props.match.params.userId);
     }
-  }
-
-  onWorkoutDeleteClick(workoutId, userId) {
-    this.props.deleteWorkout(workoutId, userId);
   }
 
   onAddWorkoutModalOpen(event) {
@@ -84,7 +88,7 @@ class Profile extends Component {
   render() {
     if (!this.props.userProfileIsFetched || !this.props.userWorkoutsFetched || !this.props.teamIsFetched) {
       return (
-        <div className="profile-page">
+        <div className="profile-page loading">
           <LoadingScreen />
         </div>
       );
@@ -106,7 +110,7 @@ class Profile extends Component {
                 isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
                 isCoach={this.props.isCoach}
                 onAddWorkoutModalOpen={this.onAddWorkoutModalOpen}
-                onWorkoutDeleteClick={this.onWorkoutDeleteClick}
+                deleteWorkout={this.props.deleteWorkout}
                 soloWorkouts={this.props.userWorkouts}
                 currentUserId={this.props.userId}
                 updateWorkout={this.props.updateWorkout}
@@ -136,7 +140,25 @@ class Profile extends Component {
   }
 }
 
+Profile.propTypes = {
+  userId: PropTypes.string,
+  user: PropTypes.object,
+  userProfile: PropTypes.object,
+  isFetchingUserProfile: PropTypes.bool,
+  userProfileIsFetched: PropTypes.bool,
+  userProfileIsUpdated: PropTypes.bool,
+  userWorkouts: PropTypes.array,
+  isFetchingUserWorkouts: PropTypes.bool,
+  userWorkoutsFetched: PropTypes.bool,
+  workoutStatusText: PropTypes.string,
+  team: PropTypes.object,
+  isFetchingTeam: PropTypes.bool,
+  teamIsFetched: PropTypes.bool,
+  isCoach: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+};
+
 export default withRouter(connect(mapStateToProps, {
-  fetchUserProfile, updateUserProfile, fetchUserWorkouts, addWorkout,
+  fetchUser, fetchUserProfile, updateUserProfile, fetchUserWorkouts, addWorkout,
   updateWorkout, deleteWorkout, fetchUserTeam,
 })(Profile));
