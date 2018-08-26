@@ -72,7 +72,6 @@ class TeamWorkoutPost extends Component {
   }
 
   onCancelClick(event) {
-    this.setState({ isEditing: false });
     this.setState({
       isEditing: false,
       distance: this.props.teamWorkout.distance,
@@ -90,7 +89,12 @@ class TeamWorkoutPost extends Component {
       const activity = this.state.activity;
       const distance = this.state.distance;
       const distUnit = this.state.distUnit;
-      const time = timeStringToSeconds(this.state.timeStringToSeconds);
+      let time;
+      if (this.state.timeString !== '') {
+        time = timeStringToSeconds(this.state.timeString);
+      } else {
+        time = '';
+      }
       const teamWorkoutObject = {
         activity, distance, distUnit, time,
       };
