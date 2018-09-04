@@ -62,10 +62,10 @@ export function updateUserProfileSuccess(userProfile: Object) : Action {
 }
 
 export function updateUserProfileFailure(error: APIError) : Action {
-  return getErrorAction({
-    type: UPDATE_USER_PROFILE_FAILURE,
+  return getErrorAction(
+    UPDATE_USER_PROFILE_FAILURE,
     error,
-  });
+  );
 }
 
 export function updateUserProfileRequest() : Action {

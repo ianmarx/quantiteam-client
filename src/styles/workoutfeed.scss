@@ -57,7 +57,7 @@
     border-style: none;
     width: 98%;
 
-    .workout-post-header {
+    .header {
       width: 95%;
       display: flex;
       flex-direction: row;
@@ -66,7 +66,7 @@
       margin: 5px 10px;
     }
 
-    .workout-post-content {
+    .content {
       width: 95%;
       display: flex;
       flex-direction: row;
@@ -75,16 +75,20 @@
       margin: 5px 10px;
     }
 
-    .workout-post-details {
+    .details {
       width: 95%;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       margin: 5px 10px;
+
+      div {
+        margin: 0px 10px;
+      }
     }
 
-    .workout-post-footer {
+    .footer {
       width: 95%;
       display: flex;
       flex-direction: row;
@@ -128,7 +132,7 @@
       .row-unit {
         margin: 0px 10px;
       }
-      .workout-post-footer {
+      .footer {
         justify-content: flex-end;
       }
 

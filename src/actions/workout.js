@@ -6,7 +6,6 @@ import getErrorAction from '../utils/actions';
 import type { APIError } from '../types';
 import type { Action } from '../types/actions/workout';
 
-export const FETCH_WORKOUT = 'FETCH_WORKOUT';
 export const FETCH_USER_WORKOUTS_SUCCESS = 'FETCH_USER_WORKOUTS_SUCCESS';
 export const FETCH_USER_WORKOUTS_FAILURE = 'FETCH_USER_WORKOUTS_FAILURE';
 export const FETCH_USER_WORKOUTS_REQUEST = 'FETCH_USER_WORKOUTS_REQUEST';
@@ -135,18 +134,6 @@ export function addWorkout(workout) {
   };
 }
 
-export function fetchWorkout(workoutId) {
-  const headers = { headers: { authorization: localStorage.getItem('token') } };
-  /* axios GET call */
-  return async (dispatch) => {
-    await axios.get(`${ROOT_URL}/workouts/${workoutId}`, headers).then((response) => {
-      dispatch({ type: FETCH_WORKOUT, payload: response.data });
-    }).catch((error) => {
-      console.log(`fetchWorkout failed: ${error.message}`);
-    });
-  };
-}
-
 export function fetchUserWorkouts(userId) {
   const headers = { headers: { authorization: localStorage.getItem('token') } };
   /* axios GET call */
@@ -177,7 +164,7 @@ export function deleteWorkout(workoutId, userId) {
   return async (dispatch) => {
     dispatch(deleteWorkoutRequest());
     await axios.delete(`${ROOT_URL}/workouts/${workoutId}/${userId}`, headers).then((response) => {
-      dispatch(deleteWorkoutSuccess(response.data));
+      dispatch(deleteWorkoutSuccess(workoutId));
     }).catch((error) => {
       dispatch(deleteWorkoutFailure(error));
     });

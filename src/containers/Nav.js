@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import { signOutUser } from '../actions/auth';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
+    userId: state.auth.userId,
     isAuthenticated: state.auth.isAuthenticated,
   }
 );
 
-/* Navbar component */
-class Nav extends Component {
+export class Nav extends Component {
   constructor(props) {
     super(props);
-
     this.onSignOutClick = this.onSignOutClick.bind(this);
   }
 
@@ -30,7 +30,7 @@ class Nav extends Component {
             <NavLink className='nav-button' exact to='/'>
               Home
             </NavLink>
-            <NavLink className='nav-button' to={`/profile/${localStorage.getItem('userId')}`}>
+            <NavLink className='nav-button' to={`/profile/${this.props.userId}`}>
               Profile
             </NavLink>
             <NavLink className='nav-button' to='/team'>
@@ -59,5 +59,10 @@ class Nav extends Component {
     );
   }
 }
+
+Nav.propTypes = {
+  userId: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+};
 
 export default withRouter(connect(mapStateToProps, { signOutUser })(Nav));

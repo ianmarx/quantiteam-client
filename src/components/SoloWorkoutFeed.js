@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WorkoutPost from './WorkoutPost';
 import LoadingScreen from './mini/LoadingScreen';
 
 const SoloWorkoutFeed = (props) => {
   if (props.isFetchingUserWorkouts) {
     return (
-      <div className="workout-feed">
+      <div className="workout-feed loading">
         <div className="feed-title">Workouts</div>
         <LoadingScreen />
       </div>
@@ -27,7 +28,7 @@ const SoloWorkoutFeed = (props) => {
               workout={workout}
               key={workout.date}
               isCoach={props.isCoach}
-              onDeleteClick={props.onWorkoutDeleteClick}
+              deleteWorkout={props.deleteWorkout}
               updateWorkout={props.updateWorkout}
               currentUserId={props.currentUserId}
             />
@@ -36,6 +37,17 @@ const SoloWorkoutFeed = (props) => {
       </div>
     );
   }
+};
+
+SoloWorkoutFeed.propTypes = {
+  currentUserId: PropTypes.string,
+  deleteWorkout: PropTypes.func,
+  isCoach: PropTypes.bool,
+  isFetchingUserWorkouts: PropTypes.bool,
+  onAddWorkoutModalOpen: PropTypes.func,
+  profileUserId: PropTypes.string,
+  soloWorkouts: PropTypes.array,
+  updateWorkout: PropTypes.func,
 };
 
 export default SoloWorkoutFeed;

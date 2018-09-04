@@ -3,7 +3,8 @@ export default function sortTeamWorkoutResults(resultsArray, teamWorkoutType) {
     resultsArray.sort((a, b) => {
       return b.distance - a.distance;
     });
-  } else if (teamWorkoutType === 'distance') {
+  }
+  if (teamWorkoutType === 'distance') {
     resultsArray.sort((a, b) => {
       return a.time - b.time;
     });

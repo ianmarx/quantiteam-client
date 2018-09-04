@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import timeStringToSeconds from '../../utils/workout';
 
 class AddWorkoutForm extends Component {
@@ -24,9 +25,7 @@ class AddWorkoutForm extends Component {
     this.onRowSelect = this.onRowSelect.bind(this);
     this.onRunSelect = this.onRunSelect.bind(this);
     this.onBikeSelect = this.onBikeSelect.bind(this);
-    this.onActivityChange = this.onActivityChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
-    this.onDistUnitChange = this.onDistUnitChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
@@ -52,16 +51,8 @@ class AddWorkoutForm extends Component {
     this.setState({ activity: 'bike', distUnit: 'mi' });
   }
 
-  onActivityChange(event) {
-    this.setState({ activity: event.target.value });
-  }
-
   onDistanceChange(event) {
     this.setState({ distance: event.target.value });
-  }
-
-  onDistUnitChange(event) {
-    this.setState({ distUnit: event.target.value });
   }
 
   onTimeStringChange(event) {
@@ -176,7 +167,7 @@ class AddWorkoutForm extends Component {
         <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
         <div className='form-row'>
           <input
-            className={`${this.state.distanceIsValid ? '' : 'invalid'}`}
+            className={`distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
             onChange={this.onDistanceChange}
             value={this.state.distance}
             type="text"
@@ -188,7 +179,7 @@ class AddWorkoutForm extends Component {
         </div>
         <div className='form-row'>
           <input
-            className={`${this.state.timeIsValid ? '' : 'invalid'}`}
+            className={`time ${this.state.timeIsValid ? '' : 'invalid'}`}
             onChange={this.onTimeStringChange}
             value={this.state.timeString}
             type="text"
@@ -200,7 +191,7 @@ class AddWorkoutForm extends Component {
         {(this.state.activity === 'erg' || this.state.activity === 'row') &&
           <div className='form-row'>
             <input
-              className={`${this.state.strokeRateIsValid ? '' : 'invalid'}`}
+              className={`stroke-rate ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
               onChange={this.onStrokeRateChange}
               value={this.state.strokeRate}
               type="text"
@@ -211,7 +202,7 @@ class AddWorkoutForm extends Component {
         {(this.state.activity === 'bike') &&
           <div className='form-row'>
             <input
-              className={`${this.state.wattsIsValid ? '' : 'invalid'}`}
+              className={`watts ${this.state.wattsIsValid ? '' : 'invalid'}`}
               onChange={this.onWattsChange}
               value={this.state.watts}
               type="text"
@@ -221,7 +212,7 @@ class AddWorkoutForm extends Component {
         }
         <div className='form-row'>
           <input
-            className={`${this.state.avgHRIsValid ? '' : 'invalid'}`}
+            className={`heart-rate ${this.state.avgHRIsValid ? '' : 'invalid'}`}
             onChange={this.onHeartRateChange}
             value={this.state.avgHR}
             type="text"
@@ -241,5 +232,14 @@ class AddWorkoutForm extends Component {
     );
   }
 }
+
+AddWorkoutForm.propTypes = {
+  addWorkout: PropTypes.func,
+  onModalClose: PropTypes.func,
+  statusText: PropTypes.string,
+  userId: PropTypes.string,
+  userName: PropTypes.string,
+  workoutIsAdded: PropTypes.bool,
+};
 
 export default AddWorkoutForm;

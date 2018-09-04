@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ResultPost from './ResultPost';
 
 const ResultsView = (props) => {
@@ -11,12 +12,12 @@ const ResultsView = (props) => {
       <div className='results-view'>
         {dateString}
         {props.teamWorkout.type === 'distance' &&
-          <div className="results-title">
+          <div className="results-title distance">
             {props.teamWorkout.distance} {props.teamWorkout.distUnit} {props.teamWorkout.activity}
           </div>
         }
         {props.teamWorkout.type === 'time' &&
-          <div className="results-title">
+          <div className="results-title time">
             {props.teamWorkout.timeString} {props.teamWorkout.activity}
           </div>
         }
@@ -29,11 +30,8 @@ const ResultsView = (props) => {
                 key={workout.date}
                 teamWorkoutId={props.teamWorkout._id}
                 type={props.teamWorkout.type}
-                onDeleteClick={props.onDeleteClick}
                 updateResult={props.updateResult}
                 deleteResult={props.deleteResult}
-                fetchDistResults={props.fetchDistResults}
-                fetchTimeResults={props.fetchTimeResults}
               />
             );
           })}
@@ -45,6 +43,15 @@ const ResultsView = (props) => {
       <button type="button" className="modal-close" onClick={props.onModalClose}>Close</button>
     </div>
   );
+};
+
+ResultsView.propTypes = {
+  deleteResult: PropTypes.func,
+  isCoach: PropTypes.bool,
+  onModalClose: PropTypes.func,
+  results: PropTypes.array,
+  teamWorkout: PropTypes.object,
+  updateResult: PropTypes.func,
 };
 
 export default ResultsView;

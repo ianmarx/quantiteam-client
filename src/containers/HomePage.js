@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ReactModal from 'react-modal';
+import PropTypes from 'prop-types';
 import { fetchUser } from '../actions/user';
 import {
   fetchUserWorkouts,
@@ -31,13 +32,14 @@ import AddResultForm from '../components/forms/AddResultForm';
 import AddTeamWorkoutForm from '../components/forms/AddTeamWorkoutForm';
 import LoadingScreen from '../components/mini/LoadingScreen';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
     userId: state.auth.userId,
     user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
     isFetchingUser: state.auth.isFetchingUser,
     userIsFetched: state.auth.userIsFetched,
-    teamSoloWorkouts: state.workouts.list,
+    soloWorkouts: state.workouts.soloList,
     workoutIsAdded: state.workouts.workoutIsAdded,
     isFetchingSoloWorkouts: state.workouts.isFetchingSoloWorkouts,
     soloWorkoutsFetched: state.workouts.soloWorkoutsFetched,
@@ -46,7 +48,6 @@ const mapStateToProps = state => (
     isFetchingTeam: state.team.isFetchingTeam,
     teamIsFetched: state.team.teamIsFetched,
     isCoach: state.team.isCoach,
-    isAuthenticated: state.auth.isAuthenticated,
     teamWorkouts: state.teamWorkouts.list,
     isFetchingTeamWorkouts: state.teamWorkouts.isFetchingTeamWorkouts,
     teamWorkoutsFetched: state.teamWorkouts.teamWorkoutsFetched,
@@ -58,7 +59,7 @@ const mapStateToProps = state => (
   }
 );
 
-class HomePage extends Component {
+export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,20 +71,20 @@ class HomePage extends Component {
 
     this.onAddWorkoutModalOpen = this.onAddWorkoutModalOpen.bind(this);
     this.onAddWorkoutModalClose = this.onAddWorkoutModalClose.bind(this);
-    this.onWorkoutDeleteClick = this.onWorkoutDeleteClick.bind(this);
     this.onAddTeamWorkoutModalOpen = this.onTeamWorkoutModalOpen.bind(this);
     this.onAddTeamWorkoutModalClose = this.onTeamWorkoutModalClose.bind(this);
-    this.onTeamWorkoutDeleteClick = this.onTeamWorkoutDeleteClick.bind(this);
     this.onAddResultModalOpen = this.onAddResultModalOpen.bind(this);
     this.onAddResultModalClose = this.onAddResultModalClose.bind(this);
     this.onViewResultsModalOpen = this.onViewResultsModalOpen.bind(this);
     this.onViewResultsModalClose = this.onViewResultsModalClose.bind(this);
     this.onAddResultClick = this.onAddResultClick.bind(this);
-    this.onResultDeleteClick = this.onResultDeleteClick.bind(this);
     this.onViewResultsClick = this.onViewResultsClick.bind(this);
   }
 
   componentDidMount() {
+    if (!this.props.user) {
+      this.props.fetchUser(this.props.userId);
+    }
     if (!this.props.team) {
       this.props.fetchUserTeam(this.props.userId);
     }
@@ -93,18 +94,6 @@ class HomePage extends Component {
     if (!this.props.soloWorkouts) {
       this.props.fetchSoloWorkouts(this.props.userId);
     }
-  }
-
-  onResultDeleteClick(workoutId, teamWorkoutId) {
-    this.props.deleteResult(workoutId, teamWorkoutId);
-  }
-
-  onWorkoutDeleteClick(workoutId, userId) {
-    this.props.deleteWorkout(workoutId, userId);
-  }
-
-  onTeamWorkoutDeleteClick(workoutId, teamId) {
-    this.props.deleteTeamWorkout(workoutId, teamId);
   }
 
   async onAddResultClick(teamWorkoutId, prevProps) {
@@ -117,7 +106,8 @@ class HomePage extends Component {
 
     if (type === 'distance') {
       await this.props.fetchTimeResults(teamWorkoutId);
-    } else if (type === 'time') {
+    }
+    if (type === 'time') {
       await this.props.fetchDistResults(teamWorkoutId);
     }
 
@@ -167,7 +157,7 @@ class HomePage extends Component {
   render() {
     if (!this.props.userIsFetched || !this.props.teamIsFetched || !this.props.soloWorkoutsFetched || !this.props.teamWorkoutsFetched) {
       return (
-        <div className="home-page">
+        <div className="home-page loading">
           <LoadingScreen />
         </div>
       );
@@ -183,9 +173,9 @@ class HomePage extends Component {
               onAddTeamWorkoutModalOpen={this.onAddTeamWorkoutModalOpen}
               onAddResultClick={this.onAddResultClick}
               onViewResultsClick={this.onViewResultsClick}
-              onWorkoutDeleteClick={this.onWorkoutDeleteClick}
-              onTeamWorkoutDeleteClick={this.onTeamWorkoutDeleteClick}
-              soloWorkouts={this.props.teamSoloWorkouts}
+              deleteWorkout={this.props.deleteWorkout}
+              deleteTeamWorkout={this.props.deleteTeamWorkout}
+              soloWorkouts={this.props.soloWorkouts}
               teamWorkouts={this.props.teamWorkouts}
               teamName={this.props.team.name}
               currentUserId={this.props.userId}
@@ -223,9 +213,7 @@ class HomePage extends Component {
                     isCoach={this.props.isCoach}
                     results={this.props.currentResults}
                     teamWorkout={this.props.currentTeamWorkout}
-                    onDeleteClick={this.onResultDeleteClick}
-                    fetchDistResults={this.props.fetchDistResults}
-                    fetchTimeResults={this.props.fetchTimeResults}
+                    deleteResult={this.props.deleteResult}
                     updateResult={this.props.updateResult}
                     onModalClose={this.onViewResultsModalClose}
                   />
@@ -273,6 +261,31 @@ class HomePage extends Component {
     }
   }
 }
+
+HomePage.propTypes = {
+  userId: PropTypes.string,
+  user: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
+  isFetchingUser: PropTypes.bool,
+  userIsFetched: PropTypes.bool,
+  soloWorkouts: PropTypes.array,
+  workoutIsAdded: PropTypes.bool,
+  isFetchingSoloWorkouts: PropTypes.bool,
+  soloWorkoutsFetched: PropTypes.bool,
+  workoutStatusText: PropTypes.string,
+  team: PropTypes.object,
+  isFetchingTeam: PropTypes.bool,
+  teamIsFetched: PropTypes.bool,
+  isCoach: PropTypes.bool,
+  teamWorkouts: PropTypes.array,
+  isFetchingTeamWorkouts: PropTypes.bool,
+  teamWorkoutsFetched: PropTypes.bool,
+  currentTeamWorkout: PropTypes.object,
+  isFetchingTeamWorkout: PropTypes.bool,
+  isFetchingResults: PropTypes.bool,
+  currentResults: PropTypes.array,
+  queryResults: PropTypes.array,
+};
 
 export default withRouter(connect(
   mapStateToProps,

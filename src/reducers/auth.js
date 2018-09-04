@@ -33,7 +33,7 @@ const AuthReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: false,
-        statusText: action.payload.statusText || action.payload.message,
+        statusText: action.payload.statusText,
         userId: null,
       });
     case AUTH_USER_REQUEST:
@@ -42,11 +42,7 @@ const AuthReducer = (state = initialState, action) => {
         statusText: 'Authorizing...',
       });
     case DEAUTH_USER:
-      return Object.assign({}, state, {
-        isAuthenticating: false,
-        isAuthenticated: false,
-        userId: null,
-      });
+      return initialState;
     case FETCH_USER_SUCCESS: {
       return Object.assign({}, state, {
         user: action.user,

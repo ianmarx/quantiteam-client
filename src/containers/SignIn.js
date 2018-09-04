@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signInUser } from '../actions/auth';
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
-    userId: state.auth.userId,
     isAuthenticated: state.auth.isAuthenticated,
-    isAuthenticating: state.auth.isAuthenticating,
     statusText: state.auth.statusText,
   }
 );
 
-class SignIn extends Component {
+export class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,8 +58,10 @@ class SignIn extends Component {
       <div className="sign-in-form">
         <form onSubmit={this.onSubmit}>
           <h2>Sign In</h2>
-          <div className="email field">
-            <input onChange={this.onEmailChange}
+          <div className="field">
+            <input
+              className='email'
+              onChange={this.onEmailChange}
               value={this.state.email}
               type="text"
               required
@@ -69,8 +70,10 @@ class SignIn extends Component {
               autoComplete='email'
             />
           </div>
-          <div className="password field">
-            <input onChange={this.onPasswordChange}
+          <div className="field">
+            <input
+              className='password'
+              onChange={this.onPasswordChange}
               value={this.state.password}
               type="password"
               required
@@ -90,5 +93,10 @@ class SignIn extends Component {
     );
   }
 }
+
+SignIn.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  statusText: PropTypes.string,
+};
 
 export default withRouter(connect(mapStateToProps, { signInUser })(SignIn));

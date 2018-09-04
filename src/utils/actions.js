@@ -4,7 +4,7 @@ export default function getErrorAction(type: string, error: APIError, statusText
   return {
     type,
     payload: {
-      status: error.response ? error.response.statusText : null,
+      status: error.response ? error.response.status : null,
       statusText: error.response ? error.response.statusText : null,
       message: error.message,
     },

@@ -3,21 +3,15 @@ import ROOT_URL from './index';
 import getErrorAction from '../utils/actions';
 import type { APIError } from '../types';
 import type { Action } from '../types/actions/auth';
-import { fetchUser } from './user';
-import { fetchUserTeam } from './team';
-import { fetchTeamWorkouts } from './teamworkout';
-import { fetchSoloWorkouts } from './workout';
 
 export const AUTH_USER_SUCCESS = 'AUTH_USER_SUCCESS';
 export const AUTH_USER_FAILURE = 'AUTH_USER_FAILURE';
 export const AUTH_USER_REQUEST = 'AUTH_USER_REQUEST';
 export const DEAUTH_USER = 'DEAUTH_USER';
-export const AUTH_ERROR = 'AUTH_ERROR';
 
-export function authError(error) {
+export function deauth() : Action {
   return {
-    type: AUTH_ERROR,
-    message: error,
+    type: DEAUTH_USER,
   };
 }
 
@@ -45,12 +39,6 @@ export function authUserRequest() : Action {
 export function handleAuthSuccess(response: Object, history) : Function {
   return async (dispatch) => {
     localStorage.setItem('token', response.data.token);
-    await Promise.all([
-      dispatch(fetchUser(response.data.id)),
-      dispatch(fetchUserTeam(response.data.id)),
-      dispatch(fetchSoloWorkouts(response.data.id)),
-      dispatch(fetchTeamWorkouts(response.data.id)),
-    ]);
     dispatch(authUserSuccess(response));
     history.push('/');
   };
@@ -65,12 +53,6 @@ export function reAuthUser(localToken: String, userId: String) : Function {
       },
     };
     dispatch(authUserSuccess(res));
-    await Promise.all([
-      dispatch(fetchUser(userId)),
-      dispatch(fetchUserTeam(userId)),
-      dispatch(fetchSoloWorkouts(userId)),
-      dispatch(fetchTeamWorkouts(userId)),
-    ]);
   };
 }
 
@@ -112,7 +94,7 @@ export function signOutUser(history) {
   return (dispatch) => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    dispatch({ type: DEAUTH_USER });
+    dispatch(deauth());
     history.push('/');
   };
 }

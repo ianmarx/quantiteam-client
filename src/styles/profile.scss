@@ -83,6 +83,12 @@ $div-background: #e8e8e8;
         font-size: 16px;
         border-style: none;
         border-radius: 5px;
+
+        &.invalid {
+          border-style: solid;
+          border-width: 2px;
+          border-color: #d12600;
+        }
       }
       select {
         height: 20px;
@@ -107,6 +113,12 @@ $div-background: #e8e8e8;
       }
       .user-edit-cancel {
         background-color: #595959;
+      }
+      .status-text {
+        text-align: center;
+        &.error {
+          color: #d12600;
+        }
       }
     }
   }
