@@ -1,6 +1,6 @@
 {
   "name": "Quantiteam",
-  "version": "0.3.2-beta",
+  "version": "0.3.3-beta",
   "license": "UNLICENSED",
   "description": "Front-end for quantiteam.com, written in React",
   "main": "src/index.js",
