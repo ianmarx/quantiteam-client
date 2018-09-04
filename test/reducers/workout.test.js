@@ -221,6 +221,20 @@ describe('workout reducer', () => {
       userList: userList,
       statusText: null,
     });
+
+    expect(workout({
+      soloList: null,
+      userList: null,
+    }, {
+      type: ADD_WORKOUT_SUCCESS,
+      workout: workoutObject,
+    })).toEqual({
+      isAddingWorkout: false,
+      workoutIsAdded: true,
+      soloList: null,
+      userList: null,
+      statusText: null,
+    });
   });
 
   it('should handle ADD_WORKOUT_FAILURE', () => {
@@ -297,6 +311,24 @@ describe('workout reducer', () => {
       workoutIsUpdated: true,
       soloList: newSoloList,
       userList: newUserList,
+      statusText: null,
+    });
+
+    expect(workout({
+      soloList: null,
+      userList: null,
+    }, {
+      type: UPDATE_WORKOUT_SUCCESS,
+      workout: {
+        _id: '1',
+        distance: 2000,
+        time: 370,
+      },
+    })).toEqual({
+      isUpdatingWorkout: false,
+      workoutIsUpdated: true,
+      soloList: null,
+      userList: null,
       statusText: null,
     });
   });
