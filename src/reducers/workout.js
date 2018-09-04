@@ -110,9 +110,15 @@ const WorkoutReducer = (state = initialState, action) => {
     }
     case ADD_WORKOUT_SUCCESS: {
       const newSoloWorkoutList = state.soloList;
-      newSoloWorkoutList.unshift(action.workout);
+      if (newSoloWorkoutList !== null) {
+        newSoloWorkoutList.unshift(action.workout);
+      }
+
       const newUserWorkoutList = state.userList;
-      newUserWorkoutList.unshift(action.workout);
+      if (newUserWorkoutList !== null) {
+        newUserWorkoutList.unshift(action.workout);
+      }
+
       return Object.assign({}, state, {
         isAddingWorkout: false,
         workoutIsAdded: true,
@@ -136,20 +142,21 @@ const WorkoutReducer = (state = initialState, action) => {
       });
     }
     case UPDATE_WORKOUT_SUCCESS: {
-      const newSoloWorkouts = [];
-      Object.assign(newSoloWorkouts, state.soloList);
-      const oldSoloWorkoutIndex = newSoloWorkouts.findIndex((workout) => {
-        return workout._id === action.workout._id;
-      });
-      newSoloWorkouts[oldSoloWorkoutIndex] = action.workout;
+      const newSoloWorkouts = state.soloList;
+      if (newSoloWorkouts !== null) {
+        const oldSoloWorkoutIndex = newSoloWorkouts.findIndex((workout) => {
+          return workout._id === action.workout._id;
+        });
+        newSoloWorkouts[oldSoloWorkoutIndex] = action.workout;
+      }
 
-      const newUserWorkouts = [];
-      Object.assign(newUserWorkouts, state.userList);
-      const oldUserWorkoutIndex = newUserWorkouts.findIndex((workout) => {
-        return workout._id === action.workout._id;
-      });
-
-      newUserWorkouts[oldUserWorkoutIndex] = action.workout;
+      const newUserWorkouts = state.userList;
+      if (newUserWorkouts !== null) {
+        const oldUserWorkoutIndex = newUserWorkouts.findIndex((workout) => {
+          return workout._id === action.workout._id;
+        });
+        newUserWorkouts[oldUserWorkoutIndex] = action.workout;
+      }
 
       return Object.assign({}, state, {
         isUpdatingWorkout: false,
