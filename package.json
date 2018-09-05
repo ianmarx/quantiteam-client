@@ -10,8 +10,8 @@
     "show": "google-chrome coverage/lcov-report/index.html",
     "build": "WEBPACK_ENV=production webpack --mode=production --colors",
     "clean": "rimraf public/build",
-    "deploy-staging": "yarn clean && yarn build && aws s3 sync public/ s3://staging.quantiteam.com",
-    "deploy-prod": "yarn clean && yarn build && aws s3 sync public/ s3://quantiteam.com"
+    "deploy:staging": "yarn clean && yarn build && aws s3 sync public/ s3://staging.quantiteam.com",
+    "deploy:prod": "yarn clean && yarn build && aws s3 sync public/ s3://quantiteam.com"
   },
   "repository": {
     "type": "git",
