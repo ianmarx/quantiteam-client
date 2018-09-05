@@ -34,7 +34,7 @@ const TeamProfile = loadable({
 const App = (props) => {
   return (
     <Router history={browserHistory}>
-      <div>
+      <div id='app-container'>
         <Nav />
         <Switch>
           <Route exact path="/" component={props.isAuthenticated ? HomePage : LandingPage} />

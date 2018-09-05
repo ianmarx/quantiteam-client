@@ -9,13 +9,11 @@ describe('<LandingPage />', () => {
       isAuthenticated
     />);
 
-    expect(wrapper.find('.site-welcome').length).toBe(1);
+    expect(wrapper.find('.info-box').length).toBe(5);
+    expect(wrapper.find('.header').length).toBe(1);
     expect(wrapper.find('.tagline').length).toBe(1);
-    expect(wrapper.find('.info').length).toBe(1);
-    expect(wrapper.find('.sign-up-button').length).toBe(1);
+    expect(wrapper.find('.cta-button').length).toBe(2);
     expect(wrapper.find('.already-user').length).toBe(1);
-
-    wrapper.instance().componentWillUnmount();
   });
 
   it('should handle mapStateToProps', () => {
