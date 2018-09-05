@@ -1,13 +1,27 @@
-# Quantiteam
+# QuantiTeam
+QuantiTeam is a web platform for athletes and coaches to track performance data in a team environment.
 
-## About
-Quantiteam is a website designed for athletes and coaches to track performance data in a team environment.
+## Installation
+```
+$ yarn install
+```
 
-## Dependencies
-The Quantiteam front-end uses these web tools:
-* React 
-* Redux
-* Node.js
-* Webpack
-* Babel
-* surge.sh
+## Testing
+```
+$ yarn test
+```
+
+## Run the app in localhost
+```
+$ yarn start
+```
+
+## Deploy to **staging.quantiteam.com**
+```
+$ yarn deploy-staging
+```
+
+## Deploy to **quantiteam.com**
+```
+$ yarn deploy-prod
+```
