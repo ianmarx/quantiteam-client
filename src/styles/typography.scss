@@ -1,3 +1,8 @@
+.h0 {
+  font-size: calc(20px + 2vw);
+  font-weight: 600;
+}
+
 .h1 {
   font-size: calc(20px + 1vw);
   font-weight: bolder;
@@ -6,6 +11,10 @@
 .h2 {
   font-size: calc(20px + 0.5vw);
   font-weight: bolder;
+}
+
+.h2-light {
+  font-size: calc(20px + 0.5vw);
 }
 
 .p {

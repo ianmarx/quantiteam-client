@@ -4,9 +4,9 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
   AUTH_USER_SUCCESS, AUTH_USER_FAILURE, AUTH_USER_REQUEST,
-  DEAUTH_USER,
+  DEAUTH_USER, RESET_AUTH,
   authUserSuccess, authUserFailure, authUserRequest,
-  signUpAthlete, signUpCoach, signInUser, signOutUser, reAuthUser, deauth,
+  signUpAthlete, signUpCoach, signInUser, signOutUser, reAuthUser, deauth, resetAuth,
 } from '../../src/actions/auth';
 import ROOT_URL from '../../src/actions/index';
 
@@ -68,6 +68,14 @@ describe('auth actions', () => {
     };
 
     expect(deauth()).toEqual(expectedAction);
+  });
+
+  it('should create an action to reset auth state', () => {
+    const expectedAction = {
+      type: RESET_AUTH,
+    };
+
+    expect(resetAuth()).toEqual(expectedAction);
   });
 });
 

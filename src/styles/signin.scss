@@ -1,0 +1,51 @@
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding-top: 90px;
+
+  .line {
+    margin-top: auto;
+    margin-bottom: 0px;
+  }
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 90%;
+
+  .h0 {
+    margin-bottom: 20px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0px;
+  }
+
+  input {
+    margin-top: 5px;
+    height: 40px;
+    font-size: 20px;
+    border-style: none;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+  }
+
+  .btn-submit, .btn-prev {
+    margin: 10px 0px;
+  }
+
+  .status-text {
+    text-align: center;
+    height: 30px;
+  }
+}
