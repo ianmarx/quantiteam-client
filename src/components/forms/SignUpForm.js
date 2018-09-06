@@ -25,7 +25,6 @@ const SignUpForm = (props) => {
           value={props.email}
           type="text"
           required
-          placeholder='Must have an @ symbol'
           autoComplete='email'
         />
       </div>
@@ -41,6 +40,9 @@ const SignUpForm = (props) => {
         />
       </div>
       <div className='field'>
+        <div className='status-text p'>
+          {(props.statusText === 'Unauthorized') ? 'The email/password combination was not found.' : props.statusText}
+        </div>
         <button type="submit" className='btn-submit'>Sign Up</button>
         <button className='btn-prev' onClick={props.onBackClick}>
           Back
@@ -49,11 +51,6 @@ const SignUpForm = (props) => {
       <div className="already-user">
         Already on a team? <NavLink to="/signin"><strong>Sign in here.</strong></NavLink>
       </div>
-      {props.statusText &&
-        <div className='status-text h2-light'>
-          {props.statusText}
-        </div>
-      }
     </form>
   );
 };
