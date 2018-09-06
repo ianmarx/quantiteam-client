@@ -5,7 +5,6 @@
   font-size: calc(14px + 0.5vw);
   color: white;
   background-color: #1da55f;
-  border-radius: 8px;
 
   &:active {
     background-color: #106b3c;
@@ -24,7 +23,7 @@
 .btn-prev {
   padding: 15px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: calc(14px + 0.5vw);
   color: white;
   background-color: $darkgrey-2;
