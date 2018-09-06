@@ -41,7 +41,7 @@ const SignUpForm = (props) => {
       </div>
       <div className='field'>
         <div className='status-text p'>
-          {(props.statusText === 'Unauthorized') ? 'The email/password combination was not found.' : props.statusText}
+          {props.statusText}
         </div>
         <button type="submit" className='btn-submit'>Sign Up</button>
         <button className='btn-prev' onClick={props.onBackClick}>
