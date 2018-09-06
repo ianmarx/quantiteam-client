@@ -1,5 +1,6 @@
 @import '/styles/landing.scss';
-@import '/styles/signupin.scss';
+@import '/styles/signin.scss';
+@import '/styles/signup.scss';
 @import '/styles/home.scss';
 @import '/styles/profile.scss';
 @import '/styles/team.scss';
@@ -104,7 +105,7 @@ nav {
 
       &.sign-out {
         &:active {
-          background-color: rgba(0,0,0,.3);
+          background-color: $darkgrey-2;
         }
       }
     }
