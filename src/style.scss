@@ -88,6 +88,14 @@ nav {
       border-radius: 4px;
       font-size: calc(12px + 0.5vw);
 
+      @media screen and (max-width: 500px) {
+        font-size: calc(12px + 0.25vw);
+      }
+      @media screen and (max-width: 400px) {
+        padding: 7px;;
+        font-size: 12px;
+      }
+
       &.active {
         background-color: $darkgrey-2;
         color: $snow;
@@ -107,6 +115,13 @@ nav {
     .logo {
       align-self: center;
       font-size: calc(20px + 0.5vw);
+
+      @media screen and (max-width: 500px) {
+        font-size: calc(16px + 0.25vw);
+      }
+      @media screen and (max-width: 400px) {
+        font-size: calc(16px);
+      }
 
       sup {
         font-size: calc(10px + 0.5vw);
