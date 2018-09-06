@@ -50,13 +50,6 @@ export class SignUp extends Component {
     if (this.props.isAuthenticated) {
       this.props.history.replace('/');
     }
-    document.body.style.background = 'url("/img/erging-compressed.jpg") no-repeat center center fixed';
-    document.body.style.backgroundSize = 'cover';
-  }
-
-  componentWillUnmount() {
-    document.body.style.background = null;
-    document.body.style.backgroundSize = null;
   }
 
   onAthleteSelect(event) {
