@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signUpAthlete, signUpCoach } from '../actions/auth';
+import { signUpAthlete, signUpCoach, resetAuth } from '../actions/auth';
 import { checkTeamName, checkTeamCode } from '../actions/team';
 import SignUpForm from '../components/forms/SignUpForm';
 import UserTypeForm from '../components/forms/UserTypeForm';
@@ -92,6 +92,7 @@ export class SignUp extends Component {
 
   onBackClick(event) {
     this.setState({ firstStepComplete: false });
+    this.props.resetAuth();
   }
 
   onSubmit(event) {
@@ -173,4 +174,4 @@ SignUp.propTypes = {
   teamNameIsAvailable: PropTypes.bool,
 };
 
-export default withRouter(connect(mapStateToProps, { signUpAthlete, signUpCoach, checkTeamName, checkTeamCode })(SignUp));
+export default withRouter(connect(mapStateToProps, { resetAuth, signUpAthlete, signUpCoach, checkTeamName, checkTeamCode })(SignUp));
