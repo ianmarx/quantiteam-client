@@ -8,8 +8,8 @@ describe('<SignIn />', () => {
 
     expect(wrapper.find('.sign-in-form').length).toBe(1);
     expect(wrapper.find('.field').length).toBe(2);
-    expect(wrapper.find('.signin-button').length).toBe(1);
-    expect(wrapper.find('.back-button').length).toBe(1);
+    expect(wrapper.find('.btn-submit').length).toBe(1);
+    expect(wrapper.find('.btn-prev').length).toBe(1);
 
     wrapper.setProps({ statusText: 'invalid input' });
     expect(wrapper.find('.status-text').length).toBe(1);
