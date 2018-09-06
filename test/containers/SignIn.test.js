@@ -13,8 +13,6 @@ describe('<SignIn />', () => {
 
     wrapper.setProps({ statusText: 'invalid input' });
     expect(wrapper.find('.status-text').length).toBe(1);
-
-    wrapper.instance().componentWillUnmount();
   });
 
   it('should redirect when isAuthenticated', () => {
