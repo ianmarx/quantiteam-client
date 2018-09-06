@@ -73,26 +73,20 @@ nav {
     font-size: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-around;
+
+    .btn-group {
+      display: flex;
+      flex-direction: row;
+    }
 
     .nav-button {
       border: 1.5px solid transparent;
       cursor: pointer;
       margin: 5px;
       padding: 10px;
-      border-radius: 5px;
-
-      @media only screen and (max-width: 650px) {
-        font-size: 16px;
-      }
-      @media only screen and (max-width: 500px) {
-        padding: 8px;
-        margin: 2px;
-        font-size: 14px;
-      }
-      @media only screen and (max-width: 400px) {
-        font-size: 10px;
-      }
+      border-radius: 4px;
+      font-size: calc(12px + 0.5vw);
 
       &.active {
         background-color: $darkgrey-2;
@@ -111,45 +105,11 @@ nav {
     }
 
     .logo {
-      margin-left: 15px;
       align-self: center;
-      margin-right: auto;
-      font-size: 30px;
-      font-weight: 550;
-
-      @media only screen and (max-width: 650px) {
-        font-size: 24px;
-      }
-      @media only screen and (max-width: 550px) {
-        font-size: 20px;
-      }
-      @media only screen and (max-width: 525px) {
-        font-size: 18px;
-      }
-      @media only screen and (max-width: 500px) {
-        font-size: 16px;
-      }
-      @media only screen and (max-width: 450px) {
-        font-size: 14px;
-      }
-      @media only screen and (max-width: 425px) {
-        font-size: 12px;
-      }
-      @media only screen and (max-width: 350px) {
-        margin-left: 8px;
-      }
+      font-size: calc(20px + 0.5vw);
 
       sup {
-        font-size: 16px;
-        font-weight: 400;
-
-        @media only screen and (max-width: 650px) {
-          font-size: 12px;
-          font-weight: lighter;
-        }
-        @media only screen and (max-width: 425px) {
-          font-size: 10px;
-        }
+        font-size: calc(10px + 0.5vw);
       }
     }
   }
