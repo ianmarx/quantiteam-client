@@ -208,12 +208,14 @@ describe('<SignUp />', () => {
 
   it('should display initial form view when .btn-prev is clicked in credential form view', () => {
     const onBackClick = jest.spyOn(SignUp.prototype, 'onBackClick');
+    const resetAuth = jest.fn();
     const options = new ReactRouterEnzymeContext();
-    const wrapper = mount(<SignUp teamCodeIsValid />, options.get());
+    const wrapper = mount(<SignUp teamCodeIsValid resetAuth={resetAuth} />, options.get());
 
     wrapper.setState({ firstStepComplete: true });
     wrapper.find('.btn-prev').simulate('click');
     expect(onBackClick).toBeCalled();
+    expect(resetAuth).toBeCalled();
     expect(wrapper.find('#team-code').length).toBe(1);
   });
 
