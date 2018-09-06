@@ -1,3 +1,64 @@
+.btn-submit {
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: calc(14px + 0.5vw);
+  color: white;
+  background-color: #1da55f;
+  border-radius: 8px;
+
+  &:active {
+    background-color: #106b3c;
+  }
+
+  &:disabled {
+    background-color: #5fbf8e;
+    cursor: default;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn-prev {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: calc(14px + 0.5vw);
+  color: white;
+  background-color: $darkgrey-2;
+
+  &:active {
+    background-color: #3d3d3d;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn-role-select {
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: calc(14px + 0.5vw);
+  color: white;
+  background-color: #fca400;
+
+  &.disabled {
+    background-color: $grey;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
 #modal-button {
   margin: 5px;
   margin-top: 10px;
