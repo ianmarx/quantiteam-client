@@ -8,10 +8,17 @@ export const AUTH_USER_SUCCESS = 'AUTH_USER_SUCCESS';
 export const AUTH_USER_FAILURE = 'AUTH_USER_FAILURE';
 export const AUTH_USER_REQUEST = 'AUTH_USER_REQUEST';
 export const DEAUTH_USER = 'DEAUTH_USER';
+export const RESET_AUTH = 'RESET_AUTH';
 
 export function deauth() : Action {
   return {
     type: DEAUTH_USER,
+  };
+}
+
+export function resetAuth() : Action {
+  return {
+    type: RESET_AUTH,
   };
 }
 

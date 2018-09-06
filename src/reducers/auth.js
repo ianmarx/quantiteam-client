@@ -3,6 +3,7 @@ import {
   AUTH_USER_FAILURE,
   AUTH_USER_REQUEST,
   DEAUTH_USER,
+  RESET_AUTH,
 } from '../actions/auth';
 import {
   FETCH_USER_SUCCESS,
@@ -43,6 +44,9 @@ const AuthReducer = (state = initialState, action) => {
       });
     case DEAUTH_USER:
       return initialState;
+    case RESET_AUTH: {
+      return initialState;
+    }
     case FETCH_USER_SUCCESS: {
       return Object.assign({}, state, {
         user: action.user,
