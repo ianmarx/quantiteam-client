@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signInUser } from '../actions/auth';
+import { signInUser, resetAuth } from '../actions/auth';
 
 export const mapStateToProps = state => (
   {
@@ -48,10 +48,11 @@ export class SignIn extends Component {
 
   render() {
     return (
-      <div className="sign-in-form">
-        <form onSubmit={this.onSubmit}>
-          <h2>Sign In</h2>
+      <div className='sign-in-container'>
+        <form className='sign-in-form' onSubmit={this.onSubmit}>
+          <div className='h0'>Sign In</div>
           <div className="field">
+            <div className='h2-light'>Email</div>
             <input
               className='email'
               onChange={this.onEmailChange}
@@ -59,29 +60,35 @@ export class SignIn extends Component {
               type="text"
               required
               autoFocus
-              placeholder='Email'
               autoComplete='email'
             />
           </div>
           <div className="field">
+            <div className='h2-light'>Password</div>
             <input
               className='password'
               onChange={this.onPasswordChange}
               value={this.state.password}
               type="password"
               required
-              placeholder='Password'
               autoComplete='current-password'
             />
           </div>
-          <button type="submit" className="signin-button">Sign In</button>
-          <NavLink to="/">
-            <button className="back-button">Back</button>
-          </NavLink>
-          {this.props.statusText &&
-            <div className='status-text'>{this.props.statusText}</div>
-          }
+          <div className='status-text p'>
+            {(this.props.statusText === 'Unauthorized') ? 'The email/password combination was not found.' : this.props.statusText}
+          </div>
+          <button type="submit" className="btn-submit">Sign In</button>
+          <NavLink className='btn-prev' onClick={this.props.resetAuth} to="/">Back</NavLink>
+          <div className="already-user">
+            Not on a team yet? <NavLink to='/signup'><strong>Sign up here.</strong></NavLink>
+          </div>
         </form>
+        <div className='line' />
+        <div className='info-box'>
+          <div className='col even'>
+            <div className='p'>&copy; 2018 QuantiTeam. All rights reserved.</div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -92,4 +99,4 @@ SignIn.propTypes = {
   statusText: PropTypes.string,
 };
 
-export default withRouter(connect(mapStateToProps, { signInUser })(SignIn));
+export default withRouter(connect(mapStateToProps, { signInUser, resetAuth })(SignIn));
