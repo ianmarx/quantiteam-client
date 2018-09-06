@@ -4,6 +4,7 @@ import {
   AUTH_USER_FAILURE,
   AUTH_USER_REQUEST,
   DEAUTH_USER,
+  RESET_AUTH,
 } from '../../src/actions/auth';
 import {
   FETCH_USER_SUCCESS,
@@ -65,6 +66,20 @@ describe('auth reducer', () => {
   it('should handle DEAUTH_USER', () => {
     expect(auth([], {
       type: DEAUTH_USER,
+    })).toEqual({
+      user: null,
+      userId: null,
+      isFetchingUser: false,
+      userIsFetched: false,
+      isAuthenticating: false,
+      isAuthenticated: false,
+      statusText: null,
+    });
+  });
+
+  it('should handle RESET_AUTH', () => {
+    expect(auth([], {
+      type: RESET_AUTH,
     })).toEqual({
       user: null,
       userId: null,
