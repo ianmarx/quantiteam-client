@@ -7,6 +7,6 @@ describe('<LoadingPage /> component', () => {
     const wrapper = shallow(<LoadingPage />);
     expect(wrapper.find('.loading-page').length).toBe(1);
     expect(wrapper.find('.loading-screen').length).toBe(1);
-    expect(wrapper.find('.dot').length).toBe(3);
+    expect(wrapper.find('.dot').length).toBe(4);
   });
 });

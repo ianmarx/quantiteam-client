@@ -5,6 +5,10 @@
   flex: 1;
   padding-top: 90px;
 
+  @media only screen and (max-width: 500px) {
+    padding-top: 70px;
+  }
+
   .line {
     margin-top: auto;
     margin-bottom: 0px;
@@ -15,7 +19,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   width: 90%;
 
   .h0 {

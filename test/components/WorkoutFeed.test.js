@@ -35,7 +35,7 @@ const soloWorkouts = [
 ];
 
 describe('<WorkoutFeed />', () => {
-  it('should render expected elements when isCoach', () => {
+  it('should render expected elements', () => {
     const wrapper = shallow(<WorkoutFeed
       soloWorkouts={soloWorkouts}
       teamWorkouts={teamWorkouts}
@@ -43,18 +43,6 @@ describe('<WorkoutFeed />', () => {
     />);
 
     expect(wrapper.find('.workout-feed').length).toBe(1);
-    expect(wrapper.find('.feed-title').length).toBe(1);
-    expect(wrapper.find('#team-workout-modal-button').length).toBe(1);
-    expect(wrapper.find('#modal-button').length).toBe(0);
-  });
-
-  it('should render expected elements when !isCoach', () => {
-    const wrapper = shallow(<WorkoutFeed
-      soloWorkouts={soloWorkouts}
-      teamWorkouts={teamWorkouts}
-    />);
-
-    expect(wrapper.find('#team-workout-modal-button').length).toBe(0);
     expect(wrapper.find('#modal-button').length).toBe(1);
   });
 
@@ -64,7 +52,6 @@ describe('<WorkoutFeed />', () => {
     />);
 
     expect(wrapper.find('.workout-feed.loading').length).toBe(1);
-    expect(wrapper.find('.feed-title').length).toBe(1);
     expect(wrapper.find('#modal-button').length).toBe(0);
     expect(wrapper.find('#team-workout-modal-button').length).toBe(0);
   });

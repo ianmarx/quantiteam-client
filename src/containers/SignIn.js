@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signInUser, resetAuth } from '../actions/auth';
+import PageFooter from '../components/mini/PageFooter';
 
 export const mapStateToProps = state => (
   {
@@ -25,6 +26,7 @@ export class SignIn extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     if (this.props.isAuthenticated) {
       this.props.history.replace('/');
     }
@@ -83,12 +85,7 @@ export class SignIn extends Component {
             Not on a team yet? <NavLink to='/signup'><strong>Sign up here.</strong></NavLink>
           </div>
         </form>
-        <div className='line' />
-        <div className='info-box'>
-          <div className='col even'>
-            <div className='p'>&copy; 2018 QuantiTeam. All rights reserved.</div>
-          </div>
-        </div>
+        <PageFooter />
       </div>
     );
   }

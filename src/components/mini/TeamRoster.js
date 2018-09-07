@@ -6,7 +6,7 @@ const TeamRoster = (props) => {
     <div className='team-roster-modal-container'>
       <div className='team-roster'>
         <div className='athlete-list'>
-          <div className='list-title'>Athletes</div>
+          <div className='h2'>Athletes</div>
           {!props.athletes ? (
             <div className='not-found'>No athletes found.</div>
           ) : (
@@ -15,7 +15,7 @@ const TeamRoster = (props) => {
                 return (
                   <div className='athlete' key={`athlete-${i}`}>
                     <NavLink to={`/profile/${athlete._id}`}>
-                      <div className="profile-link">{athlete.name}</div>
+                      <div className="p profile-link">{athlete.name}</div>
                     </NavLink>
                   </div>
                 );
@@ -24,7 +24,7 @@ const TeamRoster = (props) => {
           )}
         </div>
         <div className='coach-list'>
-          <div className='list-title'>Coaches</div>
+          <div className='h2'>Coaches</div>
           {!props.coaches ? (
             <div className='not-found'>No coaches found.</div>
           ) : (
@@ -33,7 +33,7 @@ const TeamRoster = (props) => {
                 return (
                   <div className='coach' key={`coach-${i}`}>
                     <NavLink to={`/profile/${coach._id}`}>
-                      <div className="profile-link">{coach.name}</div>
+                      <div className="p profile-link">{coach.name}</div>
                     </NavLink>
                   </div>
                 );

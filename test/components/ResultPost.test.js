@@ -22,23 +22,7 @@ describe('<ResultPost />', () => {
     />);
 
     expect(wrapper.find('.result-post').length).toBe(1);
-    expect(wrapper.find('.content').length).toBe(1);
-    expect(wrapper.find('.distance').length).toBe(0);
-    expect(wrapper.find('.time-string').length).toBe(1);
-    expect(wrapper.find('.split-string').length).toBe(1);
-    expect(wrapper.find('.stroke-rate').length).toBe(1);
-    expect(wrapper.find('.heart-rate').length).toBe(1);
-    expect(wrapper.find('.icon').length).toBe(2);
-  });
-
-  it('should hide edit/delete icons when !isCoach', () => {
-    const wrapper = shallow(<ResultPost
-      workout={workout}
-      type='distance'
-      teamWorkoutId='1'
-    />);
-
-    expect(wrapper.find('.icon').length).toBe(0);
+    expect(wrapper.find('.row-unit').length).toBe(5);
   });
 
   it('should render expected elements when state.isEditing', () => {
@@ -51,20 +35,18 @@ describe('<ResultPost />', () => {
     wrapper.setState({ isEditing: true });
 
     expect(wrapper.find('.result-post.edit').length).toBe(1);
-    expect(wrapper.find('.content').length).toBe(1);
     expect(wrapper.find('input.distance').length).toBe(0);
     expect(wrapper.find('input.time').length).toBe(1);
     expect(wrapper.find('input.stroke-rate').length).toBe(1);
     expect(wrapper.find('input.heart-rate').length).toBe(1);
-    expect(wrapper.find('.icon').length).toBe(0);
     expect(wrapper.find('.workout-edit-cancel').length).toBe(1);
     expect(wrapper.find('.workout-edit-submit').length).toBe(1);
     expect(wrapper.find('.status-text.error').length).toBe(0);
+    expect(wrapper.find('.footer').length).toBe(2);
 
     /* check for error message */
     wrapper.setState({ statusMessage: 'invalid input' });
     wrapper.update();
-    expect(wrapper.find('.footer').length).toBe(1);
     expect(wrapper.find('.status-text.error').length).toBe(1);
   });
 
@@ -83,21 +65,21 @@ describe('<ResultPost />', () => {
       isCoach
     />);
 
-    expect(wrapper.find('div.watts').length).toBe(1);
     wrapper.setState({ isEditing: true });
     expect(wrapper.find('input.watts').length).toBe(1);
   });
 
-  it('should enter edit mode on #editWorkout click', () => {
+  it('should enter edit mode on .result-post click when props.inEditMode is true', () => {
     const onEditClick = jest.spyOn(ResultPost.prototype, 'onEditClick');
     const wrapper = shallow(<ResultPost
       workout={workout}
       type='time'
       teamWorkoutId='1'
       isCoach
+      inEditMode
     />);
 
-    wrapper.find('#editWorkout').simulate('click');
+    wrapper.find('.result-post').simulate('click');
     expect(onEditClick).toBeCalled();
     expect(wrapper.state().isEditing).toBeTruthy();
   });
@@ -162,7 +144,7 @@ describe('<ResultPost />', () => {
     expect(wrapper.state().avgHR).toBe('');
   });
 
-  it('should call deleteResult() on #deleteWorkout click', () => {
+  it('should call deleteResult() on .btn-delete click', () => {
     const onDeleteClick = jest.spyOn(ResultPost.prototype, 'onDeleteClick');
     const deleteResult = jest.fn();
     const wrapper = shallow(<ResultPost
@@ -173,7 +155,9 @@ describe('<ResultPost />', () => {
       isCoach
     />);
 
-    wrapper.find('#deleteWorkout').simulate('click');
+    wrapper.setState({ isEditing: true });
+
+    wrapper.find('.btn-delete').simulate('click');
     expect(onDeleteClick).toBeCalled();
     expect(deleteResult).toBeCalled();
   });

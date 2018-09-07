@@ -9,7 +9,7 @@ describe('<LandingPage />', () => {
       isAuthenticated
     />);
 
-    expect(wrapper.find('.info-box').length).toBe(5);
+    expect(wrapper.find('.info-box').length).toBe(4);
     expect(wrapper.find('.header').length).toBe(1);
     expect(wrapper.find('.tagline').length).toBe(1);
     expect(wrapper.find('.cta-button').length).toBe(2);

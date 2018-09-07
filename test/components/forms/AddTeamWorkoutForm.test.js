@@ -13,11 +13,10 @@ describe('<AddTeamWorkoutForm />', () => {
     />);
 
     expect(wrapper.find('.modal-form').length).toBe(1);
-    expect(wrapper.find('.form-title').length).toBe(1);
+    expect(wrapper.find('.h1').length).toBe(1);
     expect(wrapper.find('.modal-prev').length).toBe(0);
-    expect(wrapper.find('.activity-select').length).toBe(4);
-    expect(wrapper.find('.form-row.activity').length).toBe(1);
-    expect(wrapper.find('.form-row.type').length).toBe(0);
+    expect(wrapper.find('.btn-select').length).toBe(4);
+    expect(wrapper.find('.btn-option').length).toBe(0);
     expect(wrapper.find('input').length).toBe(0);
     expect(wrapper.find('.modal-close').length).toBe(1);
   });
@@ -33,10 +32,7 @@ describe('<AddTeamWorkoutForm />', () => {
     });
 
     expect(wrapper.find('.modal-prev').length).toBe(1);
-    expect(wrapper.find('.activity-select').length).toBe(0);
-    expect(wrapper.find('.form-row.activity').length).toBe(0);
-    expect(wrapper.find('.form-row.type').length).toBe(1);
-    expect(wrapper.find('.type-select').length).toBe(2);
+    expect(wrapper.find('.btn-option').length).toBe(2);
   });
 
   it('should render input view when activity and type have been chosen', () => {
@@ -51,11 +47,8 @@ describe('<AddTeamWorkoutForm />', () => {
       type: 'distance',
     });
 
-    expect(wrapper.find('.form-row.type').length).toBe(0);
-    expect(wrapper.find('.type-select').length).toBe(0);
     expect(wrapper.find('input.distance').length).toBe(1);
     expect(wrapper.find('.modal-submit').length).toBe(1);
-    expect(wrapper.find('.status-text.error').length).toBe(0);
 
     /* time case */
     wrapper.setState({
@@ -107,7 +100,7 @@ describe('<AddTeamWorkoutForm />', () => {
       teamId={teamId}
     />);
 
-    wrapper.find('#erg-select').simulate('click');
+    wrapper.find('.btn-select.erg').simulate('click');
     expect(onErgSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('erg');
     expect(wrapper.state().distUnit).toBe('m');
@@ -120,7 +113,7 @@ describe('<AddTeamWorkoutForm />', () => {
       teamId={teamId}
     />);
 
-    wrapper.find('#row-select').simulate('click');
+    wrapper.find('.btn-select.row').simulate('click');
     expect(onRowSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('row');
     expect(wrapper.state().distUnit).toBe('m');
@@ -133,7 +126,7 @@ describe('<AddTeamWorkoutForm />', () => {
       teamId={teamId}
     />);
 
-    wrapper.find('#run-select').simulate('click');
+    wrapper.find('.btn-select.run').simulate('click');
     expect(onRunSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('run');
     expect(wrapper.state().distUnit).toBe('mi');
@@ -146,7 +139,7 @@ describe('<AddTeamWorkoutForm />', () => {
       teamId={teamId}
     />);
 
-    wrapper.find('#bike-select').simulate('click');
+    wrapper.find('.btn-select.bike').simulate('click');
     expect(onBikeSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('bike');
     expect(wrapper.state().distUnit).toBe('mi');
@@ -163,7 +156,7 @@ describe('<AddTeamWorkoutForm />', () => {
       activity: 'erg',
     });
 
-    wrapper.find('.type-select.distance').simulate('click');
+    wrapper.find('.btn-option.distance').simulate('click');
     expect(onDistSelect).toBeCalled();
   });
 
@@ -177,7 +170,7 @@ describe('<AddTeamWorkoutForm />', () => {
       activity: 'erg',
     });
 
-    wrapper.find('.type-select.time').simulate('click');
+    wrapper.find('.btn-option.time').simulate('click');
     expect(onTimeSelect).toBeCalled();
   });
 

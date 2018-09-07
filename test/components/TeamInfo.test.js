@@ -15,7 +15,6 @@ describe('<TeamInfo />', () => {
     />);
 
     expect(wrapper.find('.team-info').length).toBe(1);
-    expect(wrapper.find('.team-name').length).toBe(1);
     expect(wrapper.find('.team-details').length).toBe(1);
     expect(wrapper.find('.team-code').length).toBe(1);
     expect(wrapper.find('.view-roster-button').length).toBe(1);

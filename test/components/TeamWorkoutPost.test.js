@@ -31,9 +31,9 @@ describe('<TeamWorkoutPost />', () => {
     expect(wrapper.find('.header').length).toBe(1);
     expect(wrapper.find('.profile-link').length).toBe(1);
     expect(wrapper.find('.content').length).toBe(1);
-    expect(wrapper.find('.distance').length).toBe(1);
-    expect(wrapper.find('#result-modal-button').length).toBe(1);
-    expect(wrapper.find('#view-result-modal-button').length).toBe(1);
+    expect(wrapper.find('.col-unit').length).toBe(1);
+    expect(wrapper.find('.btn-modal-1').length).toBe(1);
+    expect(wrapper.find('.btn-modal-2').length).toBe(1);
     expect(wrapper.find('.footer').length).toBe(1);
     expect(wrapper.find('.fa-edit').length).toBe(1);
     expect(wrapper.find('.fa-trash').length).toBe(1);
@@ -54,7 +54,7 @@ describe('<TeamWorkoutPost />', () => {
     expect(wrapper.find('.workout-edit-submit').length).toBe(1);
   });
 
-  it('should handle click on #result-modal-button', () => {
+  it('should handle opening add result form', () => {
     const onRecordClick = jest.spyOn(TeamWorkoutPost.prototype, 'onRecordClick');
     const onAddResultClick = jest.fn();
     const wrapper = shallow(<TeamWorkoutPost
@@ -63,7 +63,7 @@ describe('<TeamWorkoutPost />', () => {
       isCoach
     />);
 
-    wrapper.find('#result-modal-button').simulate('click');
+    wrapper.find('.btn-modal-1').simulate('click');
     expect(onRecordClick).toBeCalled();
     expect(onAddResultClick).toBeCalled();
   });
@@ -94,7 +94,7 @@ describe('<TeamWorkoutPost />', () => {
     expect(deleteTeamWorkout).toBeCalled();
   });
 
-  it('should handle click on #view-result-modal-button', () => {
+  it('should handle opening results view', () => {
     const onViewClick = jest.spyOn(TeamWorkoutPost.prototype, 'onViewClick');
     const onViewResultsClick = jest.fn();
     const wrapper = shallow(<TeamWorkoutPost
@@ -103,7 +103,7 @@ describe('<TeamWorkoutPost />', () => {
       isCoach
     />);
 
-    wrapper.find('#view-result-modal-button').simulate('click');
+    wrapper.find('.btn-modal-2').simulate('click');
     expect(onViewClick).toBeCalled();
     expect(onViewResultsClick).toBeCalled();
   });

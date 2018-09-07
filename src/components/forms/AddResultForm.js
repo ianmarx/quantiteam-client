@@ -128,91 +128,94 @@ class AddResultForm extends Component {
 
   render() {
     return (
-      <form className="modal-form" onSubmit={this.onSubmit}>
-        <div className="form-title">Add Result</div>
-        <div className='form-row'>
-          <input
-            className='athlete-name'
-            list="athletes"
-            onChange={this.onAthleteNameChange}
-            value={this.state.athleteName}
-            type="text"
-            placeholder='Athlete Name'
-            required
-          />
-          <datalist id="athletes">
-            {this.props.queryResults && this.props.queryResults.map((athlete, i) => {
-              return (
-                <option key={i} value={athlete.name} />
-              );
-            })}
-          </datalist>
-        </div>
-        {this.state.type === 'time' &&
-          <div className='form-row'>
+      <form className="modal-form" autoComplete='off' onSubmit={this.onSubmit}>
+        <div className="h1 cap-1">Add Result</div>
+        <div className='row-unit'>
+          <div className='col-unit p'>
+            <div className='p-sm bold'>Athlete *</div>
             <input
-              className={`distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
-              onChange={this.onDistanceChange}
-              value={this.state.distance}
+              className='athlete-name input-extra-lg'
+              list="athletes"
+              onChange={this.onAthleteNameChange}
+              value={this.state.athleteName}
               type="text"
-              placeholder='Distance'
-              autoComplete='off'
               required
             />
-            {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}
+            <datalist id="athletes">
+              {this.props.queryResults && this.props.queryResults.map((athlete, i) => {
+                return (
+                  <option key={i} value={athlete.name} />
+                );
+              })}
+            </datalist>
           </div>
-        }
-        {this.state.type === 'distance' &&
-          <div className='form-row'>
-            <input
-              className={`time ${this.state.timeIsValid ? '' : 'invalid'}`}
-              onChange={this.onTimeStringChange}
-              value={this.state.timeString}
-              type="text"
-              placeholder='Time'
-              autoComplete='off'
-              required
-            />
-            {this.props.teamWorkout.activity}
-          </div>
-        }
-        {(this.props.teamWorkout.activity === 'erg' || this.props.teamWorkout.activity === 'row') &&
-          <div className='form-row'>
-            <input
-              className={`stroke-rate ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
-              onChange={this.onStrokeRateChange}
-              value={this.state.strokeRate}
-              type="text"
-              placeholder='s/m'
-            />
-          </div>
-        }
-        {(this.props.teamWorkout.activity === 'bike') &&
-          <div className='form-row'>
-            <input
-              className={`watts ${this.state.wattsIsValid ? '' : 'invalid'}`}
-              onChange={this.onWattsChange}
-              value={this.state.watts}
-              type="text"
-              placeholder='Watts'
-            />
-          </div>
-        }
-        <div className='form-row'>
-          <input
-            className={`heart-rate ${this.state.avgHRIsValid ? '' : 'invalid'}`}
-            onChange={this.onHeartRateChange}
-            value={this.state.avgHR}
-            type="text"
-            placeholder='Heart Rate'
-          />
-          bpm
         </div>
-        {this.state.statusMessage !== '' &&
-          <div className='status-text error'>{this.state.statusMessage}</div>
-        }
+        <div className='row-unit'>
+          {this.state.type === 'time' &&
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Distance ({this.props.teamWorkout.distUnit}) *</div>
+              <input
+                className={`input-lg distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                onChange={this.onDistanceChange}
+                value={this.state.distance}
+                type="text"
+                autoComplete='off'
+                required
+              />
+            </div>
+          }
+          {this.state.type === 'distance' &&
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Time *</div>
+              <input
+                className={`input-lg time ${this.state.timeIsValid ? '' : 'invalid'}`}
+                onChange={this.onTimeStringChange}
+                value={this.state.timeString}
+                type="text"
+                placeholder='hh:mm:ss'
+                autoComplete='off'
+                required
+              />
+            </div>
+          }
+        </div>
+        <div className='row-unit'>
+          <div className='col-unit'>
+            <div className='p-sm bold'>Heart Rate (bpm)</div>
+            <input
+              className={`heart-rate ${this.state.avgHRIsValid ? '' : 'invalid'}`}
+              onChange={this.onHeartRateChange}
+              value={this.state.avgHR}
+              type="text"
+            />
+          </div>
+          {(this.props.teamWorkout.activity === 'erg' || this.props.teamWorkout.activity === 'row') &&
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Stroke Rate (s/m)</div>
+              <input
+                className={`stroke-rate ${this.state.strokeRateIsValid ? '' : 'invalid'}`}
+                onChange={this.onStrokeRateChange}
+                value={this.state.strokeRate}
+                type="text"
+              />
+            </div>
+          }
+          {(this.props.teamWorkout.activity === 'bike') &&
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Watts</div>
+              <input
+                className={`watts ${this.state.wattsIsValid ? '' : 'invalid'}`}
+                onChange={this.onWattsChange}
+                value={this.state.watts}
+                type="text"
+              />
+            </div>
+          }
+        </div>
+        <div className='status-text error'>{this.state.statusMessage}</div>
         <button type="submit" className="modal-submit">Submit</button>
         <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
+        <div id='required-msg' className='p-extra-sm'>* indicates a required field.</div>
       </form>
     );
   }

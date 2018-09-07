@@ -7,7 +7,6 @@ const SoloWorkoutFeed = (props) => {
   if (props.isFetchingUserWorkouts) {
     return (
       <div className="workout-feed loading">
-        <div className="feed-title">Workouts</div>
         <LoadingScreen />
       </div>
     );
@@ -18,7 +17,6 @@ const SoloWorkoutFeed = (props) => {
 
     return (
       <div className="workout-feed">
-        <div className="feed-title">Workouts</div>
         {props.profileUserId === props.currentUserId &&
           <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
         }

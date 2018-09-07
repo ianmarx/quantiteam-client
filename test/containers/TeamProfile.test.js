@@ -33,8 +33,7 @@ describe('<TeamProfile />', () => {
       teamWorkoutsFetched
     />);
 
-    expect(wrapper.find('.team-page').length).toBe(1);
-    expect(wrapper.find('.workout-feed-container').length).toBe(1);
+    expect(wrapper.find('.team-page-container').length).toBe(1);
   });
 
   it('should render loading screen when data is not fetched', () => {
@@ -49,8 +48,7 @@ describe('<TeamProfile />', () => {
       fetchTeamWorkouts={jest.fn()}
     />);
 
-    expect(wrapper.find('.team-page.loading').length).toBe(1);
-    expect(wrapper.find('.workout-feed-container').length).toBe(0);
+    expect(wrapper.find('.team-page-container').length).toBe(0);
   });
 
   it('should redirect to /signin when !isAuthenticated', () => {

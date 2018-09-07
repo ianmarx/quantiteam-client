@@ -1,186 +1,160 @@
-.results-modal-container {
+.results-view {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  padding: 10px;
-  background-color: #f4f4f4;
-  color: black;
-  border-radius: 5px;
-  border: none;
-  max-height: 75vh;
-  width: 80vw;
+  width: 100vw;
+  height: 100vh;
+  background-color: $snow;
 
-  @media only screen and (max-width: 650px) {
-    margin: 70px 25px 0px;
-  }
-  @media only screen and (max-width: 500px) {
-    margin: 50px 5px 0px;
+  .date {
+    margin-top: 10px;
   }
 
+  .h1 {
+    margin-bottom: 10px;
+  }
 
-  .instructions {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  #editModeButton, #viewModeButton, #editInstructions {
+    margin-bottom: 10px;
+  }
+
+  .column-titles {
     width: 100%;
-    height: 100%;
-  }
-
-  .results-view-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 750px;
-    width: 100%;
+    flex-direction: row;
+    color: $darkgrey-2;
+    margin-bottom: 10px;
 
-    @media only screen and (max-height: 850px) {
-      height: 600px;
-    }
-    @media only screen and (max-height: 700px) {
-      height: 450px;
+    .row-unit {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      justify-content: center;
     }
   }
 
-  .results-view {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 90%;
+  .line {
+    border-width: 1px;
+    margin: 5px 0px 10px;
   }
 
-  .results-title {
-    font-size: 25px;
-    margin-bottom: 20px;
-  }
   .result-feed {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-  }
-}
-
-.result-post {
-  display: flex;
-  flex-direction: column;
-  background-color: #f4f4f4;
-  margin: 0px;
-  border-radius: 3px;
-  border-style: solid;
-  border-color: #d6d6d6;
-  border-width: thin;
-  @media only screen and (max-width: 550px) {
-    font-size: 14px;
+    margin-bottom: 5px;
   }
 
-  .content {
-    margin: 0px 5px;
+  .instructions {
+    margin: auto 20px;
+    text-align: center;
+  }
+
+  .result-post {
+    height: 40px;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
-  }
+    border-top: 2px solid $smoke;
+    transition: height 0.2s;
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  div {
-    margin: 10px;
-  }
-
-  i {
-    font-size: 20px;
-    &:hover {
-      cursor: pointer;
+    &.edit {
+      height: 110px;
+      flex-direction: column;
+      justify-content: space-around;
     }
-  }
 
-  li {
-    margin: 5px;
-  }
-
-  input {
-    height: 30px;
-    width: 100px;
-    font-size: 20px;
-    border-style: none;
-    border-radius: 5px;
-
-    &.invalid {
-      border-style: solid;
-      border-width: 2px;
-      border-color: #d12600;
+    &.show-msg {
+      height: 120px;
     }
-  }
 
-  select {
-    height: 30px;
-    font-size: 20px;
-    border-style: none;
-    border-radius: 5px;
-    background-color: white;
-  }
+    &:last-child {
+      border-bottom: 2px solid $smoke;
+    }
 
-  .workout-edit-cancel {
-    background-color: #595959;
-  }
-
-  .row-unit {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 0px;
-  }
-
-  &.edit {
-    .content {
+    .row-unit {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
       justify-content: center;
-      @media only screen and (max-width: 500px) {
-        flex-direction: column;
+      align-items: center;
+
+      div.icon {
+        margin: 0px 10px;
+      }
+
+      button {
+        margin: 0px 5px;
+      }
+
+      i {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
-    div {
-      margin: 5px 10px;
+    .content {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        margin: 0px 10px;
+      }
+
+      .workout-edit-submit {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
     }
 
     input {
-      height: 25px;
-      font-size: 16px;
+      border-style: none;
+      border-radius: 4px;
       text-align: center;
+
+      &.input-sm {
+        width: calc(30px + 5vw);
+      }
+
+      &.input-md {
+        width: calc(40px + 5vw);
+      }
+
+      &.input-lg {
+        width: calc(50px + 5vw);
+      }
+
+      &.invalid {
+        border-style: solid;
+        border-width: 2px;
+        border-color: #d12600;
+      }
     }
 
-
-    .input-sm {
-      max-width: 40px;
-      height: 25px;
+    .workout-edit-cancel {
+      background-color: #595959;
     }
 
-    .input-md {
-      max-width: 80px;
-    }
-
-    .input-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-
-    button {
-      margin: 0px 5px;
-    }
     .status-text {
+      margin-top: 5px;
+
       &.error {
         color: #d12600;
       }
     }
+  }
+
+  .modal-close {
+    margin: auto 0px 20px;
   }
 }

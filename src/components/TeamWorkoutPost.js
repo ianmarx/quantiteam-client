@@ -132,48 +132,55 @@ class TeamWorkoutPost extends Component {
     if (this.state.isEditing) {
       return (
         <form className="team-workout-post edit" key={this.props.index} onSubmit={this.onSubmit}>
-          <div className='header'>
-            <NavLink className='profile-link' to='/team'>
-              <strong>Team</strong>
-            </NavLink>
-            <div>{dateString}</div>
-          </div>
-          <div className='content'>
-            {this.state.type === 'distance' &&
-              <div className="row-unit">
-                <input
-                  className={`distance input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
-                  onChange={this.onDistanceChange}
-                  value={this.state.distance}
-                  type="text"
-                />
-                <div>{this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
-              </div>
-            }
-            {this.state.type === 'time' &&
-              <div className='row-unit'>
-                <input
-                  className={`time-string input-md ${this.state.timeIsValid ? '' : 'invalid'}`}
-                  onChange={this.onTimeStringChange}
-                  value={this.state.timeString}
-                  type="text"
-                />
-              </div>
-            }
-            <div className="row-unit">
-              <select className='activity' value={this.state.activity} onChange={this.onActivityChange}>
-                <option value="erg">Erg</option>
-                <option value="row">Row</option>
-                <option value="run">Run</option>
-                <option value="bike">Bike</option>
-              </select>
+          <div className='header p'>
+            <div className='header-item'>
+              <NavLink className='profile-link bold' to='/team'>Team</NavLink>
             </div>
-            <div className='row-unit'>
-              <select className='dist-unit' value={this.state.distUnit} onChange={this.onDistUnitChange}>
-                <option value="m">m</option>
-                <option value="km">km</option>
-                <option value="mi">mi</option>
-              </select>
+            <div className='cap-1 ctr header-item'>{this.props.teamWorkout.activity}</div>
+            <div className='header-item right'>{dateString}</div>
+          </div>
+          <div className='content p-sm'>
+            <div className='col-unit'>
+              {this.state.type === 'distance' &&
+                <div className="row-unit">
+                  <input
+                    className={`distance input-md ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                    onChange={this.onDistanceChange}
+                    value={this.state.distance}
+                    type="text"
+                  />
+                  <div>{this.props.teamWorkout.distUnit}</div>
+                </div>
+              }
+              {this.state.type === 'time' &&
+                <div className='row-unit'>
+                  <input
+                    className={`time-string input-lg ${this.state.timeIsValid ? '' : 'invalid'}`}
+                    onChange={this.onTimeStringChange}
+                    value={this.state.timeString}
+                    type="text"
+                  />
+                </div>
+              }
+            </div>
+            <div className='col-unit'>
+              <div className="row-unit">
+                <select className='activity' value={this.state.activity} onChange={this.onActivityChange}>
+                  <option value="erg">Erg</option>
+                  <option value="row">Row</option>
+                  <option value="run">Run</option>
+                  <option value="bike">Bike</option>
+                </select>
+              </div>
+            </div>
+            <div className='col-unit'>
+              <div className='row-unit'>
+                <select className='dist-unit' value={this.state.distUnit} onChange={this.onDistUnitChange}>
+                  <option value="m">m</option>
+                  <option value="km">km</option>
+                  <option value="mi">mi</option>
+                </select>
+              </div>
             </div>
           </div>
           <div className='footer'>
@@ -190,26 +197,28 @@ class TeamWorkoutPost extends Component {
     } else {
       return (
         <div className="team-workout-post">
-          <div className='header'>
-            <NavLink className='profile-link' to='/team'>
-              <strong>Team</strong>
-            </NavLink>
-            <div>{dateString}</div>
+          <div className='header p'>
+            <div className='header-item'>
+              <NavLink className='profile-link bold' to='/team'>Team</NavLink>
+            </div>
+            <div className='cap-1 ctr header-item'>{this.props.teamWorkout.activity}</div>
+            <div className='header-item right'>{dateString}</div>
           </div>
-          <div className='content'>
-            <div className="row-unit data">
+          <div className='content h3-light'>
+            <div className='col-unit'>
+              <div className='p-extra-sm cap-1'>{this.props.teamWorkout.type}</div>
               {this.props.teamWorkout.type === 'distance' &&
-                <div className='distance'>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit} {this.props.teamWorkout.activity}</div>
+                <div>{this.props.teamWorkout.distance} {this.props.teamWorkout.distUnit}</div>
               }
               {this.props.teamWorkout.type === 'time' &&
-                <div className='time'>{this.props.teamWorkout.timeString} {this.props.teamWorkout.activity}</div>
+                <div>{this.props.teamWorkout.timeString}</div>
               }
             </div>
-            <div className="row-unit button">
+            <div className='row-unit btn'>
               {this.props.isCoach &&
-                <button id="result-modal-button" onClick={this.onRecordClick}>Record</button>
+                <button className='btn-modal-1' onClick={this.onRecordClick}>Add Result</button>
               }
-              <button id="view-result-modal-button" onClick={this.onViewClick}>View</button>
+              <button className="btn-modal-2" onClick={this.onViewClick}>View Results</button>
             </div>
           </div>
           <div className='footer'>

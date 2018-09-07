@@ -6,6 +6,7 @@ import { signUpAthlete, signUpCoach, resetAuth } from '../actions/auth';
 import { checkTeamName, checkTeamCode } from '../actions/team';
 import SignUpForm from '../components/forms/SignUpForm';
 import UserTypeForm from '../components/forms/UserTypeForm';
+import PageFooter from '../components/mini/PageFooter';
 
 export const mapStateToProps = state => (
   {
@@ -45,6 +46,7 @@ export class SignUp extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     if (this.props.isAuthenticated) {
       this.props.history.replace('/');
     }
@@ -155,12 +157,7 @@ export class SignUp extends Component {
           />
         )
         }
-        <div className='line' />
-        <div className='info-box'>
-          <div className='col even'>
-            <div className='p'>&copy; 2018 QuantiTeam. All rights reserved.</div>
-          </div>
-        </div>
+        <PageFooter />
       </div>
     );
   }

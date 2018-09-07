@@ -1,22 +1,62 @@
 .h0 {
-  font-size: calc(20px + 2vw);
+  font-size: calc(36px + 1.5vw);
   font-weight: 600;
+}
+
+.h0-light {
+  font-size: calc(36px + 1.5vw);
 }
 
 .h1 {
   font-size: calc(20px + 1vw);
-  font-weight: bolder;
+  font-weight: 600;
 }
 
 .h2 {
   font-size: calc(20px + 0.5vw);
-  font-weight: bolder;
+  font-weight: 600;
 }
 
 .h2-light {
   font-size: calc(20px + 0.5vw);
 }
 
+.h3 {
+  font-size: calc(20px + 0.25vw);
+  font-weight: 600;
+}
+
+.h3-light {
+  font-size: calc(20px + 0.25vw);
+}
+
+.p-sm {
+  font-size: calc(14px + 0.25vw);
+}
+
+.p-extra-sm {
+  font-size: calc(12px + 0.25vw);
+}
+
 .p {
   font-size: calc(14px + 0.5vw);
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.cap-1 {
+  text-transform: capitalize;
+}
+
+.left {
+  text-align: left;
+}
+.ctr {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
 }

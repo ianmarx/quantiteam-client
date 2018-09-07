@@ -47,8 +47,7 @@ describe('<Profile />', () => {
       isAuthenticated
     />);
 
-    expect(wrapper.find('.profile-page').length).toBe(1);
-    expect(wrapper.find('.workout-feed-container').length).toBe(1);
+    expect(wrapper.find('.profile-page-container').length).toBe(1);
     expect(wrapper.find('.modal').length).toBe(1);
   });
 
@@ -68,7 +67,7 @@ describe('<Profile />', () => {
       isAuthenticated
     />);
 
-    expect(wrapper.find('.profile-page.loading').length).toBe(1);
+    expect(wrapper.find('.profile-page-container').length).toBe(0);
   });
 
   it('should redirect to /signin when !isAuthenticated', () => {
@@ -94,21 +93,18 @@ describe('<Profile />', () => {
   });
 
   it('should fetch user, userTeam, workouts, and teamWorkouts when not present', () => {
-    const fetchUser = jest.fn();
     const fetchUserTeam = jest.fn();
     const fetchUserProfile = jest.fn();
     const fetchUserWorkouts = jest.fn();
     shallow(<Profile
       match={match}
       isAuthenticated
-      fetchUser={fetchUser}
       fetchUserProfile={fetchUserProfile}
       fetchUserTeam={fetchUserTeam}
       fetchUserWorkouts={fetchUserWorkouts}
       userId={userId}
     />);
 
-    expect(fetchUser).toBeCalled();
     expect(fetchUserProfile).toBeCalled();
     expect(fetchUserTeam).toBeCalled();
     expect(fetchUserWorkouts).toBeCalled();

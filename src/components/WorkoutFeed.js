@@ -8,7 +8,7 @@ const WorkoutFeed = (props) => {
   if (props.isFetchingSoloWorkouts || props.isFetchingTeamWorkouts) {
     return (
       <div className="workout-feed loading">
-        <div className="feed-title">Workout Feed</div>
+        <div className='h1 ctr'>{props.teamName}</div>
         <LoadingScreen />
       </div>
     );
@@ -20,9 +20,9 @@ const WorkoutFeed = (props) => {
 
     return (
       <div className="workout-feed">
-        <div className="feed-title">Workout Feed</div>
+        <div className='h1 ctr'>{props.teamName}</div>
         {props.isCoach ? (
-          <button id="team-workout-modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
+          <button id="modal-button" onClick={props.onAddTeamWorkoutModalOpen}>Add Team Workout</button>
         ) : (
           <button id="modal-button" onClick={props.onAddWorkoutModalOpen}>Add Workout</button>
         )

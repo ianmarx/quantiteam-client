@@ -1,17 +1,32 @@
-.home-page {
+.home-page-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-start;
-  overflow: auto;
-  color: black;
-  margin-top: 50px;
+  flex-direction: column;
+  flex: 1;
+  padding-top: 75px;
+  align-items: center;
 
-  @media only screen and (max-width: 800px) {
-    margin-left: 0px;
-    margin-right: 0px;
+  @media only screen and (max-width: 500px ) {
+    padding-top: 55px;
   }
-  @media only screen and (max-width: 500px) {
-    margin-top: 30px;
+
+  .workout-feed {
+    width: 50%;
+
+    #modal-button {
+      margin: 10px 0px 20px;
+    }
+
+    @media screen and (max-width: 1250px) {
+      width: 60%;
+    }
+    @media screen and (max-width: 1000px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 750px) {
+      width: 90%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 95%;
+    }
   }
 }

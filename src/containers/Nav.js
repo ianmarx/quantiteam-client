@@ -31,11 +31,11 @@ export class Nav extends Component {
               <NavLink className='nav-button' exact to='/'>
                 Home
               </NavLink>
-              <NavLink className='nav-button' to={`/profile/${this.props.userId}`}>
-                Profile
-              </NavLink>
               <NavLink className='nav-button' to='/team'>
                 Team
+              </NavLink>
+              <NavLink className='nav-button' to={`/profile/${this.props.userId}`}>
+                Profile
               </NavLink>
               <div onClick={this.onSignOutClick} className="nav-button sign-out">
                 Sign Out

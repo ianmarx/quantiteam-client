@@ -31,7 +31,7 @@ describe('<AddResultForm />', () => {
       queryResults={[]}
     />);
     expect(wrapper.find('.modal-form').length).toBe(1);
-    expect(wrapper.find('.form-title').length).toBe(1);
+    expect(wrapper.find('.h1').length).toBe(1);
     expect(wrapper.find('input.athlete-name').length).toBe(1);
     expect(wrapper.find('option').length).toBe(0);
     expect(wrapper.find('input.distance').length).toBe(0);

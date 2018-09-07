@@ -34,7 +34,7 @@ describe('<TeamRoster /> component', () => {
     expect(wrapper.find('.team-roster-modal-container').length).toBe(1);
     expect(wrapper.find('.team-roster').length).toBe(1);
     expect(wrapper.find('.athlete-list').length).toBe(1);
-    expect(wrapper.find('.list-title').length).toBe(2);
+    expect(wrapper.find('.h2').length).toBe(2);
     expect(wrapper.find('.not-found').length).toBe(2);
     expect(wrapper.find('.athlete').length).toBe(0);
     expect(wrapper.find('.profile-link').length).toBe(0);

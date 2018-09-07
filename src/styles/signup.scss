@@ -6,11 +6,18 @@
   padding-top: 90px;
   background-color: $snow;
 
+  @media only screen and (max-width: 500px) {
+    padding-top: 70px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    padding-top: 50px;
+  }
+
   .user-type-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
     width: 90%;
 
     .h0 {

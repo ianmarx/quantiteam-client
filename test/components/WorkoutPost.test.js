@@ -12,6 +12,7 @@ const workout = {
   splitString: '1:31.0',
   strokeRate: 32,
   avgHR: 193,
+  watts: 464.5,
 };
 
 const currentUserId = '1';
@@ -24,18 +25,11 @@ describe('<WorkoutPost />', () => {
     />);
 
     expect(wrapper.find('.workout-post').length).toBe(1);
+    expect(wrapper.find('.header').length).toBe(1);
     expect(wrapper.find('.content').length).toBe(1);
-    expect(wrapper.find('.distance').length).toBe(1);
-    expect(wrapper.find('.time-string').length).toBe(1);
-    expect(wrapper.find('.split-string').length).toBe(1);
-    expect(wrapper.find('.fa-angle-double-down').length).toBe(1);
+    expect(wrapper.find('.col-unit').length).toBe(6);
     expect(wrapper.find('.fa-edit').length).toBe(1);
     expect(wrapper.find('.fa-trash').length).toBe(1);
-
-    wrapper.setState({ showingDetails: true });
-    expect(wrapper.find('.fa-angle-double-up').length).toBe(1);
-    expect(wrapper.find('.stroke-rate').length).toBe(1);
-    expect(wrapper.find('.heart-rate').length).toBe(1);
   });
 
   it('should hide edit/delete icons when currentUserId !== workout._creator', () => {
@@ -66,13 +60,12 @@ describe('<WorkoutPost />', () => {
     expect(wrapper.find('input.watts').length).toBe(0);
     expect(wrapper.find('.workout-edit-cancel').length).toBe(1);
     expect(wrapper.find('.workout-edit-submit').length).toBe(1);
-    expect(wrapper.find('.status-text.error').length).toBe(0);
+    expect(wrapper.find('.status-text.error').length).toBe(1);
 
     /* check for error message */
     wrapper.setState({ statusMessage: 'invalid input' });
     expect(wrapper.find('.status-text.error').length).toBe(1);
   });
-
   it('should render watts field for bike workout', () => {
     const bikeWorkout = {
       activity: 'bike',
@@ -86,8 +79,6 @@ describe('<WorkoutPost />', () => {
       currentUserId={currentUserId}
     />);
 
-    wrapper.setState({ showingDetails: true });
-    expect(wrapper.find('div.watts').length).toBe(1);
     wrapper.setState({ isEditing: true });
     expect(wrapper.find('input.watts').length).toBe(1);
   });
@@ -126,35 +117,10 @@ describe('<WorkoutPost />', () => {
     expect(wrapper.state().isEditing).toBeFalsy();
     expect(wrapper.state().distance).toBe(2000);
     expect(wrapper.state().strokeRate).toBe(32);
-    expect(wrapper.state().watts).toBe('');
+    expect(wrapper.state().watts).toBe(464.5);
     expect(wrapper.state().avgHR).toBe(193);
     expect(wrapper.state().distanceIsValid).toBeTruthy();
     expect(wrapper.state().statusMessage).toBe('');
-  });
-
-  it('should show details on .fa-angle-double-down click', () => {
-    const onShowDetailsClick = jest.spyOn(WorkoutPost.prototype, 'onShowDetailsClick');
-    const wrapper = shallow(<WorkoutPost
-      workout={workout}
-      currentUserId={currentUserId}
-    />);
-
-    wrapper.find('.fa-angle-double-down').simulate('click');
-    expect(onShowDetailsClick).toBeCalled();
-    expect(wrapper.state().showingDetails).toBeTruthy();
-  });
-
-  it('should hide details on .fa-angle-double-up click', () => {
-    const onHideDetailsClick = jest.spyOn(WorkoutPost.prototype, 'onHideDetailsClick');
-    const wrapper = shallow(<WorkoutPost
-      workout={workout}
-      currentUserId={currentUserId}
-    />);
-
-    wrapper.setState({ showingDetails: true });
-    wrapper.find('.fa-angle-double-up').simulate('click');
-    expect(onHideDetailsClick).toBeCalled();
-    expect(wrapper.state().showingDetails).toBeFalsy();
   });
 
   it('should handle onCancelClick when props.workout has no strokeRate or avgHR', () => {

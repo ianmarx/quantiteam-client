@@ -6,17 +6,15 @@ const userId = '1';
 const userName = 'Athlete 1';
 
 describe('<AddWorkoutForm />', () => {
-  it('should render activity select view when state.activity === \'\'', () => {
+  it('should render activity select view when state.activity is blank', () => {
     const wrapper = shallow(<AddWorkoutForm
       userId={userId}
       userName={userName}
     />);
 
-    expect(wrapper.find('.modal-form').length).toBe(1);
-    expect(wrapper.find('.form-title').length).toBe(1);
-    expect(wrapper.find('.modal-prev').length).toBe(0);
-    expect(wrapper.find('.form-row.activity').length).toBe(1);
-    expect(wrapper.find('.activity-select').length).toBe(4);
+    expect(wrapper.find('.modal-form.activity').length).toBe(1);
+    expect(wrapper.find('.h1').length).toBe(1);
+    expect(wrapper.find('button').length).toBe(5);
     expect(wrapper.find('input').length).toBe(0);
     expect(wrapper.find('.modal-submit').length).toBe(0);
     expect(wrapper.find('.modal-close').length).toBe(1);
@@ -34,8 +32,6 @@ describe('<AddWorkoutForm />', () => {
     });
 
     expect(wrapper.find('.modal-prev').length).toBe(1);
-    expect(wrapper.find('.activity-select').length).toBe(0);
-    expect(wrapper.find('.form-row.activity').length).toBe(0);
     expect(wrapper.find('input.distance').length).toBe(1);
     expect(wrapper.find('input.time').length).toBe(1);
     expect(wrapper.find('input.stroke-rate').length).toBe(1);
@@ -89,7 +85,7 @@ describe('<AddWorkoutForm />', () => {
       userName={userName}
     />);
 
-    wrapper.find('#erg-select').simulate('click');
+    wrapper.find('.btn-select.erg').simulate('click');
     expect(onErgSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('erg');
     expect(wrapper.state().distUnit).toBe('m');
@@ -102,7 +98,7 @@ describe('<AddWorkoutForm />', () => {
       userName={userName}
     />);
 
-    wrapper.find('#row-select').simulate('click');
+    wrapper.find('.btn-select.row').simulate('click');
     expect(onRowSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('row');
     expect(wrapper.state().distUnit).toBe('m');
@@ -115,7 +111,7 @@ describe('<AddWorkoutForm />', () => {
       userName={userName}
     />);
 
-    wrapper.find('#run-select').simulate('click');
+    wrapper.find('.btn-select.run').simulate('click');
     expect(onRunSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('run');
     expect(wrapper.state().distUnit).toBe('mi');
@@ -128,7 +124,7 @@ describe('<AddWorkoutForm />', () => {
       userName={userName}
     />);
 
-    wrapper.find('#bike-select').simulate('click');
+    wrapper.find('.btn-select.bike').simulate('click');
     expect(onBikeSelect).toBeCalled();
     expect(wrapper.state().activity).toBe('bike');
     expect(wrapper.state().distUnit).toBe('mi');

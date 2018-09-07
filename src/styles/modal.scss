@@ -1,5 +1,4 @@
 .modal {
-  margin-top: 60px;
   outline: none;
   width: fit-content;
   height: fit-content;
@@ -24,62 +23,66 @@
 }
 
 .modal-form {
+  margin-top: 8vh;
+  height: 525px;
+  width: 425px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 10px;
-  background-color: #e8e8e8;
-  color: black;
-  border-radius: 5px;
+  padding: 30px;
+  background-color: $snow;
+  border-radius: 4px;
   border: none;
-  width: fit-content;
+  opacity: 1;
+  transition: opacity 0.2s;
 
-  .form-title {
-    text-align: center;
-    font-size: 40px;
-    @media only screen and (max-width: 500px) {
-      font-size: 28px;
-    }
+  @media only screen and (max-width: 500px) {
+    height: 100vh;
+    width: 100vw;
+    padding: 60px 0px 0px;
+    border-radius: 0px;
+    margin-top: 0;
   }
 
-  .form-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .modal-prev, .modal-close, .btn-select, .btn-option {
+    margin: 15px 0px;
   }
 
-  .form-row {
+  .col-unit {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
     margin: 10px 0px;
 
-    &.activity, &.type {
-      @media only screen and (max-width: 550px) {
-        flex-direction: column;
-      }
+    .p-sm {
+      margin-bottom: 10px;
     }
+  }
+
+  .row-unit {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
   }
 
   input {
-    width: 100px;
-    height: 30px;
-    margin-right: 10px;
-    font-size: 20px;
+    height: 35px;
+    width: 130px;
+    font-size: calc(15px + 0.25vw);
     border-style: none;
     border-radius: 5px;
     text-align: center;
+    border: 2px $snow solid;
 
-    &.time-input {
-      width: 50px;
+    &.input-lg {
+      width: 160px;
     }
 
-    &.athlete-name {
-      width: 200px;
+    &.input-extra-lg {
+      width: 325px;
     }
 
     &.invalid {
@@ -92,48 +95,16 @@
 
   .status-text {
     text-align: center;
-    margin-top: 10px;
+    height: 25px;
+    width: 100%;
+    margin: 10px 0px;
 
     &.error {
       color: #d12600;
     }
   }
-}
 
-.modal-submit, .modal-close {
-  margin: 10px 5px 5px;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  font-size: 20px;
-  background-color: #1da55f;
-  &:not(.modal-submit) {
-    background-color: #595959;
-    &:active {
-      background-color: #3d3d3d;
-    }
-  }
-  color: white;
-  &:hover {
-    cursor: pointer;
-  }
-  &:active {
-    background-color: #106b3c;
-  }
-}
-
-.modal-prev {
-  padding: 10px;
-  margin: 10px 0px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  background-color: white;
-  color: black;
-  &:hover {
-    cursor: pointer;
-  }
-  &:active {
-    background-color: #d8d8d8;
+  #required-msg {
+    margin-top: 10px;
   }
 }

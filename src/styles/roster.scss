@@ -12,6 +12,21 @@
   max-height: 75vh;
   width: 80vw;
 
+  .profile-link {
+    color: $black;
+    background-color: none;
+    margin-right: auto;
+
+    &:hover {
+      color: $link-hover;
+      text-decoration: underline;
+    }
+
+    &:active {
+    color: $link-active;
+    }
+  }
+
   .team-roster {
     display: flex;
     flex-direction: column;

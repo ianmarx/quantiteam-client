@@ -24,7 +24,6 @@ describe('<SoloWorkoutFeed />', () => {
     />);
 
     expect(wrapper.find('.workout-feed').length).toBe(1);
-    expect(wrapper.find('.feed-title').length).toBe(1);
     expect(wrapper.find('#modal-button').length).toBe(1);
   });
 
@@ -34,7 +33,6 @@ describe('<SoloWorkoutFeed />', () => {
     />);
 
     expect(wrapper.find('.workout-feed.loading').length).toBe(1);
-    expect(wrapper.find('.feed-title').length).toBe(1);
     expect(wrapper.find('#modal-button').length).toBe(0);
   });
 });

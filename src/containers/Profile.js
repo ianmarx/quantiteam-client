@@ -13,8 +13,9 @@ import {
 import { fetchUserTeam } from '../actions/team';
 import UserInfo from '../components/UserInfo';
 import SoloWorkoutFeed from '../components/SoloWorkoutFeed';
-import LoadingScreen from '../components/mini/LoadingScreen';
+import LoadingPage from '../components/mini/LoadingPage';
 import AddWorkoutForm from '../components/forms/AddWorkoutForm';
+import PageFooter from '../components/mini/PageFooter';
 
 export const mapStateToProps = state => (
   {
@@ -50,11 +51,9 @@ export class Profile extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     if (!this.props.isAuthenticated) {
       this.props.history.replace('/signin');
-    }
-    if (!this.props.user) {
-      this.props.fetchUser(this.props.userId);
     }
     if (!this.props.userProfileIsFetched || this.props.match.params.userId !== this.props.userId) {
       this.props.fetchUserProfile(this.props.match.params.userId);
@@ -77,24 +76,24 @@ export class Profile extends Component {
 
   onAddWorkoutModalOpen(event) {
     this.setState({ showAddWorkoutModal: true });
+    document.getElementsByTagName('html')[0].classList.add('no-scroll');
     document.body.classList.add('no-scroll');
   }
 
   onAddWorkoutModalClose(event) {
     this.setState({ showAddWorkoutModal: false });
+    document.getElementsByTagName('html')[0].classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
   }
 
   render() {
     if (!this.props.userProfileIsFetched || !this.props.userWorkoutsFetched || !this.props.teamIsFetched) {
       return (
-        <div className="profile-page loading">
-          <LoadingScreen />
-        </div>
+        <LoadingPage />
       );
     } else {
       return (
-        <div className="profile-page">
+        <div className="profile-page-container">
           <UserInfo
             user={this.props.userProfile}
             currentUserId={this.props.userId}
@@ -103,8 +102,8 @@ export class Profile extends Component {
             updateUser={this.props.updateUserProfile}
             profileIsUpdated={this.props.userProfileIsUpdated}
           />
-          {!this.props.isCoach &&
-            <div className='workout-feed-container'>
+          {(!this.props.isCoach || this.props.userId !== this.props.match.params.userId) &&
+            <React.Fragment>
               <SoloWorkoutFeed
                 profileUserId={this.props.userProfile._id}
                 isFetchingUserWorkouts={this.props.isFetchingUserWorkouts}
@@ -132,8 +131,9 @@ export class Profile extends Component {
                   statusText={this.props.workoutStatusText}
                 />
               </ReactModal>
-            </div>
+            </React.Fragment>
           }
+          <PageFooter />
         </div>
       );
     }

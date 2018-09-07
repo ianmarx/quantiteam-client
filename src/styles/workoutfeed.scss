@@ -1,229 +1,86 @@
-.workout-feed-container {
-  margin-top: 10px;
-  width: 40%;
-
-  @media only screen and (max-width: 1500px) {
-    width: 50%;
-  }
-  @media only screen and (max-width: 1250px) {
-    width: 60%;
-  }
-  @media only screen and (max-width: 900px) {
-    width: 70%;
-  }
-  @media only screen and (max-width: 800px) {
-    margin-top: 20px;
-    width: 80%;
-  }
-  @media only screen and (max-width: 550px) {
-    width: 100%;
-  }
-}
-
-.workout-feed, .results-feed {
-  width: 100%;
+.workout-feed {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   overflow: auto;
+  padding: 0px 10px;
 
-  .feed-title {
-    display: fixed;
-    text-align: center;
-    font-size: 48px;
-
-    @media only screen and (max-width: 800px) {
-      font-size: 36px;
-    }
-    @media only screen and (max-width: 550px) {
-      font-size: 30px;
-    }
-  }
-
-  .headers {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-
-  .workout-post {
+  .workout-post, .team-workout-post {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    background-color: #f4f4f4;
-    margin: 5px 10px;
-    border-radius: 3px;
-    border-style: none;
-    width: 98%;
+    align-items: center;
+    background-color: $white;
+    margin: 10px 0px;
+    border-radius: 2px;
+    border: 2px solid $smoke;
+    width: 100%;
+    padding: 10px 0px;
 
     .header {
       width: 95%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
-      margin: 5px 10px;
-    }
+      margin-bottom: 15px;
 
-    .content {
-      width: 95%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      margin: 5px 10px;
-    }
+      .profile-link {
+        color: $black;
+        background-color: none;
+        margin-right: auto;
 
-    .details {
-      width: 95%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      margin: 5px 10px;
-
-      div {
-        margin: 0px 10px;
-      }
-    }
-
-    .footer {
-      width: 95%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      margin: 5px 10px;
-    }
-
-    .row-unit {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      div {
-        margin: 0px 10px;
-      }
-
-      &.icon {
-        margin-left: auto;
-        i {
-          font-size: 18px;
-          margin: 0px 8px;
+        &:hover {
+          color: $link-hover;
+          text-decoration: underline;
         }
-      }
-    }
 
-    i {
-      font-size: 20px;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    .workout-creator {
-      color: black;
-      background-color: none;
-      text-decoration: underline;
-    }
-
-    &.edit {
-      .row-unit {
-        margin: 0px 10px;
-      }
-      .footer {
-        justify-content: flex-end;
-      }
-
-      input {
-        height: 25px;
-        border-style: none;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-
-        &.invalid {
-          border-style: solid;
-          border-width: 2px;
-          border-color: #d12600;
+        &:active {
+          color: $link-active;
         }
       }
 
-      select {
-        height: 27px;
-        font-size: 16px;
-        border-style: none;
-        border-radius: 5px;
-        background-color: white;
-      }
-
-
-      .input-sm {
-        max-width: 40px;
-        height: 25px;
-      }
-
-      .input-md {
-        max-width: 80px;
-      }
-
-      button {
-        margin: 0px 5px;
-      }
-
-      .status-text {
+      .header-item {
         flex: 1;
-        text-align: center;
-        margin-top: 10px;
-
-        &.error {
-          color: #d12600;
-        }
       }
 
-    }
-  }
-
-  .team-workout-post {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #f4f4f4;
-    margin: 5px 10px;
-    border-radius: 3px;
-    border-style: none;
-    width: 98%;
-
-    .header {
-      width: 95%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      margin: 5px 10px;
+      .activity {
+        text-transform: capitalize;
+      }
     }
 
+    .line {
+      margin: 5px 0px;
+      border-width: 0.5px;
+      border-color: $grey;
+    }
 
     .content {
       width: 95%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      margin: 5px 10px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
 
-      div {
-        margin: 0px 20px;
+      .p-extra-sm {
+        color: $darkgrey-2;
       }
 
-      @media only screen and (max-width: 350px) {
-        .row-unit.data {
-          margin-right: 0px;
+      .col-unit {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 40px;
+        margin-bottom: 5px;
+        flex-basis: 1;
+        min-width: 80px;
+
+        @media only screen and (max-width: 500px) {
+          margin-right: 25px;
         }
-        .row-unit.button {
+
+        &:last-child {
           margin-right: 0px;
-          margin-left: auto;
         }
       }
     }
@@ -234,14 +91,25 @@
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
-      margin: 5px 10px;
     }
 
     .row-unit {
       display: flex;
       flex-direction: row;
+      justify-content: center;
       align-items: center;
-      margin: 0px;
+
+      &.btn {
+        margin-left: auto;
+
+        button {
+          margin-left: 20px;
+        }
+      }
+
+      div {
+        margin: 0px 10px;
+      }
 
       &.icon {
         margin-left: auto;
@@ -259,66 +127,53 @@
       }
     }
 
-    li {
-      margin: 5px;
+    input {
+      padding: 5px;
+      border-style: none;
+      border-radius: 5px;
+      font-size: calc(15px + 0.25vw);
+      text-align: center;
+      border: 2px $white solid;
+
+      &.invalid {
+        border-style: solid;
+        border-width: 2px;
+        border-color: $error;
+      }
     }
 
-    .profile-link {
-      color: black;
-      background-color: none;
-      text-decoration: underline;
+    .input-sm {
+      max-width: 40px;
     }
 
-    &.edit {
-      select {
-        height: 27px;
-        font-size: 16px;
-        border-style: none;
-        border-radius: 5px;
-        background-color: white;
-      }
+    .input-md {
+      max-width: 80px;
+    }
 
-      input {
-        height: 25px;
-        font-size: 16px;
-        border-style: none;
-        border-radius: 5px;
-        text-align: center;
+    .input-lg {
+      max-width: 120px;
+    }
 
-        &.invalid {
-          border-style: solid;
-          border-width: 2px;
-          border-color: #d12600;
-        }
-      }
+    select {
+      height: 35px;
+      padding: 5px;
+      font-size: calc(15px + 0.25vw);
+      border-style: none;
+      border-radius: 5px;
+      background-color: white;
+    }
 
-      .input-sm {
-        max-width: 40px;
-        height: 25px;
-      }
+    button {
+      margin: 0px 5px;
+    }
 
-      .input-md {
-        max-width: 90px;
-      }
-
-      .input-row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-
-      button {
-        margin: 0px 5px;
-      }
-
-      .status-text {
-        flex: 1;
-        text-align: center;
-        margin-top: 10px;
-
-        &.error {
-          color: #d12600;
-        }
+    .status-text {
+      flex: 1;
+      text-align: center;
+      margin-top: 10px;
+      height: 20px;
+      &.error {
+        color: $error;
       }
     }
   }

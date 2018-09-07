@@ -33,8 +33,7 @@ describe('<HomePage />', () => {
       teamWorkoutsFetched
     />);
 
-    expect(wrapper.find('.home-page').length).toBe(1);
-    expect(wrapper.find('.workout-feed-container').length).toBe(1);
+    expect(wrapper.find('.home-page-container').length).toBe(1);
     expect(wrapper.find('.modal').length).toBe(4);
   });
 
@@ -55,7 +54,7 @@ describe('<HomePage />', () => {
     expect(fetchUserTeam).toBeCalled();
     expect(fetchTeamWorkouts).toBeCalled();
     expect(fetchSoloWorkouts).toBeCalled();
-    expect(wrapper.find('.home-page.loading').length).toBe(1);
+    expect(wrapper.find('.home-page-container').length).toBe(0);
   });
 
   it('should render loading screen when not all data is not fetched', () => {
@@ -67,7 +66,7 @@ describe('<HomePage />', () => {
       teamWorkouts={teamWorkouts}
     />);
 
-    expect(wrapper.find('.home-page.loading').length).toBe(1);
+    expect(wrapper.find('.loading').length).toBe(0);
   });
 
   it('should fetchTeamWorkout() before opening AddResultForm', async () => {

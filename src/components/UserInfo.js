@@ -115,85 +115,101 @@ class UserInfo extends Component {
     if (this.state.isEditing) {
       return (
         <form className="user-info edit" onSubmit={this.onSubmit}>
-          <div className='row-unit'>
-            <div>Name</div>
-            <input
-              className={`name ${!this.state.nameIsValid && 'invalid'}`}
-              onChange={this.onNameChange}
-              value={this.state.name}
-              type="text"
-              required
-            />
-          </div>
-          {!this.props.isCoach &&
-            <div className='row-unit'>
-              <div>Weight (lb)</div>
+          <div className='content p-sm'>
+            <div className='col-unit'>
+              <div className='p-extra-sm'>Name</div>
               <input
-                className={`weight ${!this.state.weightIsValid && 'invalid'}`}
-                onChange={this.onWeightChange}
-                value={this.state.weight}
+                className={`name ${!this.state.nameIsValid && 'invalid'}`}
+                onChange={this.onNameChange}
+                value={this.state.name}
                 type="text"
+                required
               />
             </div>
-          }
-          {!this.props.isCoach &&
-            <div className='row-unit'>
-              <div>Class Year</div>
-              <input
-                className={`class-year ${!this.state.classYearIsValid && 'invalid'}`}
-                onChange={this.onClassYearChange}
-                value={this.state.classYear}
-                type="text"
-              />
-            </div>
-          }
-          {!this.props.isCoach &&
-            <div className='row-unit'>
-              <div>Position</div>
-              <select
-                className='position'
-                value={this.state.position}
-                onChange={this.onPositionChange}
-              >
-                <option default value="">Select</option>
-                <option value="Port">Port</option>
-                <option value="Starboard">Starboard</option>
-                <option value="Port/Starboard">Port/Starboard</option>
-                <option value="Coxswain">Coxswain</option>
-                <option value="Sculler">Sculler</option>
-              </select>
-            </div>
-          }
-          <div className='row-unit'>
-            <button type="button" className="user-edit-cancel" onClick={this.onCancelClick}>Cancel</button>
-            <button type="submit" className="user-edit-submit">Save</button>
           </div>
-          {this.state.statusMessage !== '' &&
-            <div className='status-text error'>
-              {this.state.statusMessage}
-            </div>
-          }
+          <div className='content p-sm'>
+            {!this.props.isCoach &&
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Weight</div>
+                <input
+                  className={`num weight ${!this.state.weightIsValid && 'invalid'}`}
+                  onChange={this.onWeightChange}
+                  value={this.state.weight}
+                  type="text"
+                />
+              </div>
+            }
+            {!this.props.isCoach &&
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Position</div>
+                <select
+                  className='num position'
+                  value={this.state.position}
+                  onChange={this.onPositionChange}
+                >
+                  <option default value="">Select</option>
+                  <option value="Port">Port</option>
+                  <option value="Starboard">Starboard</option>
+                  <option value="Port/Starboard">Port/Starboard</option>
+                  <option value="Coxswain">Coxswain</option>
+                  <option value="Sculler">Sculler</option>
+                </select>
+              </div>
+            }
+            {!this.props.isCoach &&
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Class Year</div>
+                <input
+                  className={`num class-year ${!this.state.classYearIsValid && 'invalid'}`}
+                  onChange={this.onClassYearChange}
+                  value={this.state.classYear}
+                  type="text"
+                />
+              </div>
+            }
+          </div>
+          <div className='status-text error'>
+            {this.state.statusMessage}
+          </div>
+          <div className='btn-row'>
+            <button type="button" className="btn-hollow-1" onClick={this.onCancelClick}>Cancel</button>
+            <button type="submit" className="btn-hollow-2">Save</button>
+          </div>
         </form>
       );
     } else {
       return (
         <div className="user-info">
-          <div className="user-name">{this.props.user.name}</div>
-          <div className='info-list'>
-            <div className="team-name">{this.props.team.name}</div>
+          <div className='h1 ctr'>{this.props.user.name}</div>
+          <div className='content h3-light'>
+            <div className='col-unit'>
+              <div className='p-extra-sm'>Team</div>
+              <div className="h3-light">{this.props.team.name}</div>
+            </div>
+          </div>
+          <div className='content h3-light'>
             {this.props.user.weight !== null && this.props.user.weight !== 0 && !this.props.isCoach &&
-              <div className='weight'>{this.props.user.weight} lb</div>
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Weight</div>
+                <div>{this.props.user.weight} lb</div>
+              </div>
             }
             {this.props.user.position && !this.props.isCoach &&
-              <div className='position'>{this.props.user.position}</div>
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Position</div>
+                <div>{this.props.user.position}</div>
+              </div>
             }
             {this.props.user.classYear !== null && this.props.user.classYear !== 0 && !this.props.isCoach &&
-              <div className='year'>{this.props.user.classYear}</div>
+              <div className='col-unit'>
+                <div className='p-extra-sm'>Class Year</div>
+                <div>{this.props.user.classYear}</div>
+              </div>
             }
           </div>
           {this.props.currentUserId === this.props.user._id &&
-            <div className="icon">
-              <i onClick={this.onEditClick} className="fas fa-edit" />
+            <div className='footer'>
+              <button className='btn-hollow-1' onClick={this.onEditClick}>Edit Profile</button>
             </div>
           }
         </div>

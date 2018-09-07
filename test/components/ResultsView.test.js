@@ -13,17 +13,6 @@ const distTeamWorkout = {
   ],
 };
 
-const timeTeamWorkout = {
-  id: '1',
-  type: 'time',
-  timeString: '6:00',
-  results: [
-    {
-      _id: '1',
-    },
-  ],
-};
-
 const results = [
   {
     _id: '1',
@@ -34,24 +23,15 @@ const results = [
 ];
 
 describe('<ResultsView />', () => {
-  it('should render expected elements for distance team workout', () => {
+  it('should render expected elements', () => {
     const wrapper = shallow(<ResultsView
       results={results}
       teamWorkout={distTeamWorkout}
     />);
 
-    expect(wrapper.find('.results-view-container').length).toBe(1);
-    expect(wrapper.find('.results-title.distance').length).toBe(1);
+    expect(wrapper.find('.results-view').length).toBe(1);
+    expect(wrapper.find('.h1').length).toBe(1);
     expect(wrapper.find('.result-feed').length).toBe(1);
-  });
-
-  it('should render time header for time team workout', () => {
-    const wrapper = shallow(<ResultsView
-      results={results}
-      teamWorkout={timeTeamWorkout}
-    />);
-
-    expect(wrapper.find('.results-title.time').length).toBe(1);
   });
 
   it('should show .instructions when results is empty', () => {
@@ -61,6 +41,34 @@ describe('<ResultsView />', () => {
     />);
 
     expect(wrapper.find('.instructions').length).toBe(1);
+  });
+
+  it('should handle onViewModeClick', () => {
+    const onViewModeClick = jest.spyOn(ResultsView.prototype, 'onViewModeClick');
+    const wrapper = shallow(<ResultsView
+      results={results}
+      teamWorkout={distTeamWorkout}
+      isCoach
+    />);
+
+    wrapper.setState({ inEditMode: true });
+
+    wrapper.find('#viewModeButton').simulate('click');
+    expect(onViewModeClick).toBeCalled();
+    expect(wrapper.state().inEditMode).toBeFalsy();
+  });
+
+  it('should handle onEditModeClick', () => {
+    const onEditModeClick = jest.spyOn(ResultsView.prototype, 'onEditModeClick');
+    const wrapper = shallow(<ResultsView
+      results={results}
+      teamWorkout={distTeamWorkout}
+      isCoach
+    />);
+
+    wrapper.find('#editModeButton').simulate('click');
+    expect(onEditModeClick).toBeCalled();
+    expect(wrapper.state().inEditMode).toBeTruthy();
   });
 
   it('should handle .modal-close click', () => {

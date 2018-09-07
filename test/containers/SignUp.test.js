@@ -8,8 +8,6 @@ describe('<SignUp />', () => {
     const wrapper = shallow(<SignUp />);
 
     expect(wrapper.find('.sign-up-container').length).toBe(1);
-    expect(wrapper.find('.line').length).toBe(1);
-    expect(wrapper.find('.info-box').length).toBe(1);
   });
 
   it('should redirect when isAuthenticated', () => {

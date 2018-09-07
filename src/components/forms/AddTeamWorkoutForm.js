@@ -26,8 +26,6 @@ class AddTeamWorkoutForm extends Component {
     this.onTimeSelect = this.onTimeSelect.bind(this);
     this.onPrevClick = this.onPrevClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.showActivitySelect = this.showActivitySelect.bind(this);
-    this.showTypeSelect = this.showTypeSelect.bind(this);
   }
 
   onErgSelect(event) {
@@ -63,10 +61,7 @@ class AddTeamWorkoutForm extends Component {
   }
 
   onPrevClick(event) {
-    if (this.showTypeSelect()) {
-      this.setState({ activity: '' });
-    }
-    if (!this.showActivitySelect() && !this.showTypeSelect()) {
+    if (this.state.type !== '') {
       this.setState({
         type: '',
         distance: '',
@@ -75,6 +70,8 @@ class AddTeamWorkoutForm extends Component {
         distanceIsValid: true,
         timeIsValid: true,
       });
+    } else {
+      this.setState({ activity: '' });
     }
   }
 
@@ -116,72 +113,70 @@ class AddTeamWorkoutForm extends Component {
     return isValid;
   }
 
-  showActivitySelect() {
-    return this.state.activity === '' && this.state.type === '';
-  }
-
-  showTypeSelect() {
-    return this.state.activity !== '' && this.state.type === '';
-  }
-
   render() {
-    return (
-      <form className="modal-form" onSubmit={this.onSubmit}>
-        <div className="form-title">New Team Workout</div>
-        {!this.showActivitySelect() &&
+    if (this.state.activity === '') {
+      return (
+        <div className="modal-form activity">
+          <div className="h1">Add Team Workout</div>
+          <button className="btn-select erg" onClick={this.onErgSelect}>Erg</button>
+          <button className="btn-select row" onClick={this.onRowSelect}>Row</button>
+          <button className="btn-select run" onClick={this.onRunSelect}>Run</button>
+          <button className="btn-select bike" onClick={this.onBikeSelect}>Bike</button>
+          <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
+        </div>
+      );
+    } else if (this.state.type === '') {
+      return (
+        <div className='modal-form activity'>
+          <div className="h1 cap-1">New Team {this.state.activity}</div>
           <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
-        }
-        {this.showActivitySelect() &&
-          <div className='form-row activity'>
-            <button id="erg-select" className="activity-select" onClick={this.onErgSelect}>Erg</button>
-            <button id="row-select" className="activity-select" onClick={this.onRowSelect}>Row</button>
-            <button id="run-select" className="activity-select" onClick={this.onRunSelect}>Run</button>
-            <button id="bike-select" className="activity-select" onClick={this.onBikeSelect}>Bike</button>
-          </div>
-        }
-        {this.showTypeSelect() &&
-          <div className='form-row type'>
-            <button className="type-select distance" onClick={this.onDistSelect}>Distance</button>
-            <button className="type-select time" onClick={this.onTimeSelect}>Time</button>
-          </div>
-        }
-        {this.state.type === 'distance' &&
-          <div className='form-row'>
-            <input
-              className={`distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
-              onChange={this.onDistanceChange}
-              value={this.state.distance}
-              type="text"
-              placeholder='Distance'
-              autoComplete='off'
-              required
-            />
-            {this.state.distUnit} {this.state.activity}
-          </div>
-        }
-        {this.state.type === 'time' &&
-          <div className='form-row'>
-            <input
-              className={`time ${this.state.timeIsValid ? '' : 'invalid'}`}
-              onChange={this.onTimeStringChange}
-              value={this.state.timeString}
-              type="text"
-              placeholder='Time'
-              autoComplete='off'
-              required
-            />
-            {this.state.activity}
-          </div>
-        }
-        {this.state.statusMessage !== '' &&
+          <button className="btn-option distance" onClick={this.onDistSelect}>Distance</button>
+          <button className="btn-option time" onClick={this.onTimeSelect}>Time</button>
+        </div>
+      );
+    } else {
+      return (
+        <form className="modal-form" onSubmit={this.onSubmit}>
+          <div className="h1 cap-1">New Team {this.state.activity}</div>
+          <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
+          {this.state.type === 'distance' &&
+            <div className='row-unit'>
+              <div className='col-unit'>
+                <div className='p-sm bold'>Distance ({this.state.distUnit}) *</div>
+                <input
+                  className={`input-lg distance ${this.state.distanceIsValid ? '' : 'invalid'}`}
+                  onChange={this.onDistanceChange}
+                  value={this.state.distance}
+                  type="text"
+                  autoComplete='off'
+                  required
+                />
+              </div>
+            </div>
+          }
+          {this.state.type === 'time' &&
+            <div className='row-unit'>
+              <div className='col-unit'>
+                <div className='p-sm bold'>Time *</div>
+                <input
+                  className={`input-lg time ${this.state.timeIsValid ? '' : 'invalid'}`}
+                  onChange={this.onTimeStringChange}
+                  value={this.state.timeString}
+                  type="text"
+                  placeholder='hh:mm:ss'
+                  autoComplete='off'
+                  required
+                />
+              </div>
+            </div>
+          }
           <div className='status-text error'>{this.state.statusMessage}</div>
-        }
-        {!this.showActivitySelect() && !this.showTypeSelect() &&
           <button type="submit" className="modal-submit">Submit</button>
-        }
-        <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
-      </form>
-    );
+          <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
+          <div id='required-msg' className='p-extra-sm'>* indicates a required field.</div>
+        </form>
+      );
+    }
   }
 }
 

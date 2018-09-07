@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
+import PageFooter from '../components/mini/PageFooter';
 
 export const mapStateToProps = state => (
   {
@@ -11,6 +12,7 @@ export const mapStateToProps = state => (
 );
 
 export const LandingPage = (props) => {
+  window.scrollTo(0, 0);
   return (
     <div className='landing-page-container'>
       <div className='info-box top'>
@@ -64,12 +66,7 @@ export const LandingPage = (props) => {
           <NavLink className='cta-button end' to='/signup'>GET STARTED</NavLink>
         </div>
       </div>
-      <div className='line' />
-      <div className='info-box'>
-        <div className='col even'>
-          <div className='p'>&copy; 2018 QuantiTeam. All rights reserved.</div>
-        </div>
-      </div>
+      <PageFooter />
     </div>
   );
 };

@@ -7,7 +7,7 @@ const user = {
   name: 'Athlete 1',
   weight: 200,
   position: 'starboard',
-  classYear: '2020',
+  classYear: 2020,
 };
 
 const team = {
@@ -23,13 +23,9 @@ describe('<UserInfo />', () => {
     />);
 
     expect(wrapper.find('.user-info').length).toBe(1);
-    expect(wrapper.find('.user-name').length).toBe(1);
-    expect(wrapper.find('.info-list').length).toBe(1);
-    expect(wrapper.find('.team-name').length).toBe(1);
-    expect(wrapper.find('.weight').length).toBe(1);
-    expect(wrapper.find('.position').length).toBe(1);
-    expect(wrapper.find('.year').length).toBe(1);
-    expect(wrapper.find('.fa-edit').length).toBe(1);
+    expect(wrapper.find('.content').length).toBe(2);
+    expect(wrapper.find('.col-unit').length).toBe(4);
+    expect(wrapper.find('.btn-hollow-1').length).toBe(1);
   });
 
   it('should render expected elements for edit mode', () => {
@@ -44,11 +40,11 @@ describe('<UserInfo />', () => {
     expect(wrapper.find('.user-info.edit').length).toBe(1);
     expect(wrapper.find('input').length).toBe(3);
     expect(wrapper.find('select').length).toBe(1);
-    expect(wrapper.find('.user-edit-cancel').length).toBe(1);
-    expect(wrapper.find('.user-edit-submit').length).toBe(1);
+    expect(wrapper.find('.btn-hollow-1').length).toBe(1);
+    expect(wrapper.find('.btn-hollow-2').length).toBe(1);
   });
 
-  it('should exit edit mode when .user-edit-cancel is clicked', () => {
+  it('should exit edit mode when cancel button is clicked', () => {
     const onCancelClick = jest.spyOn(UserInfo.prototype, 'onCancelClick');
     const wrapper = shallow(<UserInfo
       currentUserId='1'
@@ -58,12 +54,12 @@ describe('<UserInfo />', () => {
 
     wrapper.setState({ isEditing: true });
 
-    wrapper.find('.user-edit-cancel').simulate('click');
+    wrapper.find('.btn-hollow-1').simulate('click');
     expect(onCancelClick).toBeCalled();
     expect(wrapper.state().isEditing).toBeFalsy();
   });
 
-  it('should enter edit mode when .fa-edit is clicked', () => {
+  it('should enter edit mode when edit button is clicked', () => {
     const onEditClick = jest.spyOn(UserInfo.prototype, 'onEditClick');
     const wrapper = shallow(<UserInfo
       currentUserId='1'
@@ -71,7 +67,7 @@ describe('<UserInfo />', () => {
       team={team}
     />);
 
-    wrapper.find('.fa-edit').simulate('click');
+    wrapper.find('.btn-hollow-1').simulate('click');
     expect(onEditClick).toBeCalled();
     expect(wrapper.state().isEditing).toBeTruthy();
     expect(wrapper.find('.user-info.edit').length).toBe(1);

@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 const TeamInfo = (props) => {
   return (
     <div className="team-info">
-      <div className='team-name'>
-        {props.team.name}
-      </div>
+      <div className='h1 ctr'>{props.team.name}</div>
       <div className='team-details'>
         {props.isCoach &&
           <div className='team-code'>
-            Team Code: <strong>{props.team.teamCode}</strong>
+            <div className='p-extra-sm'>Team Code</div>
+            <div className='h3'>{props.team.teamCode}</div>
           </div>
         }
         <button type='button' className='view-roster-button' onClick={props.onViewRosterClick}>View Roster</button>

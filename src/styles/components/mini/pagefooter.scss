@@ -1,0 +1,21 @@
+.page-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+
+  margin: auto 0px 30px;
+
+  .line {
+    border-style: solid;
+    border-width: 2px;
+    border-color: $darkgrey-2;
+    width: 80%;
+    align-self: center;
+    margin: 150px 0px 20px;
+
+    @media only screen and (max-width: 500px) {
+      margin: 80px 0px 20px;
+    }
+  }
+}

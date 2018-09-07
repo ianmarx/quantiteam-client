@@ -1,0 +1,95 @@
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: $white;
+  padding: 40px 0px 20px;
+  border-radius: 4px;
+
+  .content {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 5px 0 10px;
+
+    .p-extra-sm {
+      color: $darkgrey-2;
+    }
+
+    .col-unit {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 40px;
+      margin-bottom: 5px;
+      flex-basis: 1;
+      min-width: 80px;
+      text-align: center;
+
+      @media only screen and (max-width: 500px) {
+        margin-right: 25px;
+      }
+
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+
+  .footer {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  input {
+    width: 250px;
+    height: 35px;
+    font-size: calc(15px + 0.25vw);
+    border-style: none;
+    border-radius: 5px;
+    text-align: center;
+    border: 2px $white solid;
+
+    &.num {
+      width: 80px;
+    }
+
+    &.invalid {
+      border-style: solid;
+      border-width: 2px;
+      border-color: #d12600;
+    }
+  }
+  select {
+    height: 35px;
+    font-size: calc(15px + 0.25vw);
+    border-style: none;
+    border-radius: 5px;
+    background-color: white;
+    text-align-last: center;
+  }
+
+  .status-text {
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+
+    &.error {
+      color: #d12600;
+    }
+  }
+
+  .btn-row {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    justify-content: space-between;
+  }
+}
