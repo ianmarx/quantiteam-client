@@ -32,7 +32,7 @@ export const LandingPage = (props) => {
       {/*
       <img id='erg-image' src='/img/erg-crop-md-compressed.jpeg' alt='' />
       */}
-      <div className='line no-image' />
+      <div className='line' />
       <div className='info-box no-image'>
         <div className='col'>
           <div className='h1'>The solution to workout logging for endurance sports</div>
