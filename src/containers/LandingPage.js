@@ -29,7 +29,9 @@ export const LandingPage = (props) => {
           </div>
         </div>
       </div>
+      {/*
       <img id='erg-image' src='/img/erg-crop-md-compressed.jpeg' alt='' />
+      */}
       <div className='line no-image' />
       <div className='info-box no-image'>
         <div className='col'>
