@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import timeStringToSeconds from '../utils/workout';
+import { formatDateString } from '../utils/date';
 
 class WorkoutPost extends Component {
   constructor(props) {
@@ -167,12 +168,7 @@ class WorkoutPost extends Component {
   }
 
   render() {
-    const date = this.props.workout.date;
-    const dateObject = new Date(date);
-    const month = dateObject.getMonth() + 1;
-    const day = dateObject.getDate();
-    const year = dateObject.getFullYear().toString().substr(-2);
-    const dateString = `${month}/${day}/${year}`;
+    const dateString = formatDateString(this.props.workout.date);
 
     if (this.state.isEditing) {
       return (
@@ -299,7 +295,7 @@ class WorkoutPost extends Component {
                 <div>{this.props.workout.avgHR} bpm</div>
               </div>
             }
-            {this.props.workout.watts &&
+            {this.props.workout.watts && (this.props.workout.watts !== 0) &&
               <div className='col-unit'>
                 <div className='p-extra-sm'>Watts</div>
                 <div>{this.props.workout.watts}</div>

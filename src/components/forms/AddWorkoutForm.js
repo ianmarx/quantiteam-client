@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import timeStringToSeconds from '../../utils/workout';
+import * as DateUtils from '../../utils/date';
 
 class AddWorkoutForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activity: '',
+      date: '',
       distUnit: '',
       distance: '',
       timeString: '',
@@ -14,6 +16,7 @@ class AddWorkoutForm extends Component {
       watts: '',
       avgHR: '',
       statusMessage: '',
+      dateIsValid: true,
       distanceIsValid: true,
       timeIsValid: true,
       strokeRateIsValid: true,
@@ -25,6 +28,7 @@ class AddWorkoutForm extends Component {
     this.onRowSelect = this.onRowSelect.bind(this);
     this.onRunSelect = this.onRunSelect.bind(this);
     this.onBikeSelect = this.onBikeSelect.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
@@ -33,6 +37,11 @@ class AddWorkoutForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onPrevClick = this.onPrevClick.bind(this);
     this.validateInput = this.validateInput.bind(this);
+  }
+
+  componentDidMount() {
+    const dateString = DateUtils.formatDateString(Date.now());
+    this.setState({ date: dateString });
   }
 
   onErgSelect(event) {
@@ -49,6 +58,10 @@ class AddWorkoutForm extends Component {
 
   onBikeSelect(event) {
     this.setState({ activity: 'bike', distUnit: 'mi' });
+  }
+
+  onDateChange(event) {
+    this.setState({ date: event.target.value });
   }
 
   onDistanceChange(event) {
@@ -74,6 +87,7 @@ class AddWorkoutForm extends Component {
   onPrevClick(event) {
     this.setState({
       activity: '',
+      date: DateUtils.formatDateString(Date.now()),
       distance: '',
       timeString: '',
       strokeRate: '',
@@ -81,6 +95,7 @@ class AddWorkoutForm extends Component {
       avgHR: '',
       distUnit: '',
       statusMessage: '',
+      dateIsValid: true,
       distanceIsValid: true,
       timeIsValid: true,
       strokeRateIsValid: true,
@@ -101,7 +116,8 @@ class AddWorkoutForm extends Component {
       const avgHR = this.state.avgHR;
       const creatorName = this.props.userName;
       const creatorId = this.props.userId;
-      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId };
+      const date = new Date(this.state.date);
+      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId, date };
       await this.props.addWorkout(workoutObject);
       if (this.props.workoutIsAdded) {
         this.props.onModalClose();
@@ -112,6 +128,7 @@ class AddWorkoutForm extends Component {
   validateInput() {
     this.setState({
       statusMessage: '',
+      dateIsValid: true,
       distanceIsValid: true,
       timeIsValid: true,
       strokeRateIsValid: true,
@@ -120,6 +137,10 @@ class AddWorkoutForm extends Component {
     });
     let isValid = true;
     const invalidMessage = 'One or more input parameters are invalid.';
+    if (!DateUtils.checkDateFormat(this.state.date)) {
+      this.setState({ statusMessage: invalidMessage, dateIsValid: false });
+      isValid = false;
+    }
     if (isNaN(this.state.distance)) {
       this.setState({ statusMessage: invalidMessage, distanceIsValid: false });
       isValid = false;
@@ -163,6 +184,15 @@ class AddWorkoutForm extends Component {
         >
           <div className='h1 cap-1'>New {this.state.activity}</div>
           <button type="button" className="modal-prev" onClick={this.onPrevClick}>Back</button>
+          <div className='col-unit p'>
+            <div className='p-sm bold'>Date *</div>
+            <input
+              className={`${this.state.dateIsValid ? '' : 'invalid'}`}
+              onChange={this.onDateChange}
+              value={this.state.date}
+              type='text'
+            />
+          </div>
           <div className='row-unit'>
             <div className='col-unit p'>
               <div className='p-sm bold'>Distance ({this.state.distUnit}) *</div>
@@ -182,7 +212,7 @@ class AddWorkoutForm extends Component {
                 onChange={this.onTimeStringChange}
                 value={this.state.timeString}
                 type="text"
-                placeholder='hh:mm:ss'
+                placeholder='hh:mm:ss.s'
                 autoComplete='off'
                 required
               />
