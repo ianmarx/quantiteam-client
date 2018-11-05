@@ -85,6 +85,10 @@
       width: 325px;
     }
 
+    &.input-text {
+      width: 100%;
+    }
+
     &.invalid {
       border-style: solid;
       border-width: 2px;

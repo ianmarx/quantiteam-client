@@ -12,6 +12,7 @@ class WorkoutPost extends Component {
       activity: '',
       distance: '',
       distUnit: '',
+      notes: '',
       timeString: '',
       strokeRate: '',
       watts: '',
@@ -45,6 +46,7 @@ class WorkoutPost extends Component {
       activity: this.props.workout.activity,
       distance: this.props.workout.distance,
       distUnit: this.props.workout.distUnit,
+      notes: this.props.workout.notes,
       timeString: this.props.workout.timeString,
       strokeRate: this.props.workout.strokeRate || '',
       watts: this.props.workout.watts || '',
@@ -301,6 +303,12 @@ class WorkoutPost extends Component {
                 <div>{this.props.workout.watts}</div>
               </div>
             }
+          </div>
+          <div className='content h3-light'>
+            <div className='col-unit'>
+              <div className='p-extra-sm'>Notes</div>
+              <div className='p-sm'>{this.props.workout.notes}</div>
+            </div>
           </div>
           <div className='footer'>
             {this.props.workout._creator === this.props.currentUserId &&

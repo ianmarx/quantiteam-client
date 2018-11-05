@@ -11,6 +11,7 @@ class AddWorkoutForm extends Component {
       date: '',
       distUnit: '',
       distance: '',
+      notes: '',
       timeString: '',
       strokeRate: '',
       watts: '',
@@ -31,6 +32,7 @@ class AddWorkoutForm extends Component {
     this.onDateChange = this.onDateChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
+    this.onNotesChange = this.onNotesChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
     this.onWattsChange = this.onWattsChange.bind(this);
@@ -66,6 +68,10 @@ class AddWorkoutForm extends Component {
 
   onDistanceChange(event) {
     this.setState({ distance: event.target.value });
+  }
+
+  onNotesChange(event) {
+    this.setState({ notes: event.target.value });
   }
 
   onTimeStringChange(event) {
@@ -117,7 +123,8 @@ class AddWorkoutForm extends Component {
       const creatorName = this.props.userName;
       const creatorId = this.props.userId;
       const date = new Date(this.state.date);
-      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId, date };
+      const notes = this.state.notes;
+      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId, date, notes };
       await this.props.addWorkout(workoutObject);
       if (this.props.workoutIsAdded) {
         this.props.onModalClose();
@@ -250,6 +257,17 @@ class AddWorkoutForm extends Component {
                 />
               </div>
             }
+          </div>
+          <div className='row-unit'>
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Notes</div>
+              <textarea
+                className='notes input-text'
+                onChange={this.onNotesChange}
+                value={this.state.notes}
+                type='text'
+              />
+            </div>
           </div>
           <div className={`status-text ${this.state.statusMessage !== '' && 'error'}`}>
             {this.state.statusMessage !== '' ? this.state.statusMessage : this.props.statusText}
