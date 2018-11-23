@@ -28,6 +28,7 @@ class WorkoutPost extends Component {
 
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
+    this.onNotesChange = this.onNotesChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
     this.onWattsChange = this.onWattsChange.bind(this);
@@ -64,6 +65,10 @@ class WorkoutPost extends Component {
 
   onDistanceChange(event) {
     this.setState({ distance: event.target.value });
+  }
+
+  onNotesChange(event) {
+    this.setState({ notes: event.target.value });
   }
 
   onTimeStringChange(event) {
@@ -117,8 +122,9 @@ class WorkoutPost extends Component {
       const strokeRate = this.state.strokeRate;
       const watts = this.state.watts;
       const avgHR = this.state.avgHR;
+      const notes = this.state.notes;
       const workoutObject = {
-        distance, distUnit, time, strokeRate, watts, avgHR,
+        distance, distUnit, time, strokeRate, watts, avgHR, notes,
       };
       await this.props.updateWorkout(this.props.workout._id, workoutObject);
       this.setState({
@@ -248,6 +254,17 @@ class WorkoutPost extends Component {
                 </div>
               </div>
             }
+            <div className='content h3-light'>
+              <div className='col-unit notes-col'>
+                <div className='p-extra-sm'>Notes</div>
+                <textarea
+                  className='notes input-text'
+                  onChange={this.onNotesChange}
+                  value={this.state.notes}
+                  type='text'
+                />
+              </div>
+            </div>
           </div>
           <div className='footer'>
             <div className='status-text error'>{this.state.statusMessage}</div>
@@ -304,12 +321,14 @@ class WorkoutPost extends Component {
               </div>
             }
           </div>
-          <div className='content h3-light'>
-            <div className='col-unit'>
-              <div className='p-extra-sm'>Notes</div>
-              <div className='p-sm'>{this.props.workout.notes}</div>
+          {this.props.workout.notes &&
+            <div className='content h3-light'>
+              <div className='col-unit note-col'>
+                <div className='p-extra-sm'>Notes</div>
+                <div className='notes p-sm'>{this.props.workout.notes}</div>
+              </div>
             </div>
-          </div>
+          }
           <div className='footer'>
             {this.props.workout._creator === this.props.currentUserId &&
               <div className='icon row-unit'>
