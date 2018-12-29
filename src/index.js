@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import reducers from './reducers';
 import App from './containers/App';
 import { reAuthUser } from './actions/auth';
+import * as serviceWorker from './serviceWorker';
 import './style.scss';
 
 
@@ -26,3 +27,5 @@ ReactDOM.render(
   </Provider>
   , document.getElementById('main'),
 );
+
+serviceWorker.register();
