@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import reducers from './reducers';
 import App from './containers/App';
 import { reAuthUser } from './actions/auth';
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './pwa/serviceWorker';
 import './style.scss';
 
 
