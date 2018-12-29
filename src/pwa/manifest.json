@@ -1,0 +1,17 @@
+{
+  "short_name": "QuantiTeam",
+  "name": "QuantiTeam",
+  "icons": [{
+    "src": "",
+    "sizes": "",
+    "type": ""
+  }, {
+    "src": "",
+    "sizes": "",
+    "type": ""
+  }],
+  "start_url": "quantiteam.com",
+  "display": "standalone",
+  "theme_color": "#32324B",
+  "background_color": "#32324B"
+}
