@@ -39,6 +39,17 @@ const SignUpForm = (props) => {
           autoComplete='new-password'
         />
       </div>
+      <div className="field">
+        <div className='h2-light'>Repeat Password</div>
+        <input
+          className='password'
+          onChange={props.onRepeatPasswordChange}
+          value={props.repeatPassword}
+          type="password"
+          required
+          autoComplete='new-password'
+        />
+      </div>
       <div className='field'>
         <div className='status-text p'>
           {props.statusText}

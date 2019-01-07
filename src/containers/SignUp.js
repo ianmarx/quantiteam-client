@@ -25,6 +25,7 @@ export class SignUp extends Component {
       name: '',
       email: '',
       password: '',
+      repeatPassword: '',
       userType: 'athlete',
       teamCode: '',
       teamName: '',
@@ -37,6 +38,7 @@ export class SignUp extends Component {
     this.onNameChange = this.onNameChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.onRepeatPasswordChange = this.onRepeatPasswordChange.bind(this);
     this.onTeamCodeChange = this.onTeamCodeChange.bind(this);
     this.onTeamNameChange = this.onTeamNameChange.bind(this);
     this.onNextClick = this.onNextClick.bind(this);
@@ -70,6 +72,10 @@ export class SignUp extends Component {
 
   onPasswordChange(event) {
     this.setState({ password: event.target.value });
+  }
+
+  onRepeatPasswordChange(event) {
+    this.setState({ repeatPassword: event.target.value });
   }
 
   onTeamCodeChange(event) {
@@ -108,13 +114,15 @@ export class SignUp extends Component {
     const teamCode = this.state.teamCode;
     const userType = this.state.userType;
 
-    if (this.state.userType === 'athlete') {
-      const userObject = { name, email, password, teamCode, userType };
-      this.props.signUpAthlete(userObject, this.props.history);
-    }
-    if (this.state.userType === 'coach') {
-      const userObject = { name, email, password, teamName, userType };
-      this.props.signUpCoach(userObject, this.props.history);
+    if (this.validateInput()) {
+      if (this.state.userType === 'athlete') {
+        const userObject = { name, email, password, teamCode, userType };
+        this.props.signUpAthlete(userObject, this.props.history);
+      }
+      if (this.state.userType === 'coach') {
+        const userObject = { name, email, password, teamName, userType };
+        this.props.signUpCoach(userObject, this.props.history);
+      }
     }
   }
 
@@ -124,6 +132,11 @@ export class SignUp extends Component {
     } else {
       return (this.state.teamName === '' || !this.props.teamNameIsAvailable);
     }
+  }
+
+  validateInput() {
+    console.log(this.state.password === this.state.repeatPassword);
+    return this.state.password === this.state.repeatPassword;
   }
 
   render() {
@@ -137,8 +150,10 @@ export class SignUp extends Component {
             onEmailChange={this.onEmailChange}
             onNameChange={this.onNameChange}
             onPasswordChange={this.onPasswordChange}
+            onRepeatPasswordChange={this.onRepeatPasswordChange}
             onSubmit={this.onSubmit}
             password={this.state.password}
+            repeatPassword={this.state.repeatPassword}
             statusText={this.props.statusText}
           />
         ) : (
