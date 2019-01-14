@@ -82,6 +82,23 @@
         &:last-child {
           margin-right: 0px;
         }
+
+        &.notes-col {
+          width: 100%;
+        }
+      }
+
+      .notes {
+        max-width: 100%;
+        word-wrap: break-word;
+      }
+
+      textarea {
+        border-radius: 5px;
+        padding: 5px;
+        border-style: none;
+        width: 95%;
+        max-width: 95%;
       }
     }
 

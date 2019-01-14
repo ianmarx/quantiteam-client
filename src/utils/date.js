@@ -1,7 +1,7 @@
 /* formatDateString returns the MM/DD/YYYY format of a JS date string of milliseconds */
 export function formatDateString(date) {
   const dateObject = new Date(date);
-  const month = dateObject.getMonth() + 1;
+  const month = (dateObject.getMonth() + 1) < 10 ? ('0' + (dateObject.getMonth() + 1)) : (dateObject.getMonth() + 1);
   const day = dateObject.getDate();
   const year = dateObject.getFullYear().toString().substr(-2);
   const dateString = `${month}/${day}/${year}`;

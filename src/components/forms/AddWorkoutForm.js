@@ -11,6 +11,7 @@ class AddWorkoutForm extends Component {
       date: '',
       distUnit: '',
       distance: '',
+      notes: '',
       timeString: '',
       strokeRate: '',
       watts: '',
@@ -28,12 +29,14 @@ class AddWorkoutForm extends Component {
     this.onRowSelect = this.onRowSelect.bind(this);
     this.onRunSelect = this.onRunSelect.bind(this);
     this.onBikeSelect = this.onBikeSelect.bind(this);
+    this.onXTrainSelect = this.onXTrainSelect.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
     this.onDistanceChange = this.onDistanceChange.bind(this);
     this.onHeartRateChange = this.onHeartRateChange.bind(this);
     this.onTimeStringChange = this.onTimeStringChange.bind(this);
     this.onStrokeRateChange = this.onStrokeRateChange.bind(this);
     this.onWattsChange = this.onWattsChange.bind(this);
+    this.onNotesChange = this.onNotesChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onPrevClick = this.onPrevClick.bind(this);
     this.validateInput = this.validateInput.bind(this);
@@ -60,6 +63,10 @@ class AddWorkoutForm extends Component {
     this.setState({ activity: 'bike', distUnit: 'mi' });
   }
 
+  onXTrainSelect(event) {
+    this.setState({ activity: 'x-train', distUnit: 'm' });
+  }
+
   onDateChange(event) {
     this.setState({ date: event.target.value });
   }
@@ -84,6 +91,10 @@ class AddWorkoutForm extends Component {
     this.setState({ avgHR: event.target.value });
   }
 
+  onNotesChange(event) {
+    this.setState({ notes: event.target.value });
+  }
+
   onPrevClick(event) {
     this.setState({
       activity: '',
@@ -94,6 +105,7 @@ class AddWorkoutForm extends Component {
       watts: '',
       avgHR: '',
       distUnit: '',
+      notes: '',
       statusMessage: '',
       dateIsValid: true,
       distanceIsValid: true,
@@ -117,7 +129,8 @@ class AddWorkoutForm extends Component {
       const creatorName = this.props.userName;
       const creatorId = this.props.userId;
       const date = new Date(this.state.date);
-      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId, date };
+      const notes = this.state.notes;
+      const workoutObject = { activity, distance, distUnit, time, strokeRate, watts, avgHR, creatorName, creatorId, date, notes };
       await this.props.addWorkout(workoutObject);
       if (this.props.workoutIsAdded) {
         this.props.onModalClose();
@@ -173,6 +186,7 @@ class AddWorkoutForm extends Component {
           <button className="btn-select row" onClick={this.onRowSelect}>Row</button>
           <button className="btn-select run" onClick={this.onRunSelect}>Run</button>
           <button className="btn-select bike" onClick={this.onBikeSelect}>Bike</button>
+          <button className="btn-select x-train" onClick={this.onXTrainSelect}>X-Train</button>
           <button type="button" className="modal-close" onClick={this.props.onModalClose}>Close</button>
         </div>
       );
@@ -250,6 +264,17 @@ class AddWorkoutForm extends Component {
                 />
               </div>
             }
+          </div>
+          <div className='row-unit'>
+            <div className='col-unit p'>
+              <div className='p-sm bold'>Notes</div>
+              <textarea
+                className='notes input-text'
+                onChange={this.onNotesChange}
+                value={this.state.notes}
+                type='text'
+              />
+            </div>
           </div>
           <div className={`status-text ${this.state.statusMessage !== '' && 'error'}`}>
             {this.state.statusMessage !== '' ? this.state.statusMessage : this.props.statusText}

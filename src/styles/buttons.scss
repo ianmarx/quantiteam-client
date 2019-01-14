@@ -341,4 +341,13 @@
       background-color: #e2603f;
     }
   }
+
+  &.x-train {
+    padding: 15px 10px;
+    background-color: #14cc88;
+
+    &:active {
+      background-color: #0d9965
+    }
+  }
 }
