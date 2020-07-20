@@ -3,8 +3,7 @@ import React from 'react';
 const PageFooter = () => {
   return (
     <div className='page-footer'>
-      <div className='line' />
-      <div className='p'>&copy; 2018 QuantiTeam. All rights reserved.</div>
+      <div className='p'>&copy; 2020 QuantiTeam. All rights reserved.</div>
     </div>
   );
 };

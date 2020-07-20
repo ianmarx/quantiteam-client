@@ -23,15 +23,14 @@ export const LandingPage = (props) => {
           <div className='tagline'>
             Record your team workouts and solo training with QuantiTeam. No spreadsheets required.
           </div>
-          <NavLink className='cta-button' to='/signup'>GET STARTED</NavLink>
-          <div className="already-user">
-            Already on a team? <NavLink to="/signin"><strong>Sign in here.</strong></NavLink>
-          </div>
         </div>
       </div>
-      {/*
-      <img id='erg-image' src='/img/erg-crop-md-compressed.jpeg' alt='' />
-      */}
+      <img id='erg-image' src='/img/landingPageScreenshot.png' alt='' />
+      <br />
+      <NavLink className='cta-button' to='/signup'>GET STARTED</NavLink>
+      <div className="already-user">
+        Already on a team? <NavLink to="/signin"><strong>Sign in here.</strong></NavLink>
+      </div>
       <div className='line' />
       <div className='info-box no-image'>
         <div className='col'>
@@ -61,13 +60,14 @@ export const LandingPage = (props) => {
           </div>
         </div>
       </div>
-      <div className='line' />
+      <img id='erg-image' src='/img/workoutLog.png' alt='' />
       <div className='info-box'>
         <div className='col even'>
           <div className='h2'>Try QuantiTeam for free</div>
           <NavLink className='cta-button end' to='/signup'>GET STARTED</NavLink>
         </div>
       </div>
+      <div className='line' />
       <PageFooter />
     </div>
   );
